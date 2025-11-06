@@ -1,0 +1,5 @@
+html[data-theme=light] {
+    .vp-site-logo, .vp-hero-image {
+        filter: invert(0.5);
+    }
+}

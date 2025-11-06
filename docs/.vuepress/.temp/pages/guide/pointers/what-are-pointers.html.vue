@@ -1,0 +1,192 @@
+<template><div><h1 id="что-такое-указатели-в-go" tabindex="-1"><a class="header-anchor" href="#что-такое-указатели-в-go"><span>Что такое указатели в GO?</span></a></h1>
+<h2 id="определение" tabindex="-1"><a class="header-anchor" href="#определение"><span>Определение</span></a></h2>
+<blockquote>
+<p>Указатель — это специальная переменная, которая не хранит само значение (как обычная переменная), а хранит <strong>адрес в памяти</strong> другой переменной.</p>
+</blockquote>
+<p>Представь, что память компьютера — это большой дом с комнатами. Каждая переменная занимает комнату и имеет адрес (например, &quot;комната 42&quot;). Указатель — это как записка с адресом: он говорит &quot;иди в комнату 42, там лежит значение&quot;.</p>
+<div class="hint-container info">
+<p class="hint-container-title">Почему не просто переменная?</p>
+<p>Обычные переменные хранят данные напрямую (например, число 5). Указатели позволяют &quot;ссылаться&quot; на данные косвенно, что полезно для манипуляций без копирования.</p>
+</div>
+<p>Как объявить указатель:</p>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line"><span class="token keyword">var</span> ptr <span class="token operator">*</span><span class="token builtin">int</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div></div></div><p>Это указатель на int (звёздочка <code v-pre>*</code> обозначает &quot;указатель на тип&quot;).</p>
+<p>Чтобы получить адрес переменной используем <code v-pre>&amp;</code> (амперсанд):</p>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line">x <span class="token operator">:=</span> <span class="token number">5</span></span>
+<span class="line">ptr <span class="token operator">=</span> <span class="token operator">&amp;</span>x <span class="token comment">// ptr теперь указывает на x</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div></div></div><p>Чтобы получить значение по адресу (dereferencing):</p>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line">fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token operator">*</span>ptr<span class="token punctuation">)</span> <span class="token comment">// 5, получили значение из переменной x, на которую указывал ptr</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div></div></div><h2 id="для-чего-используются-указатели" tabindex="-1"><a class="header-anchor" href="#для-чего-используются-указатели"><span>Для чего используются указатели?</span></a></h2>
+<p>Указатели не нужны везде — Go старается минимизировать их использование, чтобы код был проще и безопаснее. Но они решают несколько важных задач:</p>
+<ul>
+<li><strong>Изменение значений в функциях (pass by reference)</strong>: В Go все аргументы функций передаются по значению (копируются). Если передать большую структуру, это дорого по памяти. Указатели позволяют передать &quot;ссылку&quot; и изменить оригинал.</li>
+<li><strong>Экономия памяти</strong>: Для больших данных (структуры, массивы) лучше передавать указатель, чтобы не копировать всё.</li>
+<li><strong>Работа с nil (нулевые указатели)</strong>: Указатель может быть nil (не указывать никуда). Это полезно для опциональных значений или проверки ошибок (например, &quot;если указатель nil, значит данных нет&quot;).</li>
+<li><strong>Динамические структуры данных</strong>: Указатели нужны для linked lists (связанных списков), деревьев, графов — где элементы ссылаются друг на друга.</li>
+<li><strong>Методы структур</strong>: В Go методы могут быть на указателях (pointer receivers), чтобы изменять структуру.</li>
+<li><strong>Избегание копирования</strong>: Слайсы, мапы, chan — это уже &quot;reference types&quot; (встроенные указатели), но для пользовательских типов указатели помогают.</li>
+<li><strong>Когда НЕ использовать?</strong> Для простых типов (int, string) часто не нужно — копирование дешёвое. Go поощряет избегать указателей, если возможно, чтобы избежать ошибок (null pointer exceptions).</li>
+</ul>
+<p>В общем, указатели — это инструмент для эффективности и мутабельности, но Go делает их опциональными.</p>
+<h2 id="примеры-использования-указателеи" tabindex="-1"><a class="header-anchor" href="#примеры-использования-указателеи"><span>Примеры использования указателей</span></a></h2>
+<h3 id="пример-1-базовое-объявление-и-dereferencing" tabindex="-1"><a class="header-anchor" href="#пример-1-базовое-объявление-и-dereferencing"><span>Пример 1: Базовое объявление и dereferencing</span></a></h3>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line"><span class="token keyword">package</span> main</span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">import</span> <span class="token string">"fmt"</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token keyword">var</span> x <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">5</span>   <span class="token comment">// Обычная переменная</span></span>
+<span class="line">    <span class="token keyword">var</span> ptr <span class="token operator">*</span><span class="token builtin">int</span>    <span class="token comment">// Указатель на int (пока nil)</span></span>
+<span class="line">    </span>
+<span class="line">    ptr <span class="token operator">=</span> <span class="token operator">&amp;</span>x        <span class="token comment">// Присваиваем адрес x указателю</span></span>
+<span class="line">    </span>
+<span class="line">    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"Значение x:"</span><span class="token punctuation">,</span> x<span class="token punctuation">)</span>           <span class="token comment">// 5</span></span>
+<span class="line">    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"Адрес x:"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>x<span class="token punctuation">)</span>             <span class="token comment">// Что-то вроде 0xc0000140a0 (адрес в памяти)</span></span>
+<span class="line">    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"Значение ptr:"</span><span class="token punctuation">,</span> ptr<span class="token punctuation">)</span>       <span class="token comment">// Тот же адрес</span></span>
+<span class="line">    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"Значение по ptr:"</span><span class="token punctuation">,</span> <span class="token operator">*</span>ptr<span class="token punctuation">)</span>   <span class="token comment">// 5 (dereferencing)</span></span>
+<span class="line">    </span>
+<span class="line">    <span class="token operator">*</span>ptr <span class="token operator">=</span> <span class="token number">100</span>                              <span class="token comment">// Меняем значение через указатель</span></span>
+<span class="line">    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"Новое значение x:"</span><span class="token punctuation">,</span> x<span class="token punctuation">)</span>     <span class="token comment">// 100 (оригинал изменился!)</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
+<li><strong>Что происходит?</strong> Мы создали указатель, &quot;направили&quot; его на x, прочитали и изменили значение. Без указателя мы бы работали с копией.</li>
+</ul>
+<h3 id="пример-2-изменение-в-функции-pass-by-reference" tabindex="-1"><a class="header-anchor" href="#пример-2-изменение-в-функции-pass-by-reference"><span>Пример 2: Изменение в функции (pass by reference)</span></a></h3>
+<p>Без указателей функция не изменит оригинал:</p>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line"><span class="token keyword">package</span> main</span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">import</span> <span class="token string">"fmt"</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">func</span> <span class="token function">incrementBad</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">    n<span class="token operator">++</span>  <span class="token comment">// Меняем копию</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">    x <span class="token operator">:=</span> <span class="token number">5</span></span>
+<span class="line">    <span class="token function">incrementBad</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span></span>
+<span class="line">    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>  <span class="token comment">// Всё ещё 5</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>С указателем:</p>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line"><span class="token keyword">package</span> main</span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">import</span> <span class="token string">"fmt"</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">func</span> <span class="token function">incrementGood</span><span class="token punctuation">(</span>n <span class="token operator">*</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token operator">*</span>n<span class="token operator">++</span>  <span class="token comment">// Меняем оригинал через dereferencing</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">    x <span class="token operator">:=</span> <span class="token number">5</span></span>
+<span class="line">    <span class="token function">incrementGood</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>x<span class="token punctuation">)</span>  <span class="token comment">// Передаём адрес</span></span>
+<span class="line">    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>     <span class="token comment">// 6</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
+<li><strong>Зачем?</strong> Полезно для функций, которые модифицируют данные (например, обновление счёта в игре).</li>
+</ul>
+<h3 id="пример-3-указатели-на-структуры" tabindex="-1"><a class="header-anchor" href="#пример-3-указатели-на-структуры"><span>Пример 3: Указатели на структуры</span></a></h3>
+<p>Структуры — это составные типы. Без указателей копируется вся структура.</p>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line"><span class="token keyword">package</span> main</span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">import</span> <span class="token string">"fmt"</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">type</span> Person <span class="token keyword">struct</span> <span class="token punctuation">{</span></span>
+<span class="line">    Name <span class="token builtin">string</span></span>
+<span class="line">    Age  <span class="token builtin">int</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">func</span> <span class="token function">birthdayBad</span><span class="token punctuation">(</span>p Person<span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">    p<span class="token punctuation">.</span>Age<span class="token operator">++</span>  <span class="token comment">// Меняем копию</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">func</span> <span class="token function">birthdayGood</span><span class="token punctuation">(</span>p <span class="token operator">*</span>Person<span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token punctuation">(</span><span class="token operator">*</span>p<span class="token punctuation">)</span><span class="token punctuation">.</span>Age<span class="token operator">++</span>  <span class="token comment">// Или p.Age++ (Go позволяет упростить)</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">    alice <span class="token operator">:=</span> Person<span class="token punctuation">{</span>Name<span class="token punctuation">:</span> <span class="token string">"Alice"</span><span class="token punctuation">,</span> Age<span class="token punctuation">:</span> <span class="token number">30</span><span class="token punctuation">}</span></span>
+<span class="line">    </span>
+<span class="line">    <span class="token function">birthdayBad</span><span class="token punctuation">(</span>alice<span class="token punctuation">)</span></span>
+<span class="line">    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>alice<span class="token punctuation">.</span>Age<span class="token punctuation">)</span>  <span class="token comment">// 30 (не изменилось)</span></span>
+<span class="line">    </span>
+<span class="line">    <span class="token function">birthdayGood</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>alice<span class="token punctuation">)</span></span>
+<span class="line">    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>alice<span class="token punctuation">.</span>Age<span class="token punctuation">)</span>  <span class="token comment">// 31</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
+<li><strong>Зачем?</strong> Для больших структур (с многими полями) это экономит память. Также в методах: <code v-pre>func (p *Person) Birthday() { p.Age++ }</code>.</li>
+</ul>
+<h3 id="пример-4-nil-указатели-и-проверка" tabindex="-1"><a class="header-anchor" href="#пример-4-nil-указатели-и-проверка"><span>Пример 4: Nil-указатели и проверка</span></a></h3>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line"><span class="token keyword">package</span> main</span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">import</span> <span class="token string">"fmt"</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token keyword">var</span> ptr <span class="token operator">*</span><span class="token builtin">int</span>  <span class="token comment">// По умолчанию nil</span></span>
+<span class="line">    </span>
+<span class="line">    <span class="token keyword">if</span> ptr <span class="token operator">==</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span></span>
+<span class="line">        fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"Указатель nil, ничего не указывает"</span><span class="token punctuation">)</span></span>
+<span class="line">    <span class="token punctuation">}</span></span>
+<span class="line">    </span>
+<span class="line">    <span class="token comment">// *ptr = 5  // Ошибка! Panic: nil pointer dereference</span></span>
+<span class="line">    </span>
+<span class="line">    <span class="token keyword">var</span> x <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">10</span></span>
+<span class="line">    ptr <span class="token operator">=</span> <span class="token operator">&amp;</span>x</span>
+<span class="line">    <span class="token keyword">if</span> ptr <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span></span>
+<span class="line">        fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token operator">*</span>ptr<span class="token punctuation">)</span>  <span class="token comment">// 10</span></span>
+<span class="line">    <span class="token punctuation">}</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
+<li><strong>Зачем?</strong> Для опциональных значений (например, функция возвращает *T или nil, если ошибка). Всегда проверяй на nil, чтобы избежать краха программы.</li>
+</ul>
+<h3 id="пример-5-связанныи-список-продвинутыи-но-простои" tabindex="-1"><a class="header-anchor" href="#пример-5-связанныи-список-продвинутыи-но-простои"><span>Пример 5: Связанный список (продвинутый, но простой)</span></a></h3>
+<p>Указатели позволяют элементам &quot;ссылаться&quot; друг на друга.</p>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line"><span class="token keyword">package</span> main</span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">import</span> <span class="token string">"fmt"</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">type</span> Node <span class="token keyword">struct</span> <span class="token punctuation">{</span></span>
+<span class="line">    Value <span class="token builtin">int</span></span>
+<span class="line">    Next  <span class="token operator">*</span>Node  <span class="token comment">// Указатель на следующий узел</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">    head <span class="token operator">:=</span> <span class="token operator">&amp;</span>Node<span class="token punctuation">{</span>Value<span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">}</span>  <span class="token comment">// Первый узел</span></span>
+<span class="line">    head<span class="token punctuation">.</span>Next <span class="token operator">=</span> <span class="token operator">&amp;</span>Node<span class="token punctuation">{</span>Value<span class="token punctuation">:</span> <span class="token number">2</span><span class="token punctuation">}</span></span>
+<span class="line">    head<span class="token punctuation">.</span>Next<span class="token punctuation">.</span>Next <span class="token operator">=</span> <span class="token operator">&amp;</span>Node<span class="token punctuation">{</span>Value<span class="token punctuation">:</span> <span class="token number">3</span><span class="token punctuation">}</span></span>
+<span class="line">    </span>
+<span class="line">    <span class="token comment">// Проходим по списку</span></span>
+<span class="line">    current <span class="token operator">:=</span> head</span>
+<span class="line">    <span class="token keyword">for</span> current <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span></span>
+<span class="line">        fmt<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span>current<span class="token punctuation">.</span>Value<span class="token punctuation">,</span> <span class="token string">" -> "</span><span class="token punctuation">)</span></span>
+<span class="line">        current <span class="token operator">=</span> current<span class="token punctuation">.</span>Next</span>
+<span class="line">    <span class="token punctuation">}</span></span>
+<span class="line">    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"nil"</span><span class="token punctuation">)</span></span>
+<span class="line">    <span class="token comment">// Вывод: 1 -> 2 -> 3 -> nil</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
+<li><strong>Зачем?</strong> Для динамических коллекций, где размер меняется (в отличие от массивов фиксированного размера).</li>
+</ul>
+<h2 id="общие-советы-и-подводные-камни" tabindex="-1"><a class="header-anchor" href="#общие-советы-и-подводные-камни"><span>Общие советы и подводные камни</span></a></h2>
+<ul>
+<li><strong>Когда использовать</strong>: Если нужно изменить оригинал или сэкономить память — да. Иначе — нет (Go любит простоту).</li>
+<li><strong>Ошибки</strong>: Nil pointer dereference — самая частая. Всегда проверяй <code v-pre>if ptr != nil</code>.</li>
+<li><strong>Сравнение с другими языками</strong>: В Python всё &quot;по ссылке&quot; неявно, в C — указатели опасные. Go — золотая середина.</li>
+<li><strong>Практика</strong>: Попробуй написать функцию, которая меняет строку через указатель (strings immutable, так что нужно *string).</li>
+<li><strong>Дальше читать</strong>: Официальная документация Go — &quot;Effective Go&quot; раздел про pointers, или книга &quot;The Go Programming Language&quot;.</li>
+</ul>
+<h2 id="практика" tabindex="-1"><a class="header-anchor" href="#практика"><span>Практика</span></a></h2>
+<div class="hint-container tip">
+<p class="hint-container-title">Задание</p>
+<p>Напишите функцию <code v-pre>swap(a *int, b *int)</code>, которая меняет значения двух целых чисел местами через указатели. В <code v-pre>main</code> создайте две переменные, выведите их до и после вызова функции.</p>
+</div>
+</div></template>
+
+

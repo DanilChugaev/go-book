@@ -1,0 +1,170 @@
+<template><div><h1 id="указатели-на-слаисы" tabindex="-1"><a class="header-anchor" href="#указатели-на-слаисы"><span>Указатели на слайсы</span></a></h1>
+<div class="hint-container info">
+<p class="hint-container-title">Определение</p>
+<p>Слайсы (slices) в Go — это динамические массивы, которые уже являются <strong>ссылочными типами</strong> (reference types).</p>
+<p>Это значит, что когда ты передаёшь слайс в функцию, он передаётся по ссылке (не копируется весь массив), и изменения внутри функции повлияют на оригинал.</p>
+<p>Слайс внутри себя содержит указатель на underlying array, длину и capacity.</p>
+</div>
+<p>Однако иногда возникает необходимость в <strong>указателях на слайсы</strong> (<code v-pre>*[]T</code>). Это не очень распространено, потому что слайсы уже &quot;ссылочные&quot;, но указатели на них полезны в определённых случаях:</p>
+<ul>
+<li><strong>Для модификации самого слайса</strong>: Например, чтобы изменить его размер, capacity или сделать nil внутри функции.</li>
+<li><strong>Для опциональных слайсов</strong>: Указатель может быть nil, что означает &quot;нет слайса&quot;, в отличие от пустого слайса (<code v-pre>[]int{}</code>), который не nil.</li>
+<li><strong>В структурах</strong>: Чтобы избежать копирования слайса при присваивании структур (хотя слайсы копируются дешево, так как это всего 24 байта: указатель + len + cap).</li>
+<li><strong>Когда нужно явно контролировать ссылку</strong>: Например, в сложных структурах данных или для избежания неожиданного поведения.</li>
+</ul>
+<div class="hint-container warning">
+<p class="hint-container-title">Важно</p>
+<p>Указатели на слайсы редки в повседневном коде Go. Чаще всего достаточно просто слайсов.</p>
+</div>
+<p>Давай разберём примеры, чтобы понять.</p>
+<h4 id="пример-1-базовое-объявление-и-использование-указателя-на-слаис" tabindex="-1"><a class="header-anchor" href="#пример-1-базовое-объявление-и-использование-указателя-на-слаис"><span>Пример 1: Базовое объявление и использование указателя на слайс</span></a></h4>
+<p>Здесь мы создаём указатель на слайс и меняем его через dereferencing.</p>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line"><span class="token keyword">package</span> main</span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">import</span> <span class="token string">"fmt"</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token comment">// Создаём слайс</span></span>
+<span class="line">    numbers <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span></span>
+<span class="line">    </span>
+<span class="line">    <span class="token comment">// Указатель на слайс</span></span>
+<span class="line">    <span class="token keyword">var</span> ptr <span class="token operator">*</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token operator">=</span> <span class="token operator">&amp;</span>numbers</span>
+<span class="line">    </span>
+<span class="line">    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"Оригинальный слайс:"</span><span class="token punctuation">,</span> numbers<span class="token punctuation">)</span>  <span class="token comment">// [1 2 3]</span></span>
+<span class="line">    </span>
+<span class="line">    <span class="token comment">// Меняем элемент через указатель (dereferencing)</span></span>
+<span class="line">    <span class="token punctuation">(</span><span class="token operator">*</span>ptr<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">99</span></span>
+<span class="line">    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"После изменения элемента:"</span><span class="token punctuation">,</span> numbers<span class="token punctuation">)</span>  <span class="token comment">// [1 99 3]</span></span>
+<span class="line">    </span>
+<span class="line">    <span class="token comment">// Добавляем элемент через append (нужно dereference)</span></span>
+<span class="line">    <span class="token operator">*</span>ptr <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span><span class="token operator">*</span>ptr<span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span></span>
+<span class="line">    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"После append:"</span><span class="token punctuation">,</span> numbers<span class="token punctuation">)</span>  <span class="token comment">// [1 99 3 4]</span></span>
+<span class="line">    </span>
+<span class="line">    <span class="token comment">// Делаем слайс nil через указатель</span></span>
+<span class="line">    <span class="token operator">*</span>ptr <span class="token operator">=</span> <span class="token boolean">nil</span></span>
+<span class="line">    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"После nil:"</span><span class="token punctuation">,</span> numbers<span class="token punctuation">)</span>  <span class="token comment">// [] (но это пустой слайс, т.к. numbers теперь nil)</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
+<li><strong>Что происходит?</strong> <code v-pre>*ptr</code> даёт доступ к самому слайсу. Мы можем менять элементы, добавлять через append или устанавливать в nil. Без указателя мы бы работали напрямую, но указатель позволяет &quot;ссылаться&quot; на слайс как на переменную.</li>
+</ul>
+<h4 id="пример-2-передача-указателя-на-слаис-в-функцию" tabindex="-1"><a class="header-anchor" href="#пример-2-передача-указателя-на-слаис-в-функцию"><span>Пример 2: Передача указателя на слайс в функцию</span></a></h4>
+<p>Слайсы передаются по ссылке, но если функция должна изменить сам слайс (например, перезаписать его или сделать nil), нужен указатель.</p>
+<p>Без указателя (стандартный случай — работает для изменений внутри):</p>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line"><span class="token keyword">package</span> main</span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">import</span> <span class="token string">"fmt"</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">func</span> <span class="token function">modifySlice</span><span class="token punctuation">(</span>s <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">    s<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">100</span>  <span class="token comment">// Изменит оригинал</span></span>
+<span class="line">    s <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span>  <span class="token comment">// Это НЕ изменит оригинал! (s — локальная копия ссылки)</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">    numbers <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span></span>
+<span class="line">    <span class="token function">modifySlice</span><span class="token punctuation">(</span>numbers<span class="token punctuation">)</span></span>
+<span class="line">    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>numbers<span class="token punctuation">)</span>  <span class="token comment">// [100 2 3] (append не сработал на оригинале)</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
+<li><strong>Почему append не изменил?</strong> <code v-pre>s</code> в функции — копия слайса (указатель + len + cap). Append создаёт новый слайс и присваивает локальной <code v-pre>s</code>, но оригинал не меняется.</li>
+</ul>
+<p>С указателем:</p>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line"><span class="token keyword">package</span> main</span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">import</span> <span class="token string">"fmt"</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">func</span> <span class="token function">modifySlicePtr</span><span class="token punctuation">(</span>s <span class="token operator">*</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token punctuation">(</span><span class="token operator">*</span>s<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">100</span>  <span class="token comment">// Изменит оригинал</span></span>
+<span class="line">    <span class="token operator">*</span>s <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span><span class="token operator">*</span>s<span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span>  <span class="token comment">// Теперь изменит оригинал!</span></span>
+<span class="line">    <span class="token operator">*</span>s <span class="token operator">=</span> <span class="token boolean">nil</span>  <span class="token comment">// Можно сделать nil</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">    numbers <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span></span>
+<span class="line">    <span class="token function">modifySlicePtr</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>numbers<span class="token punctuation">)</span></span>
+<span class="line">    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>numbers<span class="token punctuation">)</span>  <span class="token comment">// [] (стал nil после изменений)</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
+<li><strong>Зачем?</strong> Полезно, если функция должна полностью перезаписать слайс (например, в парсере, где слайс может стать nil при ошибке).</li>
+</ul>
+<h4 id="пример-3-указатель-на-слаис-в-структуре" tabindex="-1"><a class="header-anchor" href="#пример-3-указатель-на-слаис-в-структуре"><span>Пример 3: Указатель на слайс в структуре</span></a></h4>
+<p>Это полезно, чтобы структура могла иметь &quot;опциональный&quot; слайс (nil) или чтобы избежать копирования при присваивании.</p>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line"><span class="token keyword">package</span> main</span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">import</span> <span class="token string">"fmt"</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">type</span> Data <span class="token keyword">struct</span> <span class="token punctuation">{</span></span>
+<span class="line">    Items <span class="token operator">*</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>  <span class="token comment">// Указатель на слайс строк</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">    d <span class="token operator">:=</span> Data<span class="token punctuation">{</span><span class="token punctuation">}</span></span>
+<span class="line">    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"Изначально:"</span><span class="token punctuation">,</span> d<span class="token punctuation">.</span>Items<span class="token punctuation">)</span>  <span class="token comment">// &lt;nil> (нет слайса)</span></span>
+<span class="line">    </span>
+<span class="line">    <span class="token comment">// Инициализируем</span></span>
+<span class="line">    items <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">{</span><span class="token string">"apple"</span><span class="token punctuation">,</span> <span class="token string">"banana"</span><span class="token punctuation">}</span></span>
+<span class="line">    d<span class="token punctuation">.</span>Items <span class="token operator">=</span> <span class="token operator">&amp;</span>items</span>
+<span class="line">    </span>
+<span class="line">    <span class="token comment">// Меняем через указатель</span></span>
+<span class="line">    <span class="token punctuation">(</span><span class="token operator">*</span>d<span class="token punctuation">.</span>Items<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"orange"</span></span>
+<span class="line">    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"После изменения:"</span><span class="token punctuation">,</span> items<span class="token punctuation">)</span>  <span class="token comment">// [orange banana]</span></span>
+<span class="line">    </span>
+<span class="line">    <span class="token comment">// Добавляем</span></span>
+<span class="line">    <span class="token operator">*</span>d<span class="token punctuation">.</span>Items <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span><span class="token operator">*</span>d<span class="token punctuation">.</span>Items<span class="token punctuation">,</span> <span class="token string">"cherry"</span><span class="token punctuation">)</span></span>
+<span class="line">    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"После append:"</span><span class="token punctuation">,</span> items<span class="token punctuation">)</span>  <span class="token comment">// [orange banana cherry]</span></span>
+<span class="line">    </span>
+<span class="line">    <span class="token comment">// Проверяем на nil</span></span>
+<span class="line">    <span class="token keyword">if</span> d<span class="token punctuation">.</span>Items <span class="token operator">==</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span></span>
+<span class="line">        fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"Нет данных"</span><span class="token punctuation">)</span></span>
+<span class="line">    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span></span>
+<span class="line">        fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"Есть данные:"</span><span class="token punctuation">,</span> <span class="token operator">*</span>d<span class="token punctuation">.</span>Items<span class="token punctuation">)</span></span>
+<span class="line">    <span class="token punctuation">}</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
+<li><strong>Зачем?</strong> В структурах слайсы без указателя всегда &quot;существуют&quot; (даже пустые). С указателем можно отличить &quot;пустой&quot; от &quot;отсутствующий&quot;. Полезно в JSON (marshal/unmarshal) или базах данных.</li>
+</ul>
+<h4 id="пример-4-nil-указатель-на-слаис-и-проверка" tabindex="-1"><a class="header-anchor" href="#пример-4-nil-указатель-на-слаис-и-проверка"><span>Пример 4: Nil-указатель на слайс и проверка</span></a></h4>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line"><span class="token keyword">package</span> main</span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">import</span> <span class="token string">"fmt"</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">func</span> <span class="token function">processSlice</span><span class="token punctuation">(</span>ptr <span class="token operator">*</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token keyword">if</span> ptr <span class="token operator">==</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span></span>
+<span class="line">        fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"Указатель nil — нет слайса"</span><span class="token punctuation">)</span></span>
+<span class="line">        <span class="token keyword">return</span></span>
+<span class="line">    <span class="token punctuation">}</span></span>
+<span class="line">    <span class="token keyword">if</span> <span class="token function">len</span><span class="token punctuation">(</span><span class="token operator">*</span>ptr<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">{</span></span>
+<span class="line">        fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"Слайс пустой, но не nil"</span><span class="token punctuation">)</span></span>
+<span class="line">        <span class="token keyword">return</span></span>
+<span class="line">    <span class="token punctuation">}</span></span>
+<span class="line">    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"Слайс:"</span><span class="token punctuation">,</span> <span class="token operator">*</span>ptr<span class="token punctuation">)</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token keyword">var</span> nilPtr <span class="token operator">*</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>  <span class="token comment">// nil</span></span>
+<span class="line">    <span class="token function">processSlice</span><span class="token punctuation">(</span>nilPtr<span class="token punctuation">)</span>  <span class="token comment">// "Указатель nil — нет слайса"</span></span>
+<span class="line">    </span>
+<span class="line">    emptySlice <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token punctuation">}</span>  <span class="token comment">// Пустой слайс (не nil)</span></span>
+<span class="line">    <span class="token function">processSlice</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>emptySlice<span class="token punctuation">)</span>  <span class="token comment">// "Слайс пустой, но не nil"</span></span>
+<span class="line">    </span>
+<span class="line">    fullSlice <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">}</span></span>
+<span class="line">    <span class="token function">processSlice</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>fullSlice<span class="token punctuation">)</span>  <span class="token comment">// "Слайс: [1 2]"</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
+<li><strong>Разница</strong>: Пустой слайс (<code v-pre>[]int{}</code>) != nil. Nil-указатель полезен для ошибок или отсутствия данных.</li>
+</ul>
+<h4 id="советы-по-использованию" tabindex="-1"><a class="header-anchor" href="#советы-по-использованию"><span>Советы по использованию</span></a></h4>
+<ul>
+<li><strong>Когда избегать</strong>: Если достаточно стандартного поведения слайсов (изменение элементов, но не перезапись) — не используй указатели. Они добавляют сложность.</li>
+<li><strong>Ошибки</strong>: Всегда проверяй на nil перед dereferencing (<code v-pre>if ptr != nil</code>), иначе panic.</li>
+<li><strong>Производительность</strong>: Указатели на слайсы — это extra уровень индирекции, но в Go это дешево.</li>
+<li><strong>Практика</strong>: Попробуй написать функцию, которая принимает *[]int и сортирует слайс на месте (используй sort.Ints(*s)).</li>
+</ul>
+<p>Читать дальше - [[03 - Указатели на мапы]]</p>
+</div></template>
+
+
