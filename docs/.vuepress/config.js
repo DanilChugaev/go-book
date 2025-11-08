@@ -8,7 +8,7 @@ export default defineUserConfig({
 
   base: '/go-book/',
   title: ' ',
-  description: 'Изучение языка GO на практике',
+  description: 'Учебник для изучения языка программирования Go с тестированием и практическими заданиями',
 
   theme: defaultTheme({
     logo: 'https://go.dev/images/go-logo-white.svg',

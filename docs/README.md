@@ -6,3 +6,5 @@ actions:
   - text: Начать изучение
     link: /guide/
     type: primary
+
+footer: 'Статус: в процессе...'
