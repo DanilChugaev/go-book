@@ -1,4 +1,4 @@
-export const siteData = JSON.parse("{\"base\":\"/go-book/\",\"lang\":\"ru-RU\",\"title\":\" \",\"description\":\"Учебник для изучения языка программирования Go с тестированием и практическими заданиями\",\"head\":[],\"locales\":{}}")
+export const siteData = JSON.parse("{\"base\":\"/\",\"lang\":\"ru-RU\",\"title\":\" \",\"description\":\"Учебник для изучения языка программирования Go с тестированием и практическими заданиями\",\"head\":[],\"locales\":{}}")
 
 if (import.meta.webpackHot) {
   import.meta.webpackHot.accept()
