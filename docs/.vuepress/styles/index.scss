@@ -15,3 +15,10 @@ html[data-theme=light] {
 .vp-footer {
     border: none;
 }
+
+@media (max-width: 719px) {
+    .vp-back-to-top-button {
+        bottom: 112px;
+        right: 30px;
+    }
+}
