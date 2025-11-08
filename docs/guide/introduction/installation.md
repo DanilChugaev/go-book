@@ -75,9 +75,7 @@ func main() {
 - Запустите:
 
 ```bash
-go run hello.go
-
-# выведет "Hello, Go!"
+go run hello.go # выведет "Hello, Go!"
 ```
 
 ### Шаг 5: Дополнительная настройка
@@ -172,9 +170,7 @@ func main() {
 - Запустите:
 
 ```bash
-go run hello.go
-
-# выведет "Hello, Go!"
+go run hello.go # выведет "Hello, Go!"
 ```
 
 ### Вариант 2: Через Homebrew (для продвинутых, проще обновления)
@@ -302,9 +298,7 @@ func main() {
 - Запустите:
 
 ```bash
-go run hello.go
-
-# выведет "Hello, Go!"
+go run hello.go # выведет "Hello, Go!"
 ```
 
 #### Альтернативы для дистрибутивов:

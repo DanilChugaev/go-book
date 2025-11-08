@@ -6,6 +6,7 @@ import { sidebarEn } from './configs'
 export default defineUserConfig({
   lang: 'ru-RU',
 
+  base: '/go-book/',
   title: ' ',
   description: 'Изучение языка GO на практике',
 

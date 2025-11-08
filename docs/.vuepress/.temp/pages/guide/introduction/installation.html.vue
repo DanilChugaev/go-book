@@ -72,11 +72,9 @@
 <div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li>Запустите:</li>
 </ul>
-<div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre v-pre><code><span class="line">go run hello.go</span>
-<span class="line"></span>
-<span class="line"><span class="token comment"># выведет "Hello, Go!"</span></span>
+<div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre v-pre><code><span class="line">go run hello.go <span class="token comment"># выведет "Hello, Go!"</span></span>
 <span class="line"></span></code></pre>
-<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="шаг-5-дополнительная-настроика" tabindex="-1"><a class="header-anchor" href="#шаг-5-дополнительная-настроика"><span>Шаг 5: Дополнительная настройка</span></a></h3>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div></div></div><h3 id="шаг-5-дополнительная-настроика" tabindex="-1"><a class="header-anchor" href="#шаг-5-дополнительная-настроика"><span>Шаг 5: Дополнительная настройка</span></a></h3>
 <ul>
 <li>Установите VS Code: Скачайте с code.visualstudio.com. Внутри VS Code установите расширение &quot;Go&quot; (от Google).</li>
 <li>Если проблемы: Проверьте антивирус (может блокировать), или скачайте .zip-версию и разархивируйте вручную в <code v-pre>C:\Go</code>, затем настройте переменные.</li>
@@ -166,11 +164,9 @@
 <div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li>Запустите:</li>
 </ul>
-<div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre v-pre><code><span class="line">go run hello.go</span>
-<span class="line"></span>
-<span class="line"><span class="token comment"># выведет "Hello, Go!"</span></span>
+<div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre v-pre><code><span class="line">go run hello.go <span class="token comment"># выведет "Hello, Go!"</span></span>
 <span class="line"></span></code></pre>
-<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="вариант-2-через-homebrew-для-продвинутых-проще-обновления" tabindex="-1"><a class="header-anchor" href="#вариант-2-через-homebrew-для-продвинутых-проще-обновления"><span>Вариант 2: Через Homebrew (для продвинутых, проще обновления)</span></a></h3>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div></div></div><h3 id="вариант-2-через-homebrew-для-продвинутых-проще-обновления" tabindex="-1"><a class="header-anchor" href="#вариант-2-через-homebrew-для-продвинутых-проще-обновления"><span>Вариант 2: Через Homebrew (для продвинутых, проще обновления)</span></a></h3>
 <ul>
 <li>Установите Homebrew: В Terminal выполните:</li>
 </ul>
@@ -281,11 +277,9 @@
 <div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li>Запустите:</li>
 </ul>
-<div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre v-pre><code><span class="line">go run hello.go</span>
-<span class="line"></span>
-<span class="line"><span class="token comment"># выведет "Hello, Go!"</span></span>
+<div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre v-pre><code><span class="line">go run hello.go <span class="token comment"># выведет "Hello, Go!"</span></span>
 <span class="line"></span></code></pre>
-<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="альтернативы-для-дистрибутивов" tabindex="-1"><a class="header-anchor" href="#альтернативы-для-дистрибутивов"><span>Альтернативы для дистрибутивов:</span></a></h4>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div></div></div><h4 id="альтернативы-для-дистрибутивов" tabindex="-1"><a class="header-anchor" href="#альтернативы-для-дистрибутивов"><span>Альтернативы для дистрибутивов:</span></a></h4>
 <ul>
 <li>Ubuntu/Debian:</li>
 </ul>

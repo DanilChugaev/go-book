@@ -3,3 +3,10 @@ html[data-theme=light] {
         filter: invert(0.5);
     }
 }
+
+.vp-home {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 60px);
+}

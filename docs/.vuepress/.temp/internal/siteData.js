@@ -1,4 +1,4 @@
-export const siteData = JSON.parse("{\"base\":\"/\",\"lang\":\"ru-RU\",\"title\":\" \",\"description\":\"Изучение языка GO на практике\",\"head\":[],\"locales\":{}}")
+export const siteData = JSON.parse("{\"base\":\"/go-book/\",\"lang\":\"ru-RU\",\"title\":\" \",\"description\":\"Изучение языка GO на практике\",\"head\":[],\"locales\":{}}")
 
 if (import.meta.webpackHot) {
   import.meta.webpackHot.accept()
