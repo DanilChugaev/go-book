@@ -3,7 +3,7 @@ home: true
 title: Home
 heroImage: https://go.dev/images/go-logo-white.svg
 actions:
-  - text: Начать изучение
+  - text: Начать изучение GO
     link: /guide/
     type: primary
 
