@@ -56,7 +56,9 @@ in progress...
 2. [Указатели на слайсы](pointers/slice-pointers.md)
 3. [Указатели на мапы](pointers/map-pointers.md)
 4. [Указатели в структурах](pointers/structure-pointers.md)
-5. [Другие виды указателей](pointers/other-pointers.md)
+5. [Встроенные структуры с указателями](pointers/embedded-structure-pointers.md)
+6. [Указатели на функции](pointers/function-pointers.md)
+7. [Другие виды указателей](pointers/other-pointers.md)
 
 ## Глава 14: Файловый I/O
 
@@ -133,6 +135,10 @@ in progress...
 ## Мини-проекты для практики
 
 in progress...
+
+## Справочник
+
+1. [Справочник](directory.md)
 
 ## Ресурсы
 
