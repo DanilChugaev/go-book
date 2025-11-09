@@ -31,7 +31,15 @@ export const sidebarEn: SidebarOptions = {
             '/guide/pointers/other-pointers.md',
           ],          
         },
-        '/guide/directory.md',
+        {
+          text: 'Справочник',
+          link: '/guide/directory/base-directory.md',
+          collapsible: true,
+          children: [
+            '/guide/directory/base-directory.md',
+            '/guide/directory/advanced-directory.md',
+          ],          
+        },
         '/guide/resources.md',
       ],
     },

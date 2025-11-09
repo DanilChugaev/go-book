@@ -138,7 +138,8 @@ in progress...
 
 ## Справочник
 
-1. [Справочник](directory.md)
+1. [Базовые понятия](directory/base-directory.md)
+2. [Продвинутые понятия](directory/advanced-directory.md)
 
 ## Ресурсы
 

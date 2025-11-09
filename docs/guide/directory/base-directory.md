@@ -1,8 +1,6 @@
-# Справочник
+# Базовые понятия
 
-Базовые понятия и концепции языка программирования Go.
-
-Этот раздел — это всесторонний справочник (глоссарий) по базовым понятиям и концепциям Go. Он организован по категориям для удобства, с алфавитным указателем в конце. Каждое понятие объяснено просто, с примерами кода (где применимо), аналогиями и ссылками на связанные концепции.
+Данный раздел — это всесторонний справочник (глоссарий) по базовым понятиям и концепциям Go. Он организован по категориям для удобства, с алфавитным указателем в конце. Каждое понятие объяснено просто, с примерами кода (где применимо), аналогиями и ссылками на связанные концепции.
 
 ::: tip Цель
 Чтобы при встрече нового термина в коде или документации ты мог быстро вернуться сюда и понять суть. 
@@ -240,180 +238,349 @@ fmt.Println(p.Name)  // Bob
 
 ### Pointer (Указатель)
 
-Переменная, хранящая адрес другой переменной.
+> Переменная, хранящая адрес другой переменной.
 
 Синтаксис: *T (указатель на T), &var (адрес).
 
 **Аналогия**: Указатель на дом, а не сам дом.
 
-**Пример**: `var ptr *int; i := 42; ptr = &i; *ptr = 43  // i теперь 43`.
+**Пример**: 
+
+```go
+var ptr *int
+i := 42
+ptr = &i
+*ptr = 43  // i теперь 43
+```
 
 **Связанные**: Nil, Dereferencing (*ptr). (Подробно отложено, но базово: для изменений по ссылке).
 
------- продолжить отсюда ---------
+## 4. Функции и методы
 
-## 4. **Функции и методы**
-- **Function (Функция)**: Блок кода для повторного использования. `func name(params) returns { ... }`. Может возвращать несколько значений.  
-  **Аналогия**: Рецепт: ингредиенты (params), результат (returns).  
-  **Пример**:  
-  ```go
-  func add(a, b int) (int, error) {
-      return a + b, nil
-  }
-  ```
-  **Связанные**: Defer, Variadic (...args).
+### Function (Функция)
 
-- **Method (Метод)**: Функция, прикреплённая к типу (обычно struct). Receiver: (r ReceiverType) или (r *ReceiverType).  
-  **Аналогия**: Действие объекта, как "машина.ехать()".  
-  **Пример**:  
-  ```go
-  func (p *Person) Birthday() {
-      p.Age++
-  }
-  ```
-  **Связанные**: Pointer receiver (для изменений), Value receiver (для копий).
+> Блок кода для повторного использования.
 
-- **Defer**: Откладывает вызов функции до конца enclosing функции (после return). Полезно для cleanup (close files).  
-  **Аналогия**: "Сделай это перед уходом".  
-  **Пример**:  
-  ```go
-  defer fmt.Println("Done")  // Выполнится последним
-  ```
-  **Связанные**: Panic/recover (defer ловит panic).
+`func name(params) returns { ... }`. Может возвращать несколько значений.
 
-- **Variadic function (Вариадическая функция)**: Принимает переменное число аргументов (...T). Внутри — как slice.  
-  **Аналогия**: Функция для "любого количества гостей".  
-  **Пример**:  
-  ```go
-  func sum(nums ...int) int {
-      total := 0
-      for _, n := range nums {
-          total += n
-      }
-      return total
-  }
-  sum(1, 2, 3)  // 6
-  ```
+**Аналогия**: Рецепт: ингредиенты (params), результат (returns).
 
-## 5. **Контроль потока**
-- **If/else**: Условное выполнение. Нет скобок для условия. Может инициализировать переменные.  
-  **Пример**: `if x > 0 { ... } else { ... }`.  
-  **Связанные**: Short if (if err := func(); err != nil { ... }).
+**Пример**:
 
-- **For**: Единственный цикл. Варианты: for init; cond; post {}, for cond {}, for range, infinite for {}. Нет while.  
-  **Пример**:  
-  ```go
-  for i := 0; i < 5; i++ { ... }
-  for _, v := range slice { ... }
-  ```
-  **Связанные**: Break, Continue, Range.
+```go
+func add(a, b int) (int, error) {
+    return a + b, nil
+}
+```
 
-- **Switch**: Многоуровневое условие. Case на выражениях, fallthrough для продолжения.  
-  **Пример**:  
-  ```go
-  switch os := runtime.GOOS; os {
-  case "darwin":
-      fmt.Println("macOS")
-  default:
-      fmt.Println("Other")
-  }
-  ```
-  **Связанные**: Type switch (switch v := i.(type) { ... }).
+**Связанные**: Defer, Variadic (...args).
 
-- **Range**: Итератор для коллекций (slice, map, chan, string). Возвращает index/key и value.  
-  **Пример**: `for i, v := range arr { ... }` (i — индекс, v — значение).  
-  **Связанные**: For, Slice.
+### Method (Метод)
 
-## 6. **Интерфейсы и типы**
-- **Interface (Интерфейс)**: Контракт — набор методов. Тип реализует интерфейс implicitly (duck typing).  
-  **Аналогия**: Розетка: любой прибор с подходящей вилкой работает.  
-  **Пример**:  
-  ```go
-  type Shaper interface {
-      Area() float64
-  }
-  ```
-  **Связанные**: Empty interface (interface{} — any type), Type assertion (i.(Type)).
+> Функция, прикреплённая к типу (обычно struct).
 
-- **Embedding (Встраивание)**: В struct/interface — поля/методы "промотируются" от встроенного типа.  
-  **Аналогия**: Наследование без классов.  
-  **Пример**: `type Employee struct { Person }  // Employee имеет поля/методы Person`.  
-  **Связанные**: Struct, Interface.
+Receiver: (r ReceiverType) или (r *ReceiverType).
 
-## 7. **Обработка ошибок**
-- **Error (Ошибка)**: Встроенный интерфейс `type error interface { Error() string }`. Функции возвращают error как второе значение.  
-  **Аналогия**: Флаг "что-то пошло не так".  
-  **Пример**:  
-  ```go
-  _, err := someFunc()
-  if err != nil {
-      fmt.Println(err.Error())
-  }
-  ```
-  **Связанные**: errors.New, fmt.Errorf, Panic.
+**Аналогия**: Действие объекта, как "car.move()".
 
-- **Panic/Recover**: Runtime-ошибка (как exception). Defer с recover() ловит panic.  
-  **Аналогия**: Аварийная остановка.  
-  **Пример**:  
-  ```go
-  defer func() {
-      if r := recover(); r != nil {
-          fmt.Println("Recovered:", r)
-      }
-  }()
-  panic("Error!")
-  ```
-  **Связанные**: Defer.
+**Пример**:
 
-## 8. **Concurrency (Параллелизм)**
-- **Goroutine**: Лёгкий "поток" — `go func() { ... }()`. Тысячи могут работать параллельно.  
-  **Аналогия**: Фоновая задача, как асинхронный вызов.  
-  **Пример**: `go worker()  // Запуск в фоне`.  
-  **Связанные**: Channel, sync.WaitGroup.
+```go
+func (p *Person) Birthday() {
+    p.Age++
+}
+```
 
-- **Channel (Канал)**: Для общения между goroutines. `ch := make(chan int)`. Буферизованные/небуферизованные.  
-  **Аналогия**: Труба для передачи данных.  
-  **Пример**: `ch <- 42  // Отправка; val := <-ch  // Получение`.  
-  **Связанные**: Select, Close.
+**Связанные**: Pointer receiver (для изменений), Value receiver (для копий).
 
-- **Select**: Мультиплексор для channels. Ждёт события от нескольких chan.  
-  **Пример**:  
-  ```go
-  select {
-  case v := <-ch1: ...
-  case <-ch2: ...
-  default: ...
-  }
-  ```
-  **Связанные**: Channel.
+### Defer
 
-- **Mutex (Мьютекс)**: Для синхронизации доступа (из sync). Lock/Unlock.  
-  **Аналогия**: Замок на двери — только один в комнате.  
-  **Пример**:  
-  ```go
-  var mu sync.Mutex
-  mu.Lock()
-  // Критическая секция
-  mu.Unlock()
-  ```
-  **Связанные**: sync.RWMutex (для чтения/записи), Atomic (для простых операций).
+> Откладывает вызов функции до конца enclosing функции (после return).
 
-## 9. **Другие концепции**
-- **Nil**: Специальное значение "ничего" для pointer, slice, map, chan, func, interface.  
-  **Аналогия**: Пустая ссылка.  
-  **Пример**: `var p *int  // p == nil`.  
-  **Связанные**: Pointer, Zero value.
+Полезно для cleanup (close files).
 
-- **Make**: Создаёт и инициализирует slice/map/chan.  
-  **Пример**: `s := make([]int, 5, 10)  // len=5, cap=10`.  
-  **Связанные**: New (new(T) — аллоцирует и возвращает *T с zero value).
+**Аналогия**: "Сделай это перед уходом".
 
-- **Type assertion (Утверждение типа)**: Извлечение underlying типа из interface. `v, ok := i.(Type)`.  
-  **Пример**: Для any (interface{}).  
-  **Связанные**: Interface, Type switch.
+**Пример**:
 
-- **Build (Сборка)**: Процесс создания бинарника. `go build`, `go install`.  
-  **Связанные**: Cross-compilation (GOOS=windows go build).
+```go
+defer fmt.Println("Done")  // Выполнится последним
+```
+
+**Связанные**: Panic/recover (defer ловит panic).
+
+### Variadic function (Вариадическая функция)
+
+> Принимает переменное число аргументов (...T). Внутри — как slice.
+
+**Аналогия**: Функция для "любого количества гостей".
+
+**Пример**:
+
+```go
+func sum(nums ...int) int {
+    total := 0
+    for _, n := range nums {
+        total += n
+    }
+    return total
+}
+sum(1, 2, 3)  // 6
+```
+
+## 5. Контроль потока
+
+### If/else
+
+> Условное выполнение.
+
+Нет скобок для условия. Может инициализировать переменные.
+
+**Пример**:
+
+```go
+if x > 0 { /*...*/ } else { /*...*/ }
+```
+
+**Связанные**: Short if (if err := func(); err != nil { ... }).
+
+### For
+
+> Единственный цикл.
+
+Варианты: for init; cond; post {}, for cond {}, for range, infinite for {}. Нет while.
+
+**Пример**:
+
+```go
+for i := 0; i < 5; i++ { ... }
+for _, v := range slice { ... }
+```
+
+**Связанные**: Break, Continue, Range.
+
+### Switch
+
+> Многоуровневое условие.
+
+Case на выражениях, fallthrough для продолжения.
+
+**Пример**:
+
+```go
+switch os := runtime.GOOS; os {
+case "darwin":
+    fmt.Println("macOS")
+default:
+    fmt.Println("Other")
+}
+```
+
+**Связанные**: Type switch (switch v := i.(type) { ... }).
+
+### Range
+
+> Итератор для коллекций (slice, map, chan, string).
+
+Возвращает index/key и value.
+
+**Пример**:
+
+```go
+for i, v := range arr { /*...*/ } // (i — индекс, v — значение)
+```
+
+**Связанные**: For, Slice.
+
+## 6. Интерфейсы и типы
+
+### Interface (Интерфейс)
+
+> Контракт — набор методов.
+
+Тип реализует интерфейс implicitly (duck typing).
+
+**Аналогия**: Розетка: любой прибор с подходящей вилкой работает.
+
+**Пример**:
+
+```go
+type Shaper interface {
+    Area() float64
+}
+```
+
+**Связанные**: Empty interface (interface{} — any type), Type assertion (i.(Type)).
+
+### Embedding (Встраивание)
+
+> В struct/interface — поля/методы "промотируются" от встроенного типа.
+
+**Аналогия**: Наследование без классов.
+
+**Пример**:
+
+```go
+// Employee имеет поля/методы Person
+type Employee struct {
+    Person
+}
+```
+
+**Связанные**: Struct, Interface.
+
+## 7. Обработка ошибок
+
+### Error (Ошибка)
+
+> Встроенный интерфейс `type error interface { Error() string }`.
+
+Функции возвращают error как второе значение.
+
+**Аналогия**: Флаг "что-то пошло не так".
+
+**Пример**:
+
+```go
+_, err := someFunc()
+if err != nil {
+    fmt.Println(err.Error())
+}
+```
+
+**Связанные**: errors.New, fmt.Errorf, Panic.
+
+### Panic/Recover
+
+> Runtime-ошибка (как exception).
+
+Defer с recover() ловит panic.
+
+**Аналогия**: Аварийная остановка.
+
+**Пример**:
+
+```go
+defer func() {
+    if r := recover(); r != nil {
+        fmt.Println("Recovered:", r)
+    }
+}()
+panic("Error!")
+```
+
+**Связанные**: Defer.
+
+## 8. Concurrency (Параллелизм)
+
+### Goroutine
+
+> Лёгкий "поток" — `go func() { ... }()`.
+
+Тысячи могут goroutine работать параллельно.
+
+**Аналогия**: Фоновая задача, как асинхронный вызов.
+
+**Пример**:
+
+```go
+go worker()  // Запуск в фоне
+```
+
+**Связанные**: Channel, sync.WaitGroup.
+
+### Channel (Канал)
+
+> Для общения между goroutines. `ch := make(chan int)`.
+
+Буферизованные/небуферизованные.
+
+**Аналогия**: Труба для передачи данных.
+
+**Пример**:
+
+```go
+ch <- 42  // Отправка
+val := <-ch  // Получение
+```
+
+**Связанные**: Select, Close.
+
+### Select
+
+> Мультиплексор для channels. Ждёт события от нескольких chan.
+
+**Пример**:
+
+```go
+select {
+    case v := <-ch1: ...
+    case <-ch2: ...
+    default: ...
+}
+```
+
+**Связанные**: Channel.
+
+### Mutex (Мьютекс)
+
+> Для синхронизации доступа (из sync). Lock/Unlock.
+
+**Аналогия**: Замок на двери — только один в комнате.
+
+**Пример**:
+
+```go
+var mu sync.Mutex
+mu.Lock()
+// Критическая секция
+mu.Unlock()
+```
+
+**Связанные**: sync.RWMutex (для чтения/записи), Atomic (для простых операций).
+
+## 9. Другие концепции
+
+### Nil
+
+> Специальное значение "ничего" для pointer, slice, map, chan, func, interface.
+
+**Аналогия**: Пустая ссылка.
+
+**Пример**:
+
+```go
+var p *int  // p == nil
+```
+
+**Связанные**: Pointer, Zero value.
+
+### Make
+
+> Создаёт и инициализирует slice/map/chan.
+
+**Пример**:
+
+```go
+s := make([]int, 5, 10)  // len=5, cap=10
+```
+
+**Связанные**: New (new(T) — аллоцирует и возвращает *T с zero value).
+
+### Type assertion (Утверждение типа)
+
+> Извлечение underlying типа из interface. `v, ok := i.(Type)`
+
+**Пример**: Для any (interface{}).
+
+**Связанные**: Interface, Type switch.
+
+### Build (Сборка)
+
+> Процесс создания бинарника. `go build`, `go install`.
+
+**Связанные**: Cross-compilation (GOOS=windows go build).
 
 ## Алфавитный указатель
-- Array, Build, Channel, Constant, Defer, Embedding, Error, For, Function, Goroutine, If/else, Import, Interface, Main function, Make, Map, Method, Module, Mutex, Nil, Package, Panic/Recover, Pointer, Range, Select, Slice, Struct, Switch, Type, Type assertion, Variable, Variadic function, Zero value.
+
+Array, Build, Channel, Constant, Defer, Embedding, Error, For, Function, Goroutine, If/else, Import, Interface, Main function, Make, Map, Method, Module, Mutex, Nil, Package, Panic/Recover, Pointer, Range, Select, Slice, Struct, Switch, Type, Type assertion, Variable, Variadic function, Zero value.
