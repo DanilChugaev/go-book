@@ -1,6 +1,6 @@
 ---
 # prev: /path/to/previous-page/
-# next: /guide/introduction/installation
+next: /guide/variables-and-data-types/variables.md
 ---
 # Первая программа: Hello World
 

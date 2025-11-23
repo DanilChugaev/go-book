@@ -4,11 +4,13 @@
 
 1. [Что такое Go и зачем он нужен?](introduction/what-is-go.md)
 2. [Установка и настройка](introduction/installation.md)
-3. [Первая программа: Hello World](introduction/first-programm.md)
+3. [Первая программа: Hello World](introduction/first-program.md)
 
 ## Глава 2: Переменные и Типы Данных
 
-in progress...
+1. [Переменные](variables-and-data-types/variables.md)
+2. [Простые типы данных](variables-and-data-types/simple-data-types.md)
+2. [Составные типы данных](variables-and-data-types/composite-data-types.md)
 
 ## Глава 3: Операторы и Выражения
 

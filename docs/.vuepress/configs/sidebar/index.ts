@@ -14,7 +14,17 @@ export const sidebarEn: SidebarOptions = {
           children: [
             '/guide/introduction/what-is-go.md',
             '/guide/introduction/installation.md',
-            '/guide/introduction/first-programm.md',
+            '/guide/introduction/first-program.md',
+          ],          
+        },
+        {
+          text: 'Глава 2: Переменные и Типы Данных',
+          link: '/guide/variables-and-data-types/variables.md',
+          collapsible: true,
+          children: [
+            '/guide/variables-and-data-types/variables.md',
+            '/guide/variables-and-data-types/simple-data-types.md',
+            '/guide/variables-and-data-types/composite-data-types.md',
           ],          
         },
         {
