@@ -1,6 +1,8 @@
-import { defaultTheme } from '@vuepress/theme-default'
 import { defineUserConfig } from 'vuepress'
+
+import { defaultTheme } from '@vuepress/theme-default'
 import { viteBundler } from '@vuepress/bundler-vite'
+
 import { sidebarEn } from './configs'
 
 export default defineUserConfig({

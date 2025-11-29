@@ -5,12 +5,16 @@
 1. [Что такое Go и зачем он нужен?](introduction/what-is-go.md)
 2. [Установка и настройка](introduction/installation.md)
 3. [Первая программа: Hello World](introduction/first-program.md)
+4. [Тестирование](introduction/tests.md)
+5. [Практика](introduction/practice.md)
 
 ## Глава 2: Переменные и Типы Данных
 
 1. [Переменные](variables-and-data-types/variables.md)
 2. [Простые типы данных](variables-and-data-types/simple-data-types.md)
-2. [Составные типы данных](variables-and-data-types/composite-data-types.md)
+3. [Составные типы данных](variables-and-data-types/composite-data-types.md)
+4. [Тестирование](variables-and-data-types/tests.md)
+5. [Практика](variables-and-data-types/practice.md)
 
 ## Глава 3: Операторы и Выражения
 
@@ -61,6 +65,8 @@ in progress...
 5. [Встроенные структуры с указателями](pointers/embedded-structure-pointers.md)
 6. [Указатели на функции](pointers/function-pointers.md)
 7. [Другие виды указателей](pointers/other-pointers.md)
+8. [Тестирование](pointers/tests.md)
+9. [Практика](pointers/practice.md)
 
 ## Глава 14: Файловый I/O
 

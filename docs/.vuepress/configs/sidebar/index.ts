@@ -15,6 +15,8 @@ export const sidebarEn: SidebarOptions = {
             '/guide/introduction/what-is-go.md',
             '/guide/introduction/installation.md',
             '/guide/introduction/first-program.md',
+            '/guide/introduction/tests.md',
+            '/guide/introduction/practice.md',
           ],          
         },
         {
@@ -25,6 +27,8 @@ export const sidebarEn: SidebarOptions = {
             '/guide/variables-and-data-types/variables.md',
             '/guide/variables-and-data-types/simple-data-types.md',
             '/guide/variables-and-data-types/composite-data-types.md',
+            '/guide/variables-and-data-types/tests.md',
+            '/guide/variables-and-data-types/practice.md',
           ],          
         },
         {
@@ -39,6 +43,8 @@ export const sidebarEn: SidebarOptions = {
             '/guide/pointers/embedded-structure-pointers.md',
             '/guide/pointers/function-pointers.md',
             '/guide/pointers/other-pointers.md',
+            '/guide/pointers/tests.md',
+            '/guide/pointers/practice.md',
           ],          
         },
         {
