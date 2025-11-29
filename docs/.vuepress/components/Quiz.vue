@@ -53,7 +53,7 @@ function checkWrongAnswer(option: IQuestionOption) {
 .quiz__options {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 .quiz__option {
