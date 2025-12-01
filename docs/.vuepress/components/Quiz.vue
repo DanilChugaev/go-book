@@ -4,7 +4,7 @@
 
     <div class="quiz__options">
       <label
-          v-for="(option, index) in question.options"
+          v-for="(option, index) in options"
           :key="index"
           :class="[
               'quiz__option',
@@ -25,15 +25,27 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import {computed, ref} from 'vue';
 import {IQuestion, IQuestionOption} from '../../types';
 
-defineProps<{
+const props = defineProps<{
   question: IQuestion;
   index: number;
 }>()
 
 const selected = ref('');
+
+const options = computed(() => {
+  let newArr = [...props.question.options];
+
+  for (let i = newArr.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+
+    [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+  }
+
+  return newArr;
+})
 
 function checkCorrectAnswer(option: IQuestionOption) {
   return selected.value === option.text && option.correct
@@ -62,6 +74,8 @@ function checkWrongAnswer(option: IQuestionOption) {
 
 .quiz__result {
   display: none;
+  margin-bottom: 0;
+  margin-left: 26px;
 }
 
 .quiz__option--correct .quiz__result--correct {
