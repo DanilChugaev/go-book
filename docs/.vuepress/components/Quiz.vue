@@ -1,6 +1,10 @@
 <template>
   <div class="quiz">
-    <h3 class="quiz__title">{{ index + 1 }}. {{ question.text }}</h3>
+    <h2 :id tabindex="-1" class="quiz__title">
+      <a class="header-anchor" :href="`#${id}`">
+        <span>{{ id }}. {{ question.text }}</span>
+      </a>
+    </h2>
 
     <div class="quiz__options">
       <label
@@ -15,10 +19,13 @@
           ]"
       >
         <input type="radio" v-model="selected" :value="option.text"/>
-        {{ option.text }}
 
-        <p class="quiz__result quiz__result--correct">Правильно!</p>
-        <p class="quiz__result quiz__result--wrong">Неправильно.</p>
+        <div>
+          <span>{{ option.text }}</span>
+
+          <p class="quiz__result quiz__result--correct">Правильно!</p>
+          <p class="quiz__result quiz__result--wrong">Неправильно.</p>
+        </div>
       </label>
     </div>
   </div>
@@ -35,6 +42,7 @@ const props = defineProps<{
 
 const selected = ref('');
 
+const id = computed(() => String(props.index + 1));
 const options = computed(() => {
   let newArr = [...props.question.options];
 
@@ -57,25 +65,22 @@ function checkWrongAnswer(option: IQuestionOption) {
 </script>
 
 <style scoped>
-.quiz__title {
-  margin: 0;
-  padding: 0;
-}
-
 .quiz__options {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .quiz__option {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
   cursor: pointer;
 }
 
 .quiz__result {
   display: none;
   margin-bottom: 0;
-  margin-left: 26px;
 }
 
 .quiz__option--correct .quiz__result--correct {
