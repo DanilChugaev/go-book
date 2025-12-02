@@ -1,0 +1,1 @@
+import{_ as e,c as o,b as a,o as n}from"./app-D38oLyG0.js";const r={};function l(s,t){return n(),o("div",null,[...t[0]||(t[0]=[a("p",null,"404 Not Found",-1)])])}const u=e(r,[["render",l]]),_=JSON.parse('{"path":"/404.html","title":"","lang":"ru-RU","frontmatter":{"layout":"NotFound"},"headers":[],"git":{},"filePathRelative":null}');export{u as comp,_ as data};
