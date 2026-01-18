@@ -16,6 +16,10 @@ html[data-theme=light] {
     border: none;
 }
 
+summary {
+    cursor: pointer;
+}
+
 @media (max-width: 719px) {
     .vp-back-to-top-button {
         bottom: 112px;
