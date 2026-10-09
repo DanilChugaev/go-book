@@ -9,7 +9,7 @@ export default defineUserConfig({
   lang: 'ru-RU',
 
   base: '/go-book/',
-  title: ' ',
+  title: 'Учебник Go',
   description: 'Учебник для изучения языка программирования Go с тестированием и практическими заданиями',
 
   theme: defaultTheme({

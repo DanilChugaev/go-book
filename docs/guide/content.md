@@ -4,8 +4,8 @@
 
 1. [Что такое Go и зачем он нужен?](introduction/what-is-go.md)
 2. [Установка и настройка](introduction/installation.md)
-3. [Первая программа: Hello World](introduction/first-program.md)
-4. [Тестирование](introduction/tests.md)
+3. [Первая программа и Go-модуль](introduction/first-program.md)
+4. [Самопроверка](introduction/tests.md)
 5. [Практика](introduction/practice.md)
 
 ## Глава 2: Переменные и Типы Данных
@@ -152,4 +152,3 @@ in progress...
 ## Ресурсы
 
 in progress...
-
