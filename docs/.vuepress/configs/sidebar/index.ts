@@ -20,13 +20,12 @@ export const sidebarEn: SidebarOptions = {
           ],          
         },
         {
-          text: 'Глава 2: Переменные и Типы Данных',
+          text: 'Глава 2: Переменные и базовые типы',
           link: '/guide/variables-and-data-types/variables.md',
           collapsible: true,
           children: [
             '/guide/variables-and-data-types/variables.md',
             '/guide/variables-and-data-types/simple-data-types.md',
-            '/guide/variables-and-data-types/composite-data-types.md',
             '/guide/variables-and-data-types/tests.md',
             '/guide/variables-and-data-types/practice.md',
           ],          

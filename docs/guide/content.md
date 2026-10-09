@@ -8,13 +8,12 @@
 4. [Самопроверка](introduction/tests.md)
 5. [Практика](introduction/practice.md)
 
-## Глава 2: Переменные и Типы Данных
+## Глава 2: Переменные и базовые типы
 
 1. [Переменные](variables-and-data-types/variables.md)
 2. [Простые типы данных](variables-and-data-types/simple-data-types.md)
-3. [Составные типы данных](variables-and-data-types/composite-data-types.md)
-4. [Тестирование](variables-and-data-types/tests.md)
-5. [Практика](variables-and-data-types/practice.md)
+3. [Самопроверка](variables-and-data-types/tests.md)
+4. [Практика](variables-and-data-types/practice.md)
 
 ## Глава 3: Операторы и Выражения
 

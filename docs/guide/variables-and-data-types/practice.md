@@ -1,198 +1,143 @@
 ---
-# prev: /path/to/previous-page/
-#next: /guide/pointers/slice-pointers
+prev: /guide/variables-and-data-types/tests.md
 ---
-# Практика
 
-## Задание 1
+# Практика: значения для задачи
 
-::: info Описание
-Объявите переменные для имени (`string`), возраста (`int`) и роста (`float64`). Используйте разный формат объявления. Выведите все переменные.
-:::
+На этом этапе Task Manager API ещё не имеет структуры задачи или базы данных. Мы подготовим отдельные значения, из которых позднее соберём модель задачи.
 
-**Цель**: Освоить синтаксис объявления и понять zero values.
+## Задание 1. Данные одной задачи
+
+Создайте новый модуль `example.com/task-manager`, если не сделали этого в первой главе. В файле `main.go` объявите и выведите:
+
+- название задачи: `Изучить переменные в Go`;
+- описание: `Прочитать урок и выполнить практику`;
+- приоритет: `2`;
+- признак выполнения: `false`.
+
+Используйте `var` хотя бы для одной переменной, а `:=` — хотя бы для одной другой.
+
+**Критерии проверки:**
+
+- проект запускается через `go run .`;
+- используются `string`, `int` и `bool`;
+- значения выводятся в терминал;
+- в коде есть и `var`, и `:=`.
 
 <details>
-  <summary>Ответ</summary>
+  <summary>Подсказка 1</summary>
 
-Что нужно сделать:
-- Создайте файл variables.go
+Для вывода нескольких значений можно вызвать `fmt.Println` несколько раз или передать несколько аргументов в один вызов.
+</details>
+
+<details>
+  <summary>Подсказка 2</summary>
+
+Начните так:
 
 ```go
-package main
-
-import (
-	"fmt"
-)
-
-const name string = "Danil"
-
-var age int
-
-func main() {
-	age = 31
-	height := 1.75
-
-	fmt.Printf("Name: %v, age: %v, height: %v", name, age, height)
-}
-```
-
-- Запустите
-
-```bash
-go run variables.go
-
-# вывод в консоль
-Name: Danil, age: 31, height: 1.75
+var title string = "Изучить переменные в Go"
+priority := 2
 ```
 </details>
 
-## Задание 2
-
-::: info Описание
-Объявите без инициализации: `int`, `bool`, `string`, `float64`, `*int`, `[]int`, `map[string]int`. Выведите их с fmt.Printf("%v").
-:::
-
-**Цель**: Понять, что Go всегда инициализирует переменные, избегая "мусора".
-
 <details>
-  <summary>Ответ</summary>
-
-Что нужно сделать:
-- Создайте файл variables.go
+  <summary>Решение</summary>
 
 ```go
 package main
 
-import (
-	"fmt"
-)
-
-var (
-	a int
-	b bool
-	c string
-	d float64
-	e *int
-	f []int
-	g map[string]int
-)
+import "fmt"
 
 func main() {
-	fmt.Printf("%v %v %q %v %v %v %v\n", a, b, c, d, e, f, g)
+	var title string = "Изучить переменные в Go"
+	description := "Прочитать урок и выполнить практику"
+	priority := 2
+	completed := false
+
+	fmt.Println("Название:", title)
+	fmt.Println("Описание:", description)
+	fmt.Println("Приоритет:", priority)
+	fmt.Println("Выполнена:", completed)
 }
-```
-
-- Запустите
-
-```bash
-go run variables.go
-
-# вывод в консоль
-0 false "" 0 <nil> [] map[]
 ```
 </details>
 
-## Задание 3
+## Задание 2. Приоритеты как константы
 
-::: info Описание
-Исследуйте диапазоны int8 и uint8, вызвав переполнение.
-:::
+Добавьте три константы приоритета: низкий, средний и высокий. Их значения должны быть `1`, `2` и `3`. Используйте `iota` и начните отсчёт с единицы.
 
-**Цель**: Понять signed/unsigned и поведение при overflow (Go не паникует, но wrap around).
+Затем создайте переменную `taskPriority` со средним приоритетом и выведите её.
+
+**Критерии проверки:**
+
+- константы находятся в одном блоке `const`;
+- для первого значения используется `iota + 1`;
+- `taskPriority` получает значение средней константы;
+- программа печатает `2`.
 
 <details>
-  <summary>Ответ</summary>
-
-Что нужно сделать:
-- Создайте файл variables.go
+  <summary>Подсказка</summary>
 
 ```go
-package main
-
-import (
-	"fmt"
+const (
+	priorityLow = iota + 1
+	// следующие значения продолжат последовательность
 )
-
-var (
-	a int8  = 127
-	b uint8 = 0
-)
-
-func main() {
-	a = a + 1
-	b = b - 1
-	fmt.Println(a, b)
-}
-```
-
-- Запустите
-
-```bash
-go run variables.go
-
-# вывод в консоль
--128 255
 ```
 </details>
 
-## Задание 4
-
-::: info Описание
-Создай константы для любых цветов с помощью iota. Выведите значения.
-:::
-
-**Цель**: Освоить константы как enum-подобные.
-
 <details>
-  <summary>Ответ</summary>
-
-Что нужно сделать:
-- Создайте файл variables.go
+  <summary>Решение</summary>
 
 ```go
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 const (
-	Red   = iota // 0
-	Green        // 1
-	Blue         // 2
+	priorityLow = iota + 1
+	priorityMedium
+	priorityHigh
 )
 
 func main() {
-	fmt.Println(Red, Green, Blue)
+	taskPriority := priorityMedium
+
+	fmt.Println(taskPriority)
 }
-```
-
-- Запустите
-
-```bash
-go run variables.go
-
-# вывод в консоль
-0 1 2
 ```
 </details>
 
-## Задание 5
+## Задание 3. Длина заголовка
 
-::: info Описание
-Напиши 2 функции, которая принимает строку и возвращают число
-- первая возвращает количество символов (рун)
-- вторая возвращает количество байтов.
-:::
+У задачи есть заголовок `Купить молоко`. Выведите:
 
-**Цель**: Освоить разницу byte/rune.
+1. число байтов в заголовке;
+2. число рун в заголовке.
+
+**Критерии проверки:**
+
+- для числа байтов используется `len`;
+- для числа рун — `utf8.RuneCountInString`;
+- программа импортирует `unicode/utf8`;
+- результаты отличаются: в строке есть кириллица.
 
 <details>
-  <summary>Ответ</summary>
+  <summary>Подсказка</summary>
 
-Что нужно сделать:
-- Создайте файл variables.go
+Импорт нескольких пакетов записывают в скобках:
+
+```go
+import (
+	"fmt"
+	"unicode/utf8"
+)
+```
+</details>
+
+<details>
+  <summary>Решение</summary>
 
 ```go
 package main
@@ -202,32 +147,56 @@ import (
 	"unicode/utf8"
 )
 
-func countRunes(s string) int {
-	return utf8.RuneCountInString(s)
-}
-
-func countBytes(s string) int {
-	return len(s)
-}
-
 func main() {
-	str := "Привет, мир!"
+	title := "Купить молоко"
 
-	runes := countRunes(str)
-	bytes := countBytes(str)
-
-	fmt.Printf("Количество рун: %d\n", runes)
-	fmt.Printf("Количество байтов: %d\n", bytes)
+	fmt.Println("Байты:", len(title))
+	fmt.Println("Руны:", utf8.RuneCountInString(title))
 }
-```
-
-- Запустите
-
-```bash
-go run variables.go
-
-# вывод в консоль
-Количество рун: 12
-Количество байтов: 21
 ```
 </details>
+
+## Задание 4. Преобразование прогресса
+
+Пусть прогресс выполнения задачи хранится в `float64` и равен `3.8`. Преобразуйте его в `int` и выведите оба значения.
+
+**Критерии проверки:**
+
+- исходное значение имеет тип `float64`;
+- для преобразования используется `int(progress)`;
+- результат преобразования равен `3`;
+- вы можете объяснить, почему это не округление.
+
+<details>
+  <summary>Подсказка</summary>
+
+При преобразовании `float64` в `int` дробная часть отбрасывается.
+</details>
+
+<details>
+  <summary>Решение</summary>
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	progress := 3.8
+	completedSteps := int(progress)
+
+	fmt.Println("Прогресс:", progress)
+	fmt.Println("Завершённых шагов:", completedSteps)
+}
+```
+</details>
+
+## Проверьте себя
+
+Перед следующей главой убедитесь, что вы можете без подсказки:
+
+- объяснить разницу между `var`, `:=` и `const`;
+- назвать нулевые значения `int`, `bool` и `string`;
+- выбрать `int`, `bool` или `string` для простых данных задачи;
+- объяснить, почему `len` не считает символы в UTF-8 строке;
+- выполнить явное преобразование `float64` в `int`.
