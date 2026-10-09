@@ -41,7 +41,9 @@
 
 ## Глава 7: Слайсы и Массивы
 
-in progress...
+1. [Массивы и слайсы](slices-and-arrays/README.md)
+2. [Самопроверка](slices-and-arrays/tests.md)
+3. [Практика](slices-and-arrays/practice.md)
 
 ## Глава 8: Мапы (Maps)
 

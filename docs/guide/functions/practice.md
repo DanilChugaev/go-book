@@ -1,5 +1,6 @@
 ---
 prev: /guide/functions/tests.md
+next: /guide/slices-and-arrays/README.md
 ---
 
 # Практика: функции Task Manager API

@@ -71,6 +71,16 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Глава 7: Массивы и слайсы',
+          link: '/guide/slices-and-arrays/README.md',
+          collapsible: true,
+          children: [
+            '/guide/slices-and-arrays/README.md',
+            '/guide/slices-and-arrays/tests.md',
+            '/guide/slices-and-arrays/practice.md',
+          ],
+        },
+        {
           text: 'Глава 13: Указатели',
           link: '/guide/pointers/what-are-pointers.md',
           collapsible: true,
