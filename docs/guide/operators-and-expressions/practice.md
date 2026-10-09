@@ -1,5 +1,6 @@
 ---
 prev: /guide/operators-and-expressions/tests.md
+next: /guide/control-flow/README.md
 ---
 
 # Практика: проверки задачи

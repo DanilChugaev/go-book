@@ -21,9 +21,11 @@
 2. [Самопроверка](operators-and-expressions/tests.md)
 3. [Практика](operators-and-expressions/practice.md)
 
-## Глава 4: Управление Потоком — If и Switch
+## Глава 4: Условия — if и switch
 
-in progress...
+1. [Условия: if и switch](control-flow/README.md)
+2. [Самопроверка](control-flow/tests.md)
+3. [Практика](control-flow/practice.md)
 
 ## Глава 5: Циклы — for и range
 

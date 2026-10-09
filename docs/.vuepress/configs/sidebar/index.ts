@@ -41,6 +41,16 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Глава 4: Условия — if и switch',
+          link: '/guide/control-flow/README.md',
+          collapsible: true,
+          children: [
+            '/guide/control-flow/README.md',
+            '/guide/control-flow/tests.md',
+            '/guide/control-flow/practice.md',
+          ],
+        },
+        {
           text: 'Глава 13: Указатели',
           link: '/guide/pointers/what-are-pointers.md',
           collapsible: true,
