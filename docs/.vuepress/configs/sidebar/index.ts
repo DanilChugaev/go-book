@@ -81,6 +81,16 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Глава 8: Map',
+          link: '/guide/maps/README.md',
+          collapsible: true,
+          children: [
+            '/guide/maps/README.md',
+            '/guide/maps/tests.md',
+            '/guide/maps/practice.md',
+          ],
+        },
+        {
           text: 'Глава 13: Указатели',
           link: '/guide/pointers/what-are-pointers.md',
           collapsible: true,

@@ -47,7 +47,9 @@
 
 ## Глава 8: Мапы (Maps)
 
-in progress...
+1. [Map: ключ и значение](maps/README.md)
+2. [Самопроверка](maps/tests.md)
+3. [Практика](maps/practice.md)
 
 ## Глава 9: Структуры (Structs)
 
