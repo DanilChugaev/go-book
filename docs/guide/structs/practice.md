@@ -1,5 +1,6 @@
 ---
 prev: /guide/structs/tests.md
+next: /guide/methods/README.md
 ---
 
 # Практика: модель Task

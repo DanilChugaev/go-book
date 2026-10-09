@@ -101,7 +101,17 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
-          text: 'Глава 13: Указатели',
+          text: 'Глава 10: Методы',
+          link: '/guide/methods/README.md',
+          collapsible: true,
+          children: [
+            '/guide/methods/README.md',
+            '/guide/methods/tests.md',
+            '/guide/methods/practice.md',
+          ],
+        },
+        {
+          text: 'Глава 11: Указатели',
           link: '/guide/pointers/what-are-pointers.md',
           collapsible: true,
           children: [

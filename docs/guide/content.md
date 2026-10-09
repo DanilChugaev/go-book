@@ -57,23 +57,17 @@
 2. [Самопроверка](structs/tests.md)
 3. [Практика](structs/practice.md)
 
-## Глава 10: Методы и Интерфейсы
+## Глава 10: Методы
 
-in progress...
+1. [Методы](methods/README.md)
+2. [Самопроверка](methods/tests.md)
+3. [Практика](methods/practice.md)
 
-## Глава 11: Обработка Ошибок
-
-in progress...
-
-## Глава 12: Пакеты и Модули
-
-in progress...
-
-## Глава 13: Указатели
+## Глава 11: Указатели
 
 1. [Что такое указатели](pointers/what-are-pointers.md)
 2. [Указатели на слайсы](pointers/slice-pointers.md)
-3. [Указатели на мапы](pointers/map-pointers.md)
+3. [Указатели на map](pointers/map-pointers.md)
 4. [Указатели в структурах](pointers/structure-pointers.md)
 5. [Встроенные структуры с указателями](pointers/embedded-structure-pointers.md)
 6. [Указатели на функции](pointers/function-pointers.md)
@@ -81,71 +75,83 @@ in progress...
 8. [Тестирование](pointers/tests.md)
 9. [Практика](pointers/practice.md)
 
-## Глава 14: Файловый I/O
+## Глава 12: Интерфейсы
 
 in progress...
 
-## Глава 15: JSON и Сериализация
+## Глава 13: Обработка ошибок
 
 in progress...
 
-## Глава 16: Горутины (Goroutines)
+## Глава 14: Пакеты и модули
 
 in progress...
 
-## Глава 17: Каналы (Channels)
+## Глава 15: Файловый I/O
 
 in progress...
 
-## Глава 18: Select и Таймауты
+## Глава 16: JSON и сериализация
 
 in progress...
 
-## Глава 19: Mutex и Синхронизация
+## Глава 17: Горутины (goroutine)
 
 in progress...
 
-## Глава 20: Контексты (Context)
+## Глава 18: Каналы (channels)
 
 in progress...
 
-## Глава 21: Стандартная Библиотека — Strings и Time
+## Глава 19: Select и таймауты
 
 in progress...
 
-## Глава 22: HTTP Клиент и Сервер
+## Глава 20: Mutex и синхронизация
 
 in progress...
 
-## Глава 23: Тестирование
+## Глава 21: Контексты (context)
 
 in progress...
 
-## Глава 24: SQL и Базы Данных
+## Глава 22: Стандартная библиотека — strings и time
 
 in progress...
 
-## Глава 25: Логирование и Отладка
+## Глава 23: HTTP-клиент и сервер
 
 in progress...
 
-## Глава 26: Рефлексия (Reflection)
+## Глава 24: Тестирование
 
 in progress...
 
-## Глава 27: Дженерики (Generics)
+## Глава 25: SQL и базы данных
 
 in progress...
 
-## Глава 28: Лучшие Практики — Кодстайл
+## Глава 26: Логирование и отладка
 
 in progress...
 
-## Глава 29: Деплой и CI/CD
+## Глава 27: Рефлексия (reflection)
 
 in progress...
 
-## Глава 30: Обзор и Интеграция
+## Глава 28: Дженерики (generics)
+
+in progress...
+
+## Глава 29: Лучшие практики — кодстайл
+
+in progress...
+
+## Глава 30: Деплой и CI/CD
+
+in progress...
+
+## Глава 30: Обзор и интеграция
 
 in progress...
 
