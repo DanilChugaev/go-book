@@ -1,6 +1,6 @@
 ---
 prev: /guide/methods/tests.md
-next: /guide/pointers/what-are-pointers.md
+next: /guide/pointers/README.md
 ---
 
 # Практика: поведение Task

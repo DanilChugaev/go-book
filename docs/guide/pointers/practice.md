@@ -1,422 +1,215 @@
-# Практика
+---
+prev: /guide/pointers/tests.md
+next: /guide/interfaces/README.md
+---
 
-## Задание 1 - Указатели на слайсы
+# Практика: изменение Task
 
-::: info Описание
-Напишите функцию `resetSlice(s *[]int)`, которая делает слайс `nil` через указатель. В main создайте слайс `[1,2,3]`, выведите его, вызовите функцию и выведите снова. Проверьте на `nil` после.
-:::
+Теперь Task Manager API может менять существующую задачу через методы. Методы с pointer receiver работают с исходной структурой, а не с её копией.
 
-**Ожидаемый результат**: Изначально `[1 2 3]`, после — `[]` (но это nil, len=0).
+## Задание 1. Выполните задачу
 
-**Цель**: Понять, как указатель позволяет перезаписать слайс целиком (nil или новый), чего нельзя без указателя.
+Добавьте к `Task` метод `Complete() bool`. Если получатель не `nil`, метод должен установить `Completed` в `true` и вернуть `true`. Для `nil` метод не должен паниковать и должен вернуть `false`.
+
+**Критерии проверки:**
+
+- используется получатель `*Task`;
+- обычная задача после `Complete()` имеет `Completed: true`;
+- метод возвращает `true` при успешном выполнении;
+- вызов для `nil`-указателя не вызывает panic и возвращает `false`.
 
 <details>
-  <summary>Ответ</summary>
+  <summary>Подсказка</summary>
 
-Что нужно сделать:
-- Создайте файл pointers.go
+В начале метода проверьте получатель:
+
+```go
+if task == nil {
+	return false
+}
+```
+</details>
+
+<details>
+  <summary>Решение</summary>
 
 ```go
 package main
 
 import "fmt"
 
-func resetSlice(s *[]int) {
-    *s = nil  // Делаем слайс nil через dereferencing
+type Task struct {
+	ID        int
+	Title     string
+	Priority  int
+	Completed bool
+}
+
+func (task *Task) Complete() bool {
+	if task == nil {
+		return false
+	}
+
+	task.Completed = true
+	return true
 }
 
 func main() {
-    slice := []int{1, 2, 3}
-    fmt.Println("Изначально:", slice)
+	task := Task{ID: 1, Title: "Купить молоко", Priority: 2}
 
-    resetSlice(&slice)
-    fmt.Println("После reset:", slice)
+	fmt.Println(task.Complete())
+	fmt.Println(task.Completed)
 
-    if slice == nil {
-        fmt.Println("Слайс теперь nil")
-    }
+	var missingTask *Task
+	fmt.Println(missingTask.Complete())
 }
-```
-
-- Запустите
-
-```bash
-go run pointers.go
-
-# вывод в консоль
-Изначально: [1 2 3]
-После reset: []
-Слайс теперь nil
 ```
 </details>
 
-## Задание 2 - Указатели на мапы
+## Задание 2. Переименуйте задачу
 
-::: info Описание
-Напишите функцию `clearAndNilMap(m *map[string]int)`, которая удаляет все элементы и делает мапу `nil`. В main создайте мапу `{"a":1, "b":2}`, выведите, вызовите функцию и выведите снова.
-:::
+Добавьте метод `Rename(title string) bool`. Он должен изменить название, если:
 
-**Ожидаемый результат**: Изначально `map[a:1 b:2]`, после `nil`.
+- получатель не `nil`;
+- новое название не пустое;
+- длина названия не превышает 120 байтов.
 
-**Цель**: Освоить модификацию мапы через указатель для полной перезаписи.
+Во всех остальных случаях задача не должна измениться, а метод должен вернуть `false`.
+
+**Критерии проверки:**
+
+- используется получатель `*Task`;
+- корректное название меняет поле `Title`;
+- пустая строка не меняет поле;
+- слишком длинное название не меняет поле;
+- результат метода показывает успех или неудачу.
 
 <details>
-  <summary>Ответ</summary>
+  <summary>Подсказка</summary>
 
-Что нужно сделать:
-- Создайте файл pointers.go
+Все условия отказа можно объединить в один `if`:
+
+```go
+if task == nil || len(title) == 0 || len(title) > 120 {
+	return false
+}
+```
+</details>
+
+<details>
+  <summary>Решение</summary>
 
 ```go
 package main
 
 import "fmt"
 
-func clearAndNilMap(m *map[string]int) {
-    for k := range *m {
-        delete(*m, k)  // Удаляем все ключи
-    }
-    *m = nil       // Делаем nil
+type Task struct {
+	ID        int
+	Title     string
+	Priority  int
+	Completed bool
+}
+
+func (task *Task) Rename(title string) bool {
+	if task == nil || len(title) == 0 || len(title) > 120 {
+		return false
+	}
+
+	task.Title = title
+	return true
 }
 
 func main() {
-    myMap := map[string]int{"a": 1, "b": 2}
-    fmt.Println("Изначально:", myMap)
+	task := Task{ID: 1, Title: "Купить молоко", Priority: 2}
 
-    clearAndNilMap(&myMap)
-    fmt.Println("После:", myMap)
+	fmt.Println(task.Rename("Купить продукты"))
+	fmt.Println(task.Title)
 
-    if myMap == nil {
-        fmt.Println("Мапа теперь nil")
-    }
+	fmt.Println(task.Rename(""))
+	fmt.Println(task.Title)
 }
-```
-
-- Запустите
-
-```bash
-go run pointers.go
-
-# вывод в консоль
-Изначально: map[a:1 b:2]
-После: map[]
-Мапа теперь nil
 ```
 </details>
 
-## Задание 3 - Указатели в структурах
+## Задание 3. Измените задачу из map
 
-::: info Описание
-Создайте struct Person с полем `Age *int` (опциональный возраст). Напишите метод `(p *Person) SetAge(a int)`, который устанавливает возраст. В main создайте Person без возраста (`nil`), выведите, установите и выведите.
-:::
+Создайте `map[int]Task` с одной задачей. Получите её по ID, вызовите `Complete` и `Rename`, затем сохраните изменённую структуру обратно в map. Выведите итоговую задачу.
 
-**Ожидаемый результат**: Изначально Age: `nil`, после `SetAge(30): Age: 30`.
+**Критерии проверки:**
 
-**Цель**: Понять указатели как поля для опциональных значений и pointer receivers для методов.
+- map имеет тип `map[int]Task`;
+- задача извлекается в локальную переменную;
+- методы вызываются у этой переменной;
+- переменная присваивается обратно в map;
+- в map сохранены новое название и `Completed: true`.
 
 <details>
-  <summary>Ответ</summary>
+  <summary>Подсказка</summary>
 
-Что нужно сделать:
-- Создайте файл pointers.go
+```go
+task := tasksByID[1]
+task.Complete()
+task.Rename("Купить продукты")
+tasksByID[1] = task
+```
+</details>
+
+<details>
+  <summary>Решение</summary>
 
 ```go
 package main
 
 import "fmt"
 
-type Person struct {
-    Name string
-    Age  *int  // Опциональный возраст
+type Task struct {
+	ID        int
+	Title     string
+	Priority  int
+	Completed bool
 }
 
-func (p *Person) SetAge(a int) {
-    p.Age = &a  // Устанавливаем указатель на значение
+func (task *Task) Complete() bool {
+	if task == nil {
+		return false
+	}
+
+	task.Completed = true
+	return true
 }
 
-func main() {
-    p := Person{Name: "Alice"}
-    fmt.Printf("Изначально Age: %v\n", p.Age)
+func (task *Task) Rename(title string) bool {
+	if task == nil || len(title) == 0 || len(title) > 120 {
+		return false
+	}
 
-    p.SetAge(30)
-    fmt.Printf("После SetAge: %d\n", *p.Age)
-
-    if p.Age != nil {
-        fmt.Println("Возраст установлен")
-    }
-}
-```
-
-- Запустите
-
-```bash
-go run pointers.go
-
-# вывод в консоль
-Изначально Age: <nil>
-После SetAge: 30
-Возраст установлен
-```
-</details>
-
-## Задание 4 - Встроенные структуры с указателями
-
-::: info Описание
-Создайте `struct Address` с полем `City string`. Затем `struct Person` с встроенным `*Address`. В main создайте `Person` с `Address`, измените `City` через promotion, затем сделайте `Address nil` и обработайте проверкой.
-:::
-
-**Ожидаемый результат**: Изначально `City: "Moscow"`, после изменения `"London"`, после `nil: "Нет адреса"`.
-
-**Цель**: Освоить embedding с указателями для опциональных частей и promotion с nil-чеком.
-
-<details>
-  <summary>Ответ</summary>
-
-Что нужно сделать:
-- Создайте файл pointers.go
-
-```go
-package main
-
-import "fmt"
-
-type Address struct {
-    City string
-}
-
-type Person struct {
-    Name string
-    *Address  // Встроенный указатель
+	task.Title = title
+	return true
 }
 
 func main() {
-    addr := Address{City: "Moscow"}
-    p := Person{Name: "Bob", Address: &addr}
-    fmt.Println("Изначально City:", p.City)
+	tasksByID := map[int]Task{
+		1: {ID: 1, Title: "Купить молоко", Priority: 2},
+	}
 
-    p.City = "London"
-    fmt.Println("После изменения:", p.City)
+	task := tasksByID[1]
+	task.Complete()
+	task.Rename("Купить продукты")
+	tasksByID[1] = task
 
-    p.Address = nil
-    if p.Address == nil {
-        fmt.Println("Нет адреса")
-    }
+	fmt.Println(tasksByID[1])
 }
-```
-
-- Запустите
-
-```bash
-go run pointers.go
-
-# вывод в консоль
-Изначально City: Moscow
-После изменения: London
-Нет адреса
 ```
 </details>
 
-## Задание 5 - Указатели на функции
+## Проверьте себя
 
-::: info Описание
-Создайте две функции: `add(a, b int) int` и `subtract(a, b int) int`. Напишите функцию `changeOp(op *func(int, int) int, newOp func(int, int) int)`, которая меняет `op` на `newOp`. В `main` инициализируйте `op` как `&add`, вызовите, измените на `subtract` и вызовите снова.
-:::
+Перед следующей главой убедитесь, что вы можете:
 
-**Ожидаемый результат**: Изначально `add(5,3)=8`, после изменения `subtract(5,3)=2`.
-
-**Цель**: Понять динамическую смену функций через указатели.
-
-<details>
-  <summary>Ответ</summary>
-
-Что нужно сделать:
-- Создайте файл pointers.go
-
-```go
-package main
-
-import "fmt"
-
-func add(a, b int) int    { return a + b }
-func subtract(a, b int) int { return a - b }
-
-func changeOp(op *func(int, int) int, newOp func(int, int) int) {
-    *op = newOp  // Меняем через dereferencing
-}
-
-func main() {
-    var op func(int, int) int = add
-    fmt.Println("Изначально:", op(5, 3))
-
-    changeOp(&op, subtract)
-    fmt.Println("После изменения:", op(5, 3))
-}
-```
-
-- Запустите
-
-```bash
-go run pointers.go
-
-# вывод в консоль
-Изначально: 8
-После изменения: 2
-```
-</details>
-
-## Задание 6 - Указатели на каналы
-
-::: info Описание
-Напишите функцию `closeAndNilChan(ch *chan string)`, которая закрывает канал и делает его `nil`. В `main` создайте канал, отправьте значение в goroutine, получите, вызовите функцию и проверьте на `nil`.
-:::
-
-**Ожидаемый результат**: Получено `"test"`, после: `канал == nil`.
-
-**Цель**: Освоить модификацию канала через указатель для динамического управления.
-
-<details>
-  <summary>Ответ</summary>
-
-Что нужно сделать:
-- Создайте файл pointers.go
-
-```go
-package main
-
-import "fmt"
-
-func closeAndNilChan(ch *chan string) {
-    close(*ch)  // Закрываем
-    *ch = nil   // Nil
-}
-
-func main() {
-    ch := make(chan string)
-    go func() {
-        ch <- "test"
-    }()
-
-    val := <-ch
-    fmt.Println("Получено:", val)
-
-    closeAndNilChan(&ch)
-    if ch == nil {
-        fmt.Println("Канал теперь nil")
-    }
-}
-```
-
-- Запустите
-
-```bash
-go run pointers.go
-
-# вывод в консоль
-Получено: test
-Канал теперь nil
-```
-</details>
-
-## Задание 7 - Указатели на интерфейсы
-
-::: info Описание
-Определите `interface Speaker` с методом `Speak() string`. Реализуйте для `struct Cat` и `Dog`. Напишите функцию `swapSpeaker(s **Speaker, newS Speaker)`, которая меняет имплементацию. В `main` инициализируйте с `Cat`, смените на `Dog` и вызовите `Speak`.
-:::
-
-**Ожидаемый результат**: Изначально `"Meow"`, после `"Woof"`.
-
-**Цель**: Понять смену имплементации интерфейса через указатель.
-
-<details>
-  <summary>Ответ</summary>
-
-Что нужно сделать:
-- Создайте файл pointers.go
-
-```go
-package main
-
-import "fmt"
-
-type Speaker interface {
-    Speak() string
-}
-
-type Cat struct{}
-func (c Cat) Speak() string { return "Meow" }
-
-type Dog struct{}
-func (d Dog) Speak() string { return "Woof" }
-
-func swapSpeaker(s **Speaker, newS Speaker) {
-    *s = &newS  // Меняем значение интерфейса
-}
-
-func main() {
-    var animal Speaker = Cat{}
-    var ptr *Speaker = &animal
-
-    fmt.Println((*ptr).Speak())
-
-    swapSpeaker(&ptr, Dog{})
-    fmt.Println((*ptr).Speak())
-}
-```
-
-- Запустите
-
-```bash
-go run pointers.go
-
-# вывод в консоль
-Meow
-Woof
-```
-</details>
-
-## Задание 8 - Многоуровневые указатели
-
-::: info Описание
-Напишите функцию `reallocPtr(pp **string, newVal string)`, которая создаёт новую строку и меняет указатель на неё. В main создайте `string "Old"`, `*string` на неё, `**string` на `*string`. Вызовите функцию и выведите.
-:::
-
-**Ожидаемый результат**: Изначально `"Old"`, после `"New"`.
-
-**Цель**: Понять индирекцию для изменения указателей.
-
-<details>
-  <summary>Ответ</summary>
-
-Что нужно сделать:
-- Создайте файл pointers.go
-
-```go
-package main
-
-import "fmt"
-
-func reallocPtr(pp **string, newVal string) {
-    *pp = &newVal  // Меняем указатель на новый адрес
-}
-
-func main() {
-    old := "Old"
-    p := &old         // *string
-    pp := &p          // **string
-
-    fmt.Println(**pp)
-
-    reallocPtr(pp, "New")
-    fmt.Println(**pp)
-}
-```
-
-- Запустите
-
-```bash
-go run pointers.go
-
-# вывод в консоль
-Old
-New
-```
-</details>
+- получить адрес переменной через `&`;
+- объяснить разницу между `*Task` и `*task`;
+- проверить указатель на `nil`;
+- объявить метод с pointer receiver;
+- изменить `Task` через `Complete` и `Rename`;
+- обновить структуру, хранящуюся значением в map.

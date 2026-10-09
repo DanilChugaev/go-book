@@ -65,15 +65,9 @@
 
 ## Глава 11: Указатели
 
-1. [Что такое указатели](pointers/what-are-pointers.md)
-2. [Указатели на слайсы](pointers/slice-pointers.md)
-3. [Указатели на map](pointers/map-pointers.md)
-4. [Указатели в структурах](pointers/structure-pointers.md)
-5. [Встроенные структуры с указателями](pointers/embedded-structure-pointers.md)
-6. [Указатели на функции](pointers/function-pointers.md)
-7. [Другие виды указателей](pointers/other-pointers.md)
-8. [Тестирование](pointers/tests.md)
-9. [Практика](pointers/practice.md)
+1. [Указатели](pointers/README.md)
+2. [Самопроверка](pointers/tests.md)
+3. [Практика](pointers/practice.md)
 
 ## Глава 12: Интерфейсы
 

@@ -112,16 +112,10 @@ export const sidebarEn: SidebarOptions = {
         },
         {
           text: 'Глава 11: Указатели',
-          link: '/guide/pointers/what-are-pointers.md',
+          link: '/guide/pointers/README.md',
           collapsible: true,
           children: [
-            '/guide/pointers/what-are-pointers.md',
-            '/guide/pointers/slice-pointers.md',
-            '/guide/pointers/map-pointers.md',
-            '/guide/pointers/structure-pointers.md',
-            '/guide/pointers/embedded-structure-pointers.md',
-            '/guide/pointers/function-pointers.md',
-            '/guide/pointers/other-pointers.md',
+            '/guide/pointers/README.md',
             '/guide/pointers/tests.md',
             '/guide/pointers/practice.md',
           ],          
