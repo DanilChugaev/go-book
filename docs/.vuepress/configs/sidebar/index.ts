@@ -61,6 +61,16 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Глава 6: Функции',
+          link: '/guide/functions/README.md',
+          collapsible: true,
+          children: [
+            '/guide/functions/README.md',
+            '/guide/functions/tests.md',
+            '/guide/functions/practice.md',
+          ],
+        },
+        {
           text: 'Глава 13: Указатели',
           link: '/guide/pointers/what-are-pointers.md',
           collapsible: true,

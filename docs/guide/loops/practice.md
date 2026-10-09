@@ -1,5 +1,6 @@
 ---
 prev: /guide/loops/tests.md
+next: /guide/functions/README.md
 ---
 
 # Практика: нумерация и название задачи

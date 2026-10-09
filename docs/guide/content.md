@@ -35,7 +35,9 @@
 
 ## Глава 6: Функции
 
-in progress...
+1. [Функции](functions/README.md)
+2. [Самопроверка](functions/tests.md)
+3. [Практика](functions/practice.md)
 
 ## Глава 7: Слайсы и Массивы
 
