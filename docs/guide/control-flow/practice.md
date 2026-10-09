@@ -1,5 +1,6 @@
 ---
 prev: /guide/control-flow/tests.md
+next: /guide/loops/README.md
 ---
 
 # Практика: валидация задачи

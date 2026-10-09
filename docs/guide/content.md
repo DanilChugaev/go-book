@@ -29,7 +29,9 @@
 
 ## Глава 5: Циклы — for и range
 
-in progress...
+1. [Циклы: for и range](loops/README.md)
+2. [Самопроверка](loops/tests.md)
+3. [Практика](loops/practice.md)
 
 ## Глава 6: Функции
 

@@ -51,6 +51,16 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Глава 5: Циклы — for и range',
+          link: '/guide/loops/README.md',
+          collapsible: true,
+          children: [
+            '/guide/loops/README.md',
+            '/guide/loops/tests.md',
+            '/guide/loops/practice.md',
+          ],
+        },
+        {
           text: 'Глава 13: Указатели',
           link: '/guide/pointers/what-are-pointers.md',
           collapsible: true,
