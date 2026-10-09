@@ -53,7 +53,9 @@
 
 ## Глава 9: Структуры (Structs)
 
-in progress...
+1. [Структуры: модель задачи](structs/README.md)
+2. [Самопроверка](structs/tests.md)
+3. [Практика](structs/practice.md)
 
 ## Глава 10: Методы и Интерфейсы
 

@@ -91,6 +91,16 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Глава 9: Структуры',
+          link: '/guide/structs/README.md',
+          collapsible: true,
+          children: [
+            '/guide/structs/README.md',
+            '/guide/structs/tests.md',
+            '/guide/structs/practice.md',
+          ],
+        },
+        {
           text: 'Глава 13: Указатели',
           link: '/guide/pointers/what-are-pointers.md',
           collapsible: true,
