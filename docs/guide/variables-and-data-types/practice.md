@@ -1,5 +1,6 @@
 ---
 prev: /guide/variables-and-data-types/tests.md
+next: /guide/operators-and-expressions/README.md
 ---
 
 # Практика: значения для задачи

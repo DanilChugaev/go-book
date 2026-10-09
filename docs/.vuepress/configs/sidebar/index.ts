@@ -31,6 +31,16 @@ export const sidebarEn: SidebarOptions = {
           ],          
         },
         {
+          text: 'Глава 3: Операторы и выражения',
+          link: '/guide/operators-and-expressions/README.md',
+          collapsible: true,
+          children: [
+            '/guide/operators-and-expressions/README.md',
+            '/guide/operators-and-expressions/tests.md',
+            '/guide/operators-and-expressions/practice.md',
+          ],
+        },
+        {
           text: 'Глава 13: Указатели',
           link: '/guide/pointers/what-are-pointers.md',
           collapsible: true,

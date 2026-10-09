@@ -17,7 +17,9 @@
 
 ## Глава 3: Операторы и Выражения
 
-in progress...
+1. [Операторы и выражения](operators-and-expressions/README.md)
+2. [Самопроверка](operators-and-expressions/tests.md)
+3. [Практика](operators-and-expressions/practice.md)
 
 ## Глава 4: Управление Потоком — If и Switch
 
