@@ -1,6 +1,5 @@
 ---
 prev: /guide/pointers/tests.md
-next: /guide/interfaces/README.md
 ---
 
 # Практика: изменение Task

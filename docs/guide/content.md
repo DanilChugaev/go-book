@@ -71,7 +71,9 @@
 
 ## Глава 12: Интерфейсы
 
-in progress...
+1. [Интерфейсы](interfaces/README.md)
+2. [Самопроверка](interfaces/tests.md)
+3. [Практика](interfaces/practice.md)
 
 ## Глава 13: Обработка ошибок
 

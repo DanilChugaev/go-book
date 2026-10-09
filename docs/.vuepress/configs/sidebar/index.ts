@@ -121,6 +121,16 @@ export const sidebarEn: SidebarOptions = {
           ],          
         },
         {
+          text: 'Глава 12: Интерфейсы',
+          link: '/guide/interfaces/README.md',
+          collapsible: true,
+          children: [
+            '/guide/interfaces/README.md',
+            '/guide/interfaces/tests.md',
+            '/guide/interfaces/practice.md',
+          ],
+        },
+        {
           text: 'Справочник',
           link: '/guide/directory/base-directory.md',
           collapsible: true,
