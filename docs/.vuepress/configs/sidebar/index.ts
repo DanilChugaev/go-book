@@ -201,6 +201,16 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Глава 20: Mutex и синхронизация',
+          link: '/guide/mutex-and-synchronization/README.md',
+          collapsible: true,
+          children: [
+            '/guide/mutex-and-synchronization/README.md',
+            '/guide/mutex-and-synchronization/tests.md',
+            '/guide/mutex-and-synchronization/practice.md',
+          ],
+        },
+        {
           text: 'Справочник',
           link: '/guide/directory/base-directory.md',
           collapsible: true,

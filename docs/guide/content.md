@@ -119,7 +119,9 @@
 
 ## Глава 20: Mutex и синхронизация
 
-in progress...
+1. [Mutex и синхронизация](mutex-and-synchronization/README.md)
+2. [Самопроверка](mutex-and-synchronization/tests.md)
+3. [Практика](mutex-and-synchronization/practice.md)
 
 ## Глава 21: Контексты (context)
 

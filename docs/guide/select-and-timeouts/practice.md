@@ -1,5 +1,6 @@
 ---
 prev: /guide/select-and-timeouts/tests.md
+next: /guide/mutex-and-synchronization/README.md
 ---
 
 # Практика: таймаут экспортов
