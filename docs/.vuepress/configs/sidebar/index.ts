@@ -151,6 +151,16 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Глава 15: Файлы и ввод-вывод',
+          link: '/guide/file-io/README.md',
+          collapsible: true,
+          children: [
+            '/guide/file-io/README.md',
+            '/guide/file-io/tests.md',
+            '/guide/file-io/practice.md',
+          ],
+        },
+        {
           text: 'Справочник',
           link: '/guide/directory/base-directory.md',
           collapsible: true,

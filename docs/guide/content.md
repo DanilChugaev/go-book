@@ -89,7 +89,9 @@
 
 ## Глава 15: Файловый I/O
 
-in progress...
+1. [Файлы и ввод-вывод](file-io/README.md)
+2. [Самопроверка](file-io/tests.md)
+3. [Практика](file-io/practice.md)
 
 ## Глава 16: JSON и сериализация
 

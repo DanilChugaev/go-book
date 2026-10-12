@@ -1,5 +1,6 @@
 ---
 prev: /guide/packages-and-modules/tests.md
+next: /guide/file-io/README.md
 ---
 
 # Практика: пакет internal/task
