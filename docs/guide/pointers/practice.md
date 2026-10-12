@@ -3,7 +3,7 @@ prev: /guide/pointers/tests.md
 next: /guide/pointers/best-practices.md
 ---
 
-# Практика: изменение Task
+# Задания: изменение Task
 
 Теперь Task Manager API может менять существующую задачу через методы. Методы с pointer receiver работают с исходной структурой, а не с её копией.
 

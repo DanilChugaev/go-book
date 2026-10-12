@@ -3,7 +3,7 @@ prev: /guide/mutex-and-synchronization/practice.md
 next: /guide/context/README.md
 ---
 
-# Лучшие практики: mutex и синхронизация
+# Рекомендации по коду: mutex и синхронизация
 
 - Защищайте одним мьютексом все связанные операции над общим состоянием, а не отдельные строки кода случайно.
 - После `Lock` сразу пишите `defer Unlock`; после `RLock` — `defer RUnlock`.

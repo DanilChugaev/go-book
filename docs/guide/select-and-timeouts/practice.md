@@ -3,7 +3,7 @@ prev: /guide/select-and-timeouts/tests.md
 next: /guide/select-and-timeouts/best-practices.md
 ---
 
-# Практика: таймаут экспортов
+# Задания: таймаут экспортов
 
 Task Manager API получает результаты экспортов через канал. Теперь добавим общий лимит ожидания и понятную ошибку, если не все операции завершились вовремя.
 

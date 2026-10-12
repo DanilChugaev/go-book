@@ -3,7 +3,7 @@ prev: /guide/mutex-and-synchronization/tests.md
 next: /guide/mutex-and-synchronization/best-practices.md
 ---
 
-# Практика: безопасный TaskStore
+# Задания: безопасный TaskStore
 
 Task Manager API теперь хранит задачи в общей map, к которой могут одновременно обращаться несколько goroutine. Обернём map в `TaskStore` и защитим операции `Add`, `Get`, `Rename` и `Complete`.
 

@@ -3,7 +3,7 @@ prev: /guide/variables-and-data-types/tests.md
 next: /guide/variables-and-data-types/best-practices.md
 ---
 
-# Практика: значения для задачи
+# Задания: значения для задачи
 
 На этом этапе Task Manager API ещё не имеет структуры задачи или базы данных. Мы подготовим отдельные значения, из которых позднее соберём модель задачи.
 

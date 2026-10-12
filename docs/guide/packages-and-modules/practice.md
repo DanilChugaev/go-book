@@ -3,7 +3,7 @@ prev: /guide/packages-and-modules/tests.md
 next: /guide/packages-and-modules/best-practices.md
 ---
 
-# Практика: пакет internal/task
+# Задания: пакет internal/task
 
 Разделим Task Manager API на точку входа и внутренний пакет модели. Все команды выполняйте из корня модуля `task-manager`.
 

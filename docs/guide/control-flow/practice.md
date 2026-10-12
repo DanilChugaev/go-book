@@ -3,7 +3,7 @@ prev: /guide/control-flow/tests.md
 next: /guide/control-flow/best-practices.md
 ---
 
-# Практика: валидация задачи
+# Задания: валидация задачи
 
 Продолжим Task Manager API. Теперь программа не только вычислит проверки, но и сообщит пользователю первую найденную проблему.
 

@@ -3,7 +3,7 @@ prev: /guide/file-io/practice.md
 next: /guide/json/README.md
 ---
 
-# Лучшие практики: файлы и ввод-вывод
+# Рекомендации по коду: файлы и ввод-вывод
 
 - Для небольшого файла используйте `os.ReadFile` и `os.WriteFile`; не усложняйте код без необходимости.
 - После успешного `os.Open` или `os.Create` сразу добавляйте `defer file.Close()`.

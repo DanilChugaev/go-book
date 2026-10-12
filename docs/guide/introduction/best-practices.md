@@ -3,7 +3,7 @@ prev: /guide/introduction/practice.md
 next: /guide/variables-and-data-types/variables.md
 ---
 
-# Лучшие практики: старт с Go
+# Рекомендации по коду: старт с Go
 
 - Устанавливайте Go только из [официального источника](https://go.dev/doc/install) и регулярно обновляйте версию.
 - Создавайте `go.mod` в начале каждого нового проекта, даже если он состоит из одного файла.

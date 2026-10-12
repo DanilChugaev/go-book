@@ -3,7 +3,7 @@ prev: /guide/goroutines/practice.md
 next: /guide/channels/README.md
 ---
 
-# Лучшие практики: goroutine
+# Рекомендации по коду: goroutine
 
 - Запускайте goroutine только для независимой работы с ясным способом завершения.
 - Не позволяйте `main` завершиться раньше нужных goroutine: используйте `WaitGroup`, канал или context.

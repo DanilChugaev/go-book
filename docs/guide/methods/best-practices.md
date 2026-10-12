@@ -3,7 +3,7 @@ prev: /guide/methods/practice.md
 next: /guide/pointers/README.md
 ---
 
-# Лучшие практики: методы
+# Рекомендации по коду: методы
 
 - Размещайте поведение сущности рядом с её типом: `Task.Summary`, `Task.IsValid`.
 - Выбирайте value receiver для небольших неизменяемых операций чтения.

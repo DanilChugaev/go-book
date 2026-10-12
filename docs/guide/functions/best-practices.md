@@ -3,7 +3,7 @@ prev: /guide/functions/practice.md
 next: /guide/slices-and-arrays/README.md
 ---
 
-# Лучшие практики: функции
+# Рекомендации по коду: функции
 
 - Пусть функция выполняет одну понятную задачу и имеет имя-глагол: `validateTitle`, `loadTasks`, `saveTasks`.
 - Передавайте данные параметрами, а не через глобальные переменные.

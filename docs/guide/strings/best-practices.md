@@ -3,7 +3,7 @@ prev: /guide/strings/practice.md
 next: /guide/operators-and-expressions/README.md
 ---
 
-# Лучшие практики: строки и текст
+# Рекомендации по коду: строки и текст
 
 - Нормализуйте пользовательский ввод через `strings.TrimSpace` до валидации и сохранения.
 - Помните, что `len(string)` возвращает байты; для видимых Unicode-символов используйте `utf8.RuneCountInString`.

@@ -3,7 +3,7 @@ prev: /guide/interfaces/tests.md
 next: /guide/interfaces/best-practices.md
 ---
 
-# Практика: TaskFormatter
+# Задания: TaskFormatter
 
 В этой практике функция будет работать не с конкретной структурой `Task`, а с любым значением, которое умеет формировать краткое описание.
 
