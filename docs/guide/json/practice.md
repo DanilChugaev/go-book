@@ -1,5 +1,6 @@
 ---
 prev: /guide/json/tests.md
+next: /guide/goroutines/README.md
 ---
 
 # Практика: сохранение задач в JSON

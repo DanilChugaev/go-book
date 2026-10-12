@@ -99,9 +99,11 @@
 2. [Самопроверка](json/tests.md)
 3. [Практика](json/practice.md)
 
-## Глава 17: Горутины (goroutine)
+## Глава 17: Goroutine
 
-in progress...
+1. [Goroutine](goroutines/README.md)
+2. [Самопроверка](goroutines/tests.md)
+3. [Практика](goroutines/practice.md)
 
 ## Глава 18: Каналы (channels)
 

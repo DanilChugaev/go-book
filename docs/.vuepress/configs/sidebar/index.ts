@@ -171,6 +171,16 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Глава 17: Goroutine',
+          link: '/guide/goroutines/README.md',
+          collapsible: true,
+          children: [
+            '/guide/goroutines/README.md',
+            '/guide/goroutines/tests.md',
+            '/guide/goroutines/practice.md',
+          ],
+        },
+        {
           text: 'Справочник',
           link: '/guide/directory/base-directory.md',
           collapsible: true,
