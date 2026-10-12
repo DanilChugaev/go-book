@@ -83,7 +83,9 @@
 
 ## Глава 14: Пакеты и модули
 
-in progress...
+1. [Пакеты и модули](packages-and-modules/README.md)
+2. [Самопроверка](packages-and-modules/tests.md)
+3. [Практика](packages-and-modules/practice.md)
 
 ## Глава 15: Файловый I/O
 

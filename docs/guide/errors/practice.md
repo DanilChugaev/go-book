@@ -1,5 +1,6 @@
 ---
 prev: /guide/errors/tests.md
+next: /guide/packages-and-modules/README.md
 ---
 
 # Практика: ошибки при переименовании задачи

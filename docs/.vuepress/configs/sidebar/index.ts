@@ -141,6 +141,16 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Глава 14: Пакеты и модули',
+          link: '/guide/packages-and-modules/README.md',
+          collapsible: true,
+          children: [
+            '/guide/packages-and-modules/README.md',
+            '/guide/packages-and-modules/tests.md',
+            '/guide/packages-and-modules/practice.md',
+          ],
+        },
+        {
           text: 'Справочник',
           link: '/guide/directory/base-directory.md',
           collapsible: true,
