@@ -131,7 +131,9 @@
 
 ## Глава 22: Стандартная библиотека — strings и time
 
-in progress...
+1. [Стандартная библиотека: strings и time](strings-and-time/README.md)
+2. [Самопроверка](strings-and-time/tests.md)
+3. [Практика](strings-and-time/practice.md)
 
 ## Глава 23: HTTP-клиент и сервер
 

@@ -221,6 +221,16 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Глава 22: strings и time',
+          link: '/guide/strings-and-time/README.md',
+          collapsible: true,
+          children: [
+            '/guide/strings-and-time/README.md',
+            '/guide/strings-and-time/tests.md',
+            '/guide/strings-and-time/practice.md',
+          ],
+        },
+        {
           text: 'Справочник',
           link: '/guide/directory/base-directory.md',
           collapsible: true,
