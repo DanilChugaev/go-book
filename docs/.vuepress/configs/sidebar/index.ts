@@ -181,6 +181,16 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Глава 18: Каналы',
+          link: '/guide/channels/README.md',
+          collapsible: true,
+          children: [
+            '/guide/channels/README.md',
+            '/guide/channels/tests.md',
+            '/guide/channels/practice.md',
+          ],
+        },
+        {
           text: 'Справочник',
           link: '/guide/directory/base-directory.md',
           collapsible: true,

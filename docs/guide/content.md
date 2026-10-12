@@ -105,9 +105,11 @@
 2. [Самопроверка](goroutines/tests.md)
 3. [Практика](goroutines/practice.md)
 
-## Глава 18: Каналы (channels)
+## Глава 18: Каналы
 
-in progress...
+1. [Каналы](channels/README.md)
+2. [Самопроверка](channels/tests.md)
+3. [Практика](channels/practice.md)
 
 ## Глава 19: Select и таймауты
 
