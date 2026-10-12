@@ -1,6 +1,6 @@
 ---
 prev: /guide/mutex-and-synchronization/tests.md
-next: /guide/context/README.md
+next: /guide/mutex-and-synchronization/best-practices.md
 ---
 
 # Практика: безопасный TaskStore

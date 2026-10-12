@@ -1,6 +1,6 @@
 ---
 prev: /guide/goroutines/tests.md
-next: /guide/channels/README.md
+next: /guide/goroutines/best-practices.md
 ---
 
 # Практика: параллельный экспорт

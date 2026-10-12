@@ -1,6 +1,6 @@
 ---
 prev: /guide/slices-and-arrays/tests.md
-next: /guide/maps/README.md
+next: /guide/slices-and-arrays/best-practices.md
 ---
 
 # Практика: список названий задач

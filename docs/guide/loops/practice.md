@@ -1,6 +1,6 @@
 ---
 prev: /guide/loops/tests.md
-next: /guide/functions/README.md
+next: /guide/loops/best-practices.md
 ---
 
 # Практика: нумерация и название задачи

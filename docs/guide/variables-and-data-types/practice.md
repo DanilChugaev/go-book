@@ -1,6 +1,6 @@
 ---
 prev: /guide/variables-and-data-types/tests.md
-next: /guide/strings/README.md
+next: /guide/variables-and-data-types/best-practices.md
 ---
 
 # Практика: значения для задачи

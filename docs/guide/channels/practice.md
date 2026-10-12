@@ -1,6 +1,6 @@
 ---
 prev: /guide/channels/tests.md
-next: /guide/select-and-timeouts/README.md
+next: /guide/channels/best-practices.md
 ---
 
 # Практика: результаты экспортов через канал

@@ -18,6 +18,7 @@
 3. [Первая программа и Go-модуль](introduction/first-program.md)
 4. [Самопроверка](introduction/tests.md)
 5. [Практика](introduction/practice.md)
+6. [Лучшие практики](introduction/best-practices.md)
 
 ### Глава 2. Переменные и базовые типы
 
@@ -32,6 +33,7 @@
 2. [Простые типы данных](variables-and-data-types/simple-data-types.md)
 3. [Самопроверка](variables-and-data-types/tests.md)
 4. [Практика](variables-and-data-types/practice.md)
+5. [Лучшие практики](variables-and-data-types/best-practices.md)
 
 ### Глава 3. Строки и обработка текста
 
@@ -44,6 +46,7 @@
 1. [Строки и обработка текста](strings/README.md)
 2. [Самопроверка](strings/tests.md)
 3. [Практика](strings/practice.md)
+4. [Лучшие практики](strings/best-practices.md)
 
 ### Глава 4. Операторы и выражения
 
@@ -59,6 +62,7 @@
 1. [Операторы и выражения](operators-and-expressions/README.md)
 2. [Самопроверка](operators-and-expressions/tests.md)
 3. [Практика](operators-and-expressions/practice.md)
+4. [Лучшие практики](operators-and-expressions/best-practices.md)
 
 ### Глава 5. Условия: `if` и `switch`
 
@@ -72,6 +76,7 @@
 1. [Условия: if и switch](control-flow/README.md)
 2. [Самопроверка](control-flow/tests.md)
 3. [Практика](control-flow/practice.md)
+4. [Лучшие практики](control-flow/best-practices.md)
 
 ### Глава 6. Циклы: `for` и `range`
 
@@ -86,6 +91,7 @@
 1. [Циклы: for и range](loops/README.md)
 2. [Самопроверка](loops/tests.md)
 3. [Практика](loops/practice.md)
+4. [Лучшие практики](loops/best-practices.md)
 
 ### Глава 7. Функции
 
@@ -100,6 +106,7 @@
 1. [Функции](functions/README.md)
 2. [Самопроверка](functions/tests.md)
 3. [Практика](functions/practice.md)
+4. [Лучшие практики](functions/best-practices.md)
 
 ## Часть II. Данные и модели
 
@@ -118,6 +125,7 @@
 1. [Массивы и слайсы](slices-and-arrays/README.md)
 2. [Самопроверка](slices-and-arrays/tests.md)
 3. [Практика](slices-and-arrays/practice.md)
+4. [Лучшие практики](slices-and-arrays/best-practices.md)
 
 ### Глава 9. Map: ключ и значение
 
@@ -132,6 +140,7 @@
 1. [Map: ключ и значение](maps/README.md)
 2. [Самопроверка](maps/tests.md)
 3. [Практика](maps/practice.md)
+4. [Лучшие практики](maps/best-practices.md)
 
 ### Глава 10. Структуры
 
@@ -146,6 +155,7 @@
 1. [Структуры: модель задачи](structs/README.md)
 2. [Самопроверка](structs/tests.md)
 3. [Практика](structs/practice.md)
+4. [Лучшие практики](structs/best-practices.md)
 
 ### Глава 11. Методы
 
@@ -159,6 +169,7 @@
 1. [Методы](methods/README.md)
 2. [Самопроверка](methods/tests.md)
 3. [Практика](methods/practice.md)
+4. [Лучшие практики](methods/best-practices.md)
 
 ### Глава 12. Указатели
 
@@ -173,6 +184,7 @@
 1. [Указатели](pointers/README.md)
 2. [Самопроверка](pointers/tests.md)
 3. [Практика](pointers/practice.md)
+4. [Лучшие практики](pointers/best-practices.md)
 
 ### Глава 13. Интерфейсы
 
@@ -187,6 +199,7 @@
 1. [Интерфейсы](interfaces/README.md)
 2. [Самопроверка](interfaces/tests.md)
 3. [Практика](interfaces/practice.md)
+4. [Лучшие практики](interfaces/best-practices.md)
 
 ## Часть III. Надёжный код и организация проекта
 
@@ -204,6 +217,7 @@
 1. [Обработка ошибок](errors/README.md)
 2. [Самопроверка](errors/tests.md)
 3. [Практика](errors/practice.md)
+4. [Лучшие практики](errors/best-practices.md)
 
 ### Глава 15. `defer`, `panic` и `recover`
 
@@ -231,6 +245,7 @@ TODO добавить ссылки на страницы
 1. [Пакеты и модули](packages-and-modules/README.md)
 2. [Самопроверка](packages-and-modules/tests.md)
 3. [Практика](packages-and-modules/practice.md)
+4. [Лучшие практики](packages-and-modules/best-practices.md)
 
 ### Глава 17. Тестирование
 
@@ -258,6 +273,7 @@ TODO добавить ссылки на страницы
 1. [Файлы и ввод-вывод](file-io/README.md)
 2. [Самопроверка](file-io/tests.md)
 3. [Практика](file-io/practice.md)
+4. [Лучшие практики](file-io/best-practices.md)
 
 ### Глава 19. JSON и сериализация
 
@@ -272,6 +288,7 @@ TODO добавить ссылки на страницы
 1. [JSON и сериализация](json/README.md)
 2. [Самопроверка](json/tests.md)
 3. [Практика](json/practice.md)
+4. [Лучшие практики](json/best-practices.md)
 
 ### Глава 20. Время и дедлайны
 
@@ -286,6 +303,7 @@ TODO добавить ссылки на страницы
 1. [Время и дедлайны](time/README.md)
 2. [Самопроверка](time/tests.md)
 3. [Практика](time/practice.md)
+4. [Лучшие практики](time/best-practices.md)
 
 ## Часть IV. Конкурентность
 
@@ -303,6 +321,7 @@ TODO добавить ссылки на страницы
 1. [Goroutine](goroutines/README.md)
 2. [Самопроверка](goroutines/tests.md)
 3. [Практика](goroutines/practice.md)
+4. [Лучшие практики](goroutines/best-practices.md)
 
 ### Глава 22. Каналы
 
@@ -318,6 +337,7 @@ TODO добавить ссылки на страницы
 1. [Каналы](channels/README.md)
 2. [Самопроверка](channels/tests.md)
 3. [Практика](channels/practice.md)
+4. [Лучшие практики](channels/best-practices.md)
 
 ### Глава 23. `select` и таймауты
 
@@ -332,6 +352,7 @@ TODO добавить ссылки на страницы
 1. [Select и таймауты](select-and-timeouts/README.md)
 2. [Самопроверка](select-and-timeouts/tests.md)
 3. [Практика](select-and-timeouts/practice.md)
+4. [Лучшие практики](select-and-timeouts/best-practices.md)
 
 ### Глава 24. Mutex и синхронизация
 
@@ -347,6 +368,7 @@ TODO добавить ссылки на страницы
 1. [Mutex и синхронизация](mutex-and-synchronization/README.md)
 2. [Самопроверка](mutex-and-synchronization/tests.md)
 3. [Практика](mutex-and-synchronization/practice.md)
+4. [Лучшие практики](mutex-and-synchronization/best-practices.md)
 
 ### Глава 25. Context: отмена и дедлайны
 
@@ -362,6 +384,7 @@ TODO добавить ссылки на страницы
 1. [Context: отмена и дедлайны](context/README.md)
 2. [Самопроверка](context/tests.md)
 3. [Практика](context/practice.md)
+4. [Лучшие практики](context/best-practices.md)
 
 ## Часть V. HTTP API и production-подготовка
 

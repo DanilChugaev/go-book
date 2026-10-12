@@ -1,6 +1,6 @@
 ---
 prev: /guide/strings/tests.md
-next: /guide/operators-and-expressions/README.md
+next: /guide/strings/best-practices.md
 ---
 
 # Практика: нормализация и поиск названия

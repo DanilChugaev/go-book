@@ -1,6 +1,6 @@
 ---
 prev: /guide/time/tests.md
-next: /guide/goroutines/README.md
+next: /guide/time/best-practices.md
 ---
 
 # Практика: дедлайн задачи

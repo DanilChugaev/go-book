@@ -1,6 +1,6 @@
 ---
 prev: /guide/maps/tests.md
-next: /guide/structs/README.md
+next: /guide/maps/best-practices.md
 ---
 
 # Практика: задачи по ID

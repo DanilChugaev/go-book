@@ -1,6 +1,6 @@
 ---
 prev: /guide/introduction/tests.md
-next: /guide/variables-and-data-types/variables.md
+next: /guide/introduction/best-practices.md
 ---
 
 # Практика: первый модуль

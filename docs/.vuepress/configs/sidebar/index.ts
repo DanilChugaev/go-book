@@ -17,6 +17,7 @@ export const sidebarEn: SidebarOptions = {
             '/guide/introduction/first-program.md',
             '/guide/introduction/tests.md',
             '/guide/introduction/practice.md',
+            '/guide/introduction/best-practices.md',
           ],          
         },
         {
@@ -28,6 +29,7 @@ export const sidebarEn: SidebarOptions = {
             '/guide/variables-and-data-types/simple-data-types.md',
             '/guide/variables-and-data-types/tests.md',
             '/guide/variables-and-data-types/practice.md',
+            '/guide/variables-and-data-types/best-practices.md',
           ],          
         },
         {
@@ -38,6 +40,7 @@ export const sidebarEn: SidebarOptions = {
             '/guide/strings/README.md',
             '/guide/strings/tests.md',
             '/guide/strings/practice.md',
+            '/guide/strings/best-practices.md',
           ],
         },
         {
@@ -48,6 +51,7 @@ export const sidebarEn: SidebarOptions = {
             '/guide/operators-and-expressions/README.md',
             '/guide/operators-and-expressions/tests.md',
             '/guide/operators-and-expressions/practice.md',
+            '/guide/operators-and-expressions/best-practices.md',
           ],
         },
         {
@@ -58,6 +62,7 @@ export const sidebarEn: SidebarOptions = {
             '/guide/control-flow/README.md',
             '/guide/control-flow/tests.md',
             '/guide/control-flow/practice.md',
+            '/guide/control-flow/best-practices.md',
           ],
         },
         {
@@ -68,6 +73,7 @@ export const sidebarEn: SidebarOptions = {
             '/guide/loops/README.md',
             '/guide/loops/tests.md',
             '/guide/loops/practice.md',
+            '/guide/loops/best-practices.md',
           ],
         },
         {
@@ -78,6 +84,7 @@ export const sidebarEn: SidebarOptions = {
             '/guide/functions/README.md',
             '/guide/functions/tests.md',
             '/guide/functions/practice.md',
+            '/guide/functions/best-practices.md',
           ],
         },
         {
@@ -88,6 +95,7 @@ export const sidebarEn: SidebarOptions = {
             '/guide/slices-and-arrays/README.md',
             '/guide/slices-and-arrays/tests.md',
             '/guide/slices-and-arrays/practice.md',
+            '/guide/slices-and-arrays/best-practices.md',
           ],
         },
         {
@@ -98,6 +106,7 @@ export const sidebarEn: SidebarOptions = {
             '/guide/maps/README.md',
             '/guide/maps/tests.md',
             '/guide/maps/practice.md',
+            '/guide/maps/best-practices.md',
           ],
         },
         {
@@ -108,6 +117,7 @@ export const sidebarEn: SidebarOptions = {
             '/guide/structs/README.md',
             '/guide/structs/tests.md',
             '/guide/structs/practice.md',
+            '/guide/structs/best-practices.md',
           ],
         },
         {
@@ -118,6 +128,7 @@ export const sidebarEn: SidebarOptions = {
             '/guide/methods/README.md',
             '/guide/methods/tests.md',
             '/guide/methods/practice.md',
+            '/guide/methods/best-practices.md',
           ],
         },
         {
@@ -128,6 +139,7 @@ export const sidebarEn: SidebarOptions = {
             '/guide/pointers/README.md',
             '/guide/pointers/tests.md',
             '/guide/pointers/practice.md',
+            '/guide/pointers/best-practices.md',
           ],          
         },
         {
@@ -138,6 +150,7 @@ export const sidebarEn: SidebarOptions = {
             '/guide/interfaces/README.md',
             '/guide/interfaces/tests.md',
             '/guide/interfaces/practice.md',
+            '/guide/interfaces/best-practices.md',
           ],
         },
         {
@@ -148,6 +161,7 @@ export const sidebarEn: SidebarOptions = {
             '/guide/errors/README.md',
             '/guide/errors/tests.md',
             '/guide/errors/practice.md',
+            '/guide/errors/best-practices.md',
           ],
         },
         {
@@ -158,6 +172,7 @@ export const sidebarEn: SidebarOptions = {
             '/guide/packages-and-modules/README.md',
             '/guide/packages-and-modules/tests.md',
             '/guide/packages-and-modules/practice.md',
+            '/guide/packages-and-modules/best-practices.md',
           ],
         },
         {
@@ -168,6 +183,7 @@ export const sidebarEn: SidebarOptions = {
             '/guide/file-io/README.md',
             '/guide/file-io/tests.md',
             '/guide/file-io/practice.md',
+            '/guide/file-io/best-practices.md',
           ],
         },
         {
@@ -178,6 +194,7 @@ export const sidebarEn: SidebarOptions = {
             '/guide/json/README.md',
             '/guide/json/tests.md',
             '/guide/json/practice.md',
+            '/guide/json/best-practices.md',
           ],
         },
         {
@@ -188,6 +205,7 @@ export const sidebarEn: SidebarOptions = {
             '/guide/time/README.md',
             '/guide/time/tests.md',
             '/guide/time/practice.md',
+            '/guide/time/best-practices.md',
           ],
         },
         {
@@ -198,6 +216,7 @@ export const sidebarEn: SidebarOptions = {
             '/guide/goroutines/README.md',
             '/guide/goroutines/tests.md',
             '/guide/goroutines/practice.md',
+            '/guide/goroutines/best-practices.md',
           ],
         },
         {
@@ -208,6 +227,7 @@ export const sidebarEn: SidebarOptions = {
             '/guide/channels/README.md',
             '/guide/channels/tests.md',
             '/guide/channels/practice.md',
+            '/guide/channels/best-practices.md',
           ],
         },
         {
@@ -218,6 +238,7 @@ export const sidebarEn: SidebarOptions = {
             '/guide/select-and-timeouts/README.md',
             '/guide/select-and-timeouts/tests.md',
             '/guide/select-and-timeouts/practice.md',
+            '/guide/select-and-timeouts/best-practices.md',
           ],
         },
         {
@@ -228,6 +249,7 @@ export const sidebarEn: SidebarOptions = {
             '/guide/mutex-and-synchronization/README.md',
             '/guide/mutex-and-synchronization/tests.md',
             '/guide/mutex-and-synchronization/practice.md',
+            '/guide/mutex-and-synchronization/best-practices.md',
           ],
         },
         {
@@ -238,6 +260,7 @@ export const sidebarEn: SidebarOptions = {
             '/guide/context/README.md',
             '/guide/context/tests.md',
             '/guide/context/practice.md',
+            '/guide/context/best-practices.md',
           ],
         },
         {

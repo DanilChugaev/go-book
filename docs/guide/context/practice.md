@@ -1,5 +1,6 @@
 ---
 prev: /guide/context/tests.md
+next: /guide/context/best-practices.md
 ---
 
 # Практика: отменяемый экспорт

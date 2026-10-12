@@ -1,6 +1,6 @@
 ---
 prev: /guide/json/tests.md
-next: /guide/time/README.md
+next: /guide/json/best-practices.md
 ---
 
 # Практика: сохранение задач в JSON

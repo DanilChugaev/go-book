@@ -1,5 +1,6 @@
 ---
 prev: /guide/pointers/tests.md
+next: /guide/pointers/best-practices.md
 ---
 
 # Практика: изменение Task
