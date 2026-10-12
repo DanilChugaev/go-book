@@ -170,6 +170,7 @@ func exportTasks(path string, tasks []task.Task) error
 
 - функция принимает `[]task.Task`;
 - каждая задача добавляет в экспорт `currentTask.Summary() + "\n"`;
+- используется `strings.Builder`;
 - `os.WriteFile` возвращает ошибку с контекстом;
 - `main` не продолжает чтение, если экспорт не записался;
 - файл содержит строку summary для каждой задачи.
@@ -183,7 +184,7 @@ func exportTasks(path string, tasks []task.Task) error
 "example.com/task-manager/internal/task"
 ```
 
-Для формирования текста на этом этапе достаточно строки `content` и цикла `range`.
+Для формирования текста используйте `strings.Builder`: добавляйте summary каждой задачи через `WriteString`.
 </details>
 
 <details>
@@ -191,13 +192,14 @@ func exportTasks(path string, tasks []task.Task) error
 
 ```go
 func exportTasks(path string, tasks []task.Task) error {
-	var content string
+	var builder strings.Builder
 
 	for _, currentTask := range tasks {
-		content += currentTask.Summary() + "\n"
+		builder.WriteString(currentTask.Summary())
+		builder.WriteString("\n")
 	}
 
-	if err := os.WriteFile(path, []byte(content), 0o644); err != nil {
+	if err := os.WriteFile(path, []byte(builder.String()), 0o644); err != nil {
 		return fmt.Errorf("не удалось сохранить экспорт задач: %w", err)
 	}
 

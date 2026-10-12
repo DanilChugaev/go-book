@@ -1,6 +1,5 @@
 ---
 prev: /guide/context/tests.md
-next: /guide/strings-and-time/README.md
 ---
 
 # Практика: отменяемый экспорт

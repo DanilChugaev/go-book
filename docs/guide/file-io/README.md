@@ -188,13 +188,14 @@ task-manager/
 
 ```go
 func exportTasks(path string, tasks []task.Task) error {
-	var content string
+	var builder strings.Builder
 
 	for _, currentTask := range tasks {
-		content += currentTask.Summary() + "\n"
+		builder.WriteString(currentTask.Summary())
+		builder.WriteString("\n")
 	}
 
-	if err := os.WriteFile(path, []byte(content), 0o644); err != nil {
+	if err := os.WriteFile(path, []byte(builder.String()), 0o644); err != nil {
 		return fmt.Errorf("не удалось сохранить экспорт задач: %w", err)
 	}
 
@@ -202,7 +203,7 @@ func exportTasks(path string, tasks []task.Task) error {
 }
 ```
 
-Пока конкатенация строк подходит, потому что экспорт маленький. Для больших объёмов текста позже рассмотрим более подходящие инструменты.
+`strings.Builder` собирает большой текст без создания новой строки на каждом шаге цикла. Добавьте импорт `strings` в файл с этой функцией.
 
 Полный пример с пакетом `internal/task`:
 
@@ -213,18 +214,20 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"strings"
 
 	"example.com/task-manager/internal/task"
 )
 
 func exportTasks(path string, tasks []task.Task) error {
-	var content string
+	var builder strings.Builder
 
 	for _, currentTask := range tasks {
-		content += currentTask.Summary() + "\n"
+		builder.WriteString(currentTask.Summary())
+		builder.WriteString("\n")
 	}
 
-	if err := os.WriteFile(path, []byte(content), 0o644); err != nil {
+	if err := os.WriteFile(path, []byte(builder.String()), 0o644); err != nil {
 		return fmt.Errorf("не удалось сохранить экспорт задач: %w", err)
 	}
 

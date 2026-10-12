@@ -66,21 +66,21 @@ const questions = [
     ],
   },
   {
-    text: 'Что возвращает len("Привет")?',
+    text: 'Какое нулевое значение у переменной var title string?',
     options: [
-      { text: 'Количество Unicode-символов: 6' },
-      { text: 'Количество байтов: 12', correct: true },
-      { text: '0, потому что строка не ASCII' },
-      { text: 'Ошибку компиляции' },
+      { text: 'Пустая строка ""', correct: true },
+      { text: 'nil' },
+      { text: 'false' },
+      { text: 'Ошибка компиляции' },
     ],
   },
   {
-    text: 'Как правильно посчитать количество рун в строке?',
+    text: 'Как правильно преобразовать int priority в float64?',
     options: [
-      { text: 'utf8.RuneCountInString(title)', correct: true },
-      { text: 'len(title)' },
-      { text: 'int(title)' },
-      { text: 'title.Count()' },
+      { text: 'float64(priority)', correct: true },
+      { text: 'priority.float64()' },
+      { text: 'priority as float64' },
+      { text: 'var value float64 = priority' },
     ],
   },
   {
@@ -93,12 +93,12 @@ const questions = [
     ],
   },
   {
-    text: 'Можно ли изменить отдельный символ строки так: title[0] = \'Г\'?',
+    text: 'Что может произойти при преобразовании большого int в uint8?',
     options: [
-      { text: 'Нет, строки неизменяемы', correct: true },
-      { text: 'Да, для строк на русском языке' },
-      { text: 'Да, если использовать int' },
-      { text: 'Только после вызова len' },
+      { text: 'Часть значения может быть потеряна', correct: true },
+      { text: 'Go всегда автоматически выберет uint64' },
+      { text: 'Значение обязательно станет nil' },
+      { text: 'Преобразование всегда округляет число' },
     ],
   },
 ]

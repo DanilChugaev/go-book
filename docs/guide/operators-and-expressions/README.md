@@ -1,5 +1,5 @@
 ---
-prev: /guide/variables-and-data-types/practice.md
+prev: /guide/strings/practice.md
 next: /guide/operators-and-expressions/tests.md
 ---
 

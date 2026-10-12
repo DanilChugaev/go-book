@@ -1,5 +1,5 @@
 ---
-prev: /guide/json/practice.md
+prev: /guide/time/practice.md
 next: /guide/goroutines/tests.md
 ---
 

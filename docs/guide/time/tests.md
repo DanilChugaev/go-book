@@ -1,6 +1,6 @@
 ---
-prev: /guide/strings-and-time/README.md
-next: /guide/strings-and-time/practice.md
+prev: /guide/time/README.md
+next: /guide/time/practice.md
 ---
 
 # Самопроверка
@@ -9,42 +9,6 @@ next: /guide/strings-and-time/practice.md
 
 <script setup>
 const questions = [
-  {
-    text: 'Что делает strings.TrimSpace?',
-    options: [
-      { text: 'Удаляет пробельные символы в начале и конце строки', correct: true },
-      { text: 'Удаляет все пробелы внутри строки' },
-      { text: 'Переводит строку в нижний регистр' },
-      { text: 'Считает количество символов' },
-    ],
-  },
-  {
-    text: 'Как выполнить поиск подстроки без учёта регистра?',
-    options: [
-      { text: 'Привести строку и подстроку к одному регистру через strings.ToLower', correct: true },
-      { text: 'Использовать только len' },
-      { text: 'Преобразовать строку в int' },
-      { text: 'Вызвать time.Parse' },
-    ],
-  },
-  {
-    text: 'Что делает strings.Split("дом, покупки", ",")?',
-    options: [
-      { text: 'Возвращает слайс строк, разделённых запятой', correct: true },
-      { text: 'Собирает слайс в строку' },
-      { text: 'Удаляет запятые без создания слайса' },
-      { text: 'Проверяет JSON' },
-    ],
-  },
-  {
-    text: 'Для чего используют strings.Builder?',
-    options: [
-      { text: 'Для эффективного построения большого текста', correct: true },
-      { text: 'Для чтения JSON-файла' },
-      { text: 'Для блокировки map' },
-      { text: 'Для запуска goroutine' },
-    ],
-  },
   {
     text: 'Какой тип представляет конкретный момент времени?',
     options: [
@@ -55,7 +19,7 @@ const questions = [
     ],
   },
   {
-    text: 'Как проверить, что DueAt не установлен и содержит нулевое время?',
+    text: 'Как проверить, что DueAt не установлен?',
     options: [
       { text: 'task.DueAt.IsZero()', correct: true },
       { text: 'task.DueAt == nil' },
@@ -70,6 +34,15 @@ const questions = [
       { text: 'Часовой пояс пользователя' },
       { text: 'Только дату без времени' },
       { text: 'JSON-тег' },
+    ],
+  },
+  {
+    text: 'Как добавить один час к моменту now?',
+    options: [
+      { text: 'now.Add(time.Hour)', correct: true },
+      { text: 'now + time.Hour' },
+      { text: 'time.Add(now, 1)' },
+      { text: 'now.Append(time.Hour)' },
     ],
   },
   {
@@ -97,6 +70,33 @@ const questions = [
       { text: 'Всегда использует локальную зону компьютера' },
       { text: 'Автоматически определяет город пользователя' },
       { text: 'Возвращает только Duration' },
+    ],
+  },
+  {
+    text: 'Зачем в API обычно используют UTC?',
+    options: [
+      { text: 'Чтобы передавать один однозначный момент времени между системами', correct: true },
+      { text: 'Чтобы автоматически показать время в городе пользователя' },
+      { text: 'Чтобы time.Parse перестал возвращать error' },
+      { text: 'Чтобы не хранить секунды' },
+    ],
+  },
+  {
+    text: 'Как time.Time сериализуется в JSON по умолчанию?',
+    options: [
+      { text: 'Как строка в формате RFC3339', correct: true },
+      { text: 'Как число миллисекунд' },
+      { text: 'Как map с полями времени' },
+      { text: 'Никак, всегда возникает error' },
+    ],
+  },
+  {
+    text: 'Почему метод IsOverdue принимает now параметром?',
+    options: [
+      { text: 'Так результат предсказуем и метод проще тестировать', correct: true },
+      { text: 'time.Now нельзя вызвать внутри метода' },
+      { text: 'Так DueAt автоматически становится UTC' },
+      { text: 'Это обязательно для JSON' },
     ],
   },
 ]
