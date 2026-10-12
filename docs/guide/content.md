@@ -113,7 +113,9 @@
 
 ## Глава 19: Select и таймауты
 
-in progress...
+1. [Select и таймауты](select-and-timeouts/README.md)
+2. [Самопроверка](select-and-timeouts/tests.md)
+3. [Практика](select-and-timeouts/practice.md)
 
 ## Глава 20: Mutex и синхронизация
 

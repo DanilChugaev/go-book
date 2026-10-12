@@ -191,6 +191,16 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Глава 19: Select и таймауты',
+          link: '/guide/select-and-timeouts/README.md',
+          collapsible: true,
+          children: [
+            '/guide/select-and-timeouts/README.md',
+            '/guide/select-and-timeouts/tests.md',
+            '/guide/select-and-timeouts/practice.md',
+          ],
+        },
+        {
           text: 'Справочник',
           link: '/guide/directory/base-directory.md',
           collapsible: true,
