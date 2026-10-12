@@ -123,9 +123,11 @@
 2. [Самопроверка](mutex-and-synchronization/tests.md)
 3. [Практика](mutex-and-synchronization/practice.md)
 
-## Глава 21: Контексты (context)
+## Глава 21: Context: отмена и дедлайны
 
-in progress...
+1. [Context: отмена и дедлайны](context/README.md)
+2. [Самопроверка](context/tests.md)
+3. [Практика](context/practice.md)
 
 ## Глава 22: Стандартная библиотека — strings и time
 

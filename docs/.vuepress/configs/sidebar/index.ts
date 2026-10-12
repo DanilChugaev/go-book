@@ -211,6 +211,16 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Глава 21: Context',
+          link: '/guide/context/README.md',
+          collapsible: true,
+          children: [
+            '/guide/context/README.md',
+            '/guide/context/tests.md',
+            '/guide/context/practice.md',
+          ],
+        },
+        {
           text: 'Справочник',
           link: '/guide/directory/base-directory.md',
           collapsible: true,
