@@ -131,6 +131,16 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Глава 13: Обработка ошибок',
+          link: '/guide/errors/README.md',
+          collapsible: true,
+          children: [
+            '/guide/errors/README.md',
+            '/guide/errors/tests.md',
+            '/guide/errors/practice.md',
+          ],
+        },
+        {
           text: 'Справочник',
           link: '/guide/directory/base-directory.md',
           collapsible: true,

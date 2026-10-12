@@ -1,5 +1,6 @@
 ---
 prev: /guide/interfaces/tests.md
+next: /guide/errors/README.md
 ---
 
 # Практика: TaskFormatter
