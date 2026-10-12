@@ -161,6 +161,16 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Глава 16: JSON и сериализация',
+          link: '/guide/json/README.md',
+          collapsible: true,
+          children: [
+            '/guide/json/README.md',
+            '/guide/json/tests.md',
+            '/guide/json/practice.md',
+          ],
+        },
+        {
           text: 'Справочник',
           link: '/guide/directory/base-directory.md',
           collapsible: true,

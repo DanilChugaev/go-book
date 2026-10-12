@@ -95,7 +95,9 @@
 
 ## Глава 16: JSON и сериализация
 
-in progress...
+1. [JSON и сериализация](json/README.md)
+2. [Самопроверка](json/tests.md)
+3. [Практика](json/practice.md)
 
 ## Глава 17: Горутины (goroutine)
 

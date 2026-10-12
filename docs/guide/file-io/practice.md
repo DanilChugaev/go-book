@@ -1,5 +1,6 @@
 ---
 prev: /guide/file-io/tests.md
+next: /guide/json/README.md
 ---
 
 # Практика: текстовый экспорт задач
