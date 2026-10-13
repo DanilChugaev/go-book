@@ -1,6 +1,6 @@
 ---
 prev: /guide/packages-and-modules/practice.md
-next: /guide/file-io/README.md
+next: /guide/testing/README.md
 ---
 
 # Рекомендации по коду: пакеты и модули

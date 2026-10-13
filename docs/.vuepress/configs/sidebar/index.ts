@@ -187,7 +187,18 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
-          text: 'Глава 17: Файлы и ввод-вывод',
+          text: 'Глава 17: Тестирование',
+          link: '/guide/testing/README.md',
+          collapsible: true,
+          children: [
+            '/guide/testing/README.md',
+            '/guide/testing/tests.md',
+            '/guide/testing/practice.md',
+            '/guide/testing/best-practices.md',
+          ],
+        },
+        {
+          text: 'Глава 18: Файлы и ввод-вывод',
           link: '/guide/file-io/README.md',
           collapsible: true,
           children: [
@@ -198,7 +209,7 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
-          text: 'Глава 18: JSON и сериализация',
+          text: 'Глава 19: JSON и сериализация',
           link: '/guide/json/README.md',
           collapsible: true,
           children: [
@@ -209,7 +220,7 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
-          text: 'Глава 19: Время и дедлайны',
+          text: 'Глава 20: Время и дедлайны',
           link: '/guide/time/README.md',
           collapsible: true,
           children: [
@@ -220,7 +231,7 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
-          text: 'Глава 20: Goroutine',
+          text: 'Глава 21: Goroutine',
           link: '/guide/goroutines/README.md',
           collapsible: true,
           children: [
@@ -231,7 +242,7 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
-          text: 'Глава 21: Каналы',
+          text: 'Глава 22: Каналы',
           link: '/guide/channels/README.md',
           collapsible: true,
           children: [
@@ -242,7 +253,7 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
-          text: 'Глава 22: Select и таймауты',
+          text: 'Глава 23: Select и таймауты',
           link: '/guide/select-and-timeouts/README.md',
           collapsible: true,
           children: [
@@ -253,7 +264,7 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
-          text: 'Глава 23: Mutex и синхронизация',
+          text: 'Глава 24: Mutex и синхронизация',
           link: '/guide/mutex-and-synchronization/README.md',
           collapsible: true,
           children: [
@@ -264,7 +275,7 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
-          text: 'Глава 24: Context',
+          text: 'Глава 25: Context',
           link: '/guide/context/README.md',
           collapsible: true,
           children: [

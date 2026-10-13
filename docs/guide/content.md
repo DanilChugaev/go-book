@@ -261,7 +261,10 @@
 - покрытие тестами;
 - `go test -race ./...`.
 
-TODO добавить ссылки на страницы
+1. [Тестирование](testing/README.md)
+2. [Самопроверка](testing/tests.md)
+3. [Задания](testing/practice.md)
+4. [Рекомендации по коду](testing/best-practices.md)
 
 ### Глава 18. Файлы и ввод-вывод
 
