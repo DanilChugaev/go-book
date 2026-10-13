@@ -286,6 +286,17 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Глава 26: Логирование и отладка',
+          link: '/guide/logging-and-debugging/README.md',
+          collapsible: true,
+          children: [
+            '/guide/logging-and-debugging/README.md',
+            '/guide/logging-and-debugging/tests.md',
+            '/guide/logging-and-debugging/practice.md',
+            '/guide/logging-and-debugging/best-practices.md',
+          ],
+        },
+        {
           text: 'Справочник',
           link: '/guide/directory/base-directory.md',
           collapsible: true,

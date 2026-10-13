@@ -1,5 +1,6 @@
 ---
 prev: /guide/context/practice.md
+next: /guide/logging-and-debugging/README.md
 ---
 
 # Рекомендации по коду: context

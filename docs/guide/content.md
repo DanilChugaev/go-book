@@ -420,7 +420,10 @@
 - диагностика через race detector;
 - краткое введение в `pprof`.
 
-TODO добавить ссылки на страницы
+1. [Логирование и отладка](logging-and-debugging/README.md)
+2. [Самопроверка](logging-and-debugging/tests.md)
+3. [Задания](logging-and-debugging/practice.md)
+4. [Рекомендации по коду](logging-and-debugging/best-practices.md)
 
 ### Глава 27. HTTP-сервер и JSON API
 
