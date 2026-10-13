@@ -18,7 +18,7 @@ export default defineUserConfig({
   shouldPrefetch: false,
 
   theme: defaultTheme({
-    logo: 'https://go.dev/images/go-logo-white.svg',
+    logo: '/go-logo.svg',
 
     // navbar: ['/', '/guide/'],
 

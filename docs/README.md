@@ -1,7 +1,7 @@
 ---
 home: true
 title: Home
-heroImage: https://go.dev/images/go-logo-white.svg
+heroImage: /go-logo.svg
 actions:
   - text: Начать изучение GO
     link: /guide/
