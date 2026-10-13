@@ -7,7 +7,7 @@ next: /guide/json/tests.md
 
 ## Цель урока
 
-Научиться преобразовывать структуры Go в JSON и обратно, управлять именами полей через теги и сохранять список задач в `tasks.json` с последующей загрузкой.
+Научиться преобразовывать структуры Go в JSON и обратно, управлять именами полей через теги, вынести JSON-хранилище в отдельный пакет и проверить его во временной директории.
 
 Текстовый экспорт из прошлой главы удобен для чтения человеком, но программа не может надёжно восстановить из него структуры `Task`. JSON хранит данные в стандартном структурированном формате, понятном Go, HTTP API и многим другим системам.
 
@@ -207,7 +207,7 @@ fmt.Println(string(emptyJSON)) // []
 Объединим JSON и файловый ввод-вывод. Сначала сериализуем слайс, затем записываем байты:
 
 ```go
-func saveTasks(path string, tasks []task.Task) error {
+func SaveTasks(path string, tasks []task.Task) error {
 	data, err := json.MarshalIndent(tasks, "", "  ")
 	if err != nil {
 		return fmt.Errorf("не удалось сериализовать задачи: %w", err)
@@ -228,7 +228,7 @@ func saveTasks(path string, tasks []task.Task) error {
 Сначала прочитаем байты, затем десериализуем их в слайс:
 
 ```go
-func loadTasks(path string) ([]task.Task, error) {
+func LoadTasks(path string) ([]task.Task, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return nil, fmt.Errorf("не удалось прочитать задачи: %w", err)
@@ -244,6 +244,99 @@ func loadTasks(path string) ([]task.Task, error) {
 ```
 
 Функция возвращает сразу два результата: список и ошибку. Если чтение или JSON-декодирование не удалось, список равен `nil`, а ошибка объясняет причину.
+
+## Пакет `internal/storage`
+
+Не держите JSON-хранилище в `main.go`. `main` должен собирать зависимости и запускать сценарий, а операции сохранения и загрузки — жить в отдельном пакете:
+
+```text
+task-manager/
+├── main.go
+└── internal/
+    ├── task/
+    │   └── task.go
+    └── storage/
+        ├── json.go
+        └── json_test.go
+```
+
+В `internal/storage/json.go`:
+
+```go
+package storage
+
+import (
+	"encoding/json"
+	"fmt"
+	"os"
+
+	"example.com/task-manager/internal/task"
+)
+
+func SaveTasks(path string, tasks []task.Task) error {
+	data, err := json.MarshalIndent(tasks, "", "  ")
+	if err != nil {
+		return fmt.Errorf("не удалось сериализовать задачи: %w", err)
+	}
+
+	if err := os.WriteFile(path, data, 0o644); err != nil {
+		return fmt.Errorf("не удалось сохранить задачи: %w", err)
+	}
+
+	return nil
+}
+
+func LoadTasks(path string) ([]task.Task, error) {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return nil, fmt.Errorf("не удалось прочитать задачи: %w", err)
+	}
+
+	var tasks []task.Task
+	if err := json.Unmarshal(data, &tasks); err != nil {
+		return nil, fmt.Errorf("не удалось разобрать JSON задач: %w", err)
+	}
+
+	return tasks, nil
+}
+```
+
+`SaveTasks` и `LoadTasks` экспортируются, потому что их вызывает `main`. Детали JSON и файловой системы остаются внутри `storage`.
+
+## Тестирование JSON-хранилища
+
+Файловое хранилище тестируют через `t.TempDir`, чтобы не создавать `tasks.json` в исходном проекте:
+
+```go
+func TestSaveAndLoadTasks(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "tasks.json")
+	wantTasks := []task.Task{
+		{ID: 1, Title: "Купить молоко", Priority: 2},
+	}
+
+	if err := SaveTasks(path, wantTasks); err != nil {
+		t.Fatalf("SaveTasks вернул ошибку: %v", err)
+	}
+
+	gotTasks, err := LoadTasks(path)
+	if err != nil {
+		t.Fatalf("LoadTasks вернул ошибку: %v", err)
+	}
+
+	if !reflect.DeepEqual(gotTasks, wantTasks) {
+		t.Errorf("LoadTasks = %#v, ожидалось %#v", gotTasks, wantTasks)
+	}
+}
+```
+
+В тесте используются `path/filepath`, `reflect`, `testing` и пакет `task`. `reflect.DeepEqual` подходит для сравнения слайсов структур в учебном примере. Позже можно выбрать более удобный инструмент сравнения, если модели станут сложнее.
+
+Полезны и отдельные сценарии:
+
+- сохранение пустого слайса как `[]`, а не `null`;
+- загрузка несуществующего файла с проверкой `errors.Is(err, os.ErrNotExist)`;
+- загрузка некорректного JSON;
+- проверка имён ключей `id`, `title`, `priority`, `completed` в записанном файле.
 
 ## Полный пример Task Manager API
 
@@ -266,39 +359,11 @@ type Task struct {
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"os"
 
+	"example.com/task-manager/internal/storage"
 	"example.com/task-manager/internal/task"
 )
-
-func saveTasks(path string, tasks []task.Task) error {
-	data, err := json.MarshalIndent(tasks, "", "  ")
-	if err != nil {
-		return fmt.Errorf("не удалось сериализовать задачи: %w", err)
-	}
-
-	if err := os.WriteFile(path, data, 0o644); err != nil {
-		return fmt.Errorf("не удалось сохранить задачи: %w", err)
-	}
-
-	return nil
-}
-
-func loadTasks(path string) ([]task.Task, error) {
-	data, err := os.ReadFile(path)
-	if err != nil {
-		return nil, fmt.Errorf("не удалось прочитать задачи: %w", err)
-	}
-
-	var tasks []task.Task
-	if err := json.Unmarshal(data, &tasks); err != nil {
-		return nil, fmt.Errorf("не удалось разобрать JSON задач: %w", err)
-	}
-
-	return tasks, nil
-}
 
 func main() {
 	tasks := []task.Task{
@@ -308,12 +373,12 @@ func main() {
 
 	const storagePath = "tasks.json"
 
-	if err := saveTasks(storagePath, tasks); err != nil {
+	if err := storage.SaveTasks(storagePath, tasks); err != nil {
 		fmt.Println("Ошибка сохранения:", err)
 		return
 	}
 
-	loadedTasks, err := loadTasks(storagePath)
+	loadedTasks, err := storage.LoadTasks(storagePath)
 	if err != nil {
 		fmt.Println("Ошибка загрузки:", err)
 		return
@@ -357,6 +422,10 @@ data, _ := json.Marshal(tasks)
 
 `json.Marshal(nilTasks)` даст `null`. Для пустого списка создайте `[]task.Task{}`.
 
+### Тест с настоящим `tasks.json`
+
+Не запускайте тест с путём `"tasks.json"` из рабочей папки: он может зависеть от старого файла или перезаписать реальные данные. В тестах используйте `filepath.Join(t.TempDir(), "tasks.json")`.
+
 ## Дальше
 
-Закрепите сохранение и загрузку задач. После этого начнём изучать конкурентный код: goroutine, каналы и безопасную координацию работы.
+Закрепите пакет JSON-хранилища и его тесты. После этого перейдём к времени и дедлайнам задач.

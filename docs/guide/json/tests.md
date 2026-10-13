@@ -99,5 +99,23 @@ const questions = [
       { text: 'fmt.Println, затем copy' },
     ],
   },
+  {
+    text: 'В каком пакете стоит разместить SaveTasks и LoadTasks?',
+    options: [
+      { text: 'В отдельном внутреннем пакете storage', correct: true },
+      { text: 'Обязательно внутри типа Task' },
+      { text: 'Только в package main' },
+      { text: 'В пакете fmt' },
+    ],
+  },
+  {
+    text: 'Какой путь нужно передать JSON-тесту, чтобы не создавать tasks.json в проекте?',
+    options: [
+      { text: 'filepath.Join(t.TempDir(), "tasks.json")', correct: true },
+      { text: '"tasks.json"' },
+      { text: 'os.TempDir() + "/tasks.json"' },
+      { text: 'go.mod' },
+    ],
+  },
 ]
 </script>

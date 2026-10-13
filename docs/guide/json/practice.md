@@ -64,16 +64,17 @@ fmt.Println(string(data))
 
 ## Задание 2. Сохраните список задач
 
-Напишите функцию:
+В пакете `internal/storage` напишите функцию:
 
 ```go
-func saveTasks(path string, tasks []task.Task) error
+func SaveTasks(path string, tasks []task.Task) error
 ```
 
 Она должна сериализовать список через `json.MarshalIndent` и записать его в `tasks.json` через `os.WriteFile`.
 
 **Критерии проверки:**
 
+- функция экспортируется и находится в пакете `storage`;
 - функция принимает `[]task.Task` и возвращает `error`;
 - JSON имеет отступы;
 - ошибки сериализации и записи получают разный контекст через `%w`;
@@ -90,7 +91,7 @@ func saveTasks(path string, tasks []task.Task) error
   <summary>Решение</summary>
 
 ```go
-func saveTasks(path string, tasks []task.Task) error {
+func SaveTasks(path string, tasks []task.Task) error {
 	data, err := json.MarshalIndent(tasks, "", "  ")
 	if err != nil {
 		return fmt.Errorf("не удалось сериализовать задачи: %w", err)
@@ -107,16 +108,17 @@ func saveTasks(path string, tasks []task.Task) error {
 
 ## Задание 3. Загрузите список задач
 
-Напишите функцию:
+В том же пакете `internal/storage` напишите функцию:
 
 ```go
-func loadTasks(path string) ([]task.Task, error)
+func LoadTasks(path string) ([]task.Task, error)
 ```
 
 Она должна прочитать `tasks.json` через `os.ReadFile`, распарсить JSON в `[]task.Task` и вернуть загруженные задачи.
 
 **Критерии проверки:**
 
+- функция экспортируется и находится в пакете `storage`;
 - функция читает файл до вызова `json.Unmarshal`;
 - `json.Unmarshal` получает `&tasks`;
 - ошибка чтения и ошибка JSON получают разные сообщения;
@@ -138,7 +140,7 @@ if err := json.Unmarshal(data, &tasks); err != nil {
   <summary>Решение</summary>
 
 ```go
-func loadTasks(path string) ([]task.Task, error) {
+func LoadTasks(path string) ([]task.Task, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return nil, fmt.Errorf("не удалось прочитать задачи: %w", err)
@@ -162,7 +164,7 @@ func loadTasks(path string) ([]task.Task, error) {
 
 - сохранение выполняется до загрузки;
 - каждая операция проверяет ошибку и завершает `main` при неудаче;
-- `loadedTasks` получен через `loadTasks`;
+- `loadedTasks` получен через `storage.LoadTasks`;
 - число и данные загруженных задач совпадают с сохранёнными;
 - программа работает после удаления старого `tasks.json`.
 
@@ -170,17 +172,79 @@ func loadTasks(path string) ([]task.Task, error) {
   <summary>Подсказка</summary>
 
 ```go
-if err := saveTasks("tasks.json", tasks); err != nil {
+if err := storage.SaveTasks("tasks.json", tasks); err != nil {
 	fmt.Println(err)
 	return
 }
 
-loadedTasks, err := loadTasks("tasks.json")
+loadedTasks, err := storage.LoadTasks("tasks.json")
 if err != nil {
 	fmt.Println(err)
 	return
 }
 ```
+</details>
+
+## Задание 5. Протестируйте JSON-хранилище
+
+В `internal/storage/json_test.go` напишите тест полного цикла: сохраните список задач в путь внутри `t.TempDir()`, загрузите его через `LoadTasks` и сравните с исходным списком.
+
+Затем добавьте отдельные subtests для:
+
+- пустого слайса — в файле должен быть `[]`;
+- несуществующего файла — ошибка распознаётся через `errors.Is(err, os.ErrNotExist)`;
+- некорректного JSON — `LoadTasks` возвращает ошибку;
+- JSON-тегов — файл содержит ключи `"id"` и `"title"`, а не `"ID"` и `"Title"`.
+
+**Критерии проверки:**
+
+- путь строится через `filepath.Join(t.TempDir(), "tasks.json")`;
+- тест не создаёт файлы в рабочей папке проекта;
+- успешный результат сравнивается с исходными задачами;
+- для слайсов используется `reflect.DeepEqual` или сравнение по элементам;
+- отсутствующий файл проверяется через `errors.Is`;
+- `go test ./...` проходит успешно.
+
+<details>
+  <summary>Подсказка</summary>
+
+```go
+path := filepath.Join(t.TempDir(), "tasks.json")
+
+if err := SaveTasks(path, wantTasks); err != nil {
+	t.Fatalf("SaveTasks вернул ошибку: %v", err)
+}
+
+gotTasks, err := LoadTasks(path)
+```
+</details>
+
+<details>
+  <summary>Решение: сохранение и загрузка</summary>
+
+```go
+func TestSaveAndLoadTasks(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "tasks.json")
+	wantTasks := []task.Task{
+		{ID: 1, Title: "Купить молоко", Priority: 2},
+	}
+
+	if err := SaveTasks(path, wantTasks); err != nil {
+		t.Fatalf("SaveTasks вернул ошибку: %v", err)
+	}
+
+	gotTasks, err := LoadTasks(path)
+	if err != nil {
+		t.Fatalf("LoadTasks вернул ошибку: %v", err)
+	}
+
+	if !reflect.DeepEqual(gotTasks, wantTasks) {
+		t.Errorf("LoadTasks = %#v, ожидалось %#v", gotTasks, wantTasks)
+	}
+}
+```
+
+Для теста нужны импорты `path/filepath`, `reflect`, `testing` и пакет `task`.
 </details>
 
 ## Проверьте себя
@@ -191,5 +255,6 @@ if err != nil {
 - преобразовать значение в JSON через `json.MarshalIndent`;
 - восстановить слайс через `json.Unmarshal`;
 - объяснить, почему `Unmarshal` получает указатель;
-- сохранить и загрузить `[]task.Task` из JSON-файла;
+- сохранить и загрузить `[]task.Task` через пакет `storage`;
 - отличить синтаксическую JSON-ошибку от бизнес-валидации задачи.
+- протестировать JSON-хранилище во временной директории.
