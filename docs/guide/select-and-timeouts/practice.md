@@ -102,32 +102,32 @@ case <-time.After(time.Second):
 Напишите функцию:
 
 ```go
-func waitForExports(results <-chan exportResult, expected int, timeout time.Duration) error
+func waitForExportsUntil(results <-chan exportResult, timeout <-chan time.Time) error
 ```
 
-Она должна получить `expected` успешных или ошибочных результатов, но вернуть ошибку, если общий таймаут закончился раньше.
+Она должна получать успешные или ошибочные результаты до закрытия канала, но вернуть ошибку, если общий таймаут закончился раньше.
 
 **Критерии проверки:**
 
-- `time.After(timeout)` создаётся один раз до цикла;
-- цикл считает полученные результаты;
+- функция получает готовый канал таймаута;
+- цикл читает результаты до закрытия канала;
 - результат с `Err != nil` приводит к ошибке с названием экспорта;
 - истечение таймаута приводит к ошибке;
-- успешное получение `expected` результатов возвращает `nil`.
+- успешное закрытие канала после результатов возвращает `nil`.
 
 <details>
   <summary>Подсказка</summary>
 
 ```go
-timeoutChannel := time.After(timeout)
-
-for received := 0; received < expected; {
+for {
 	select {
-	case result := <-results:
-		received++
+	case result, open := <-results:
+		if !open {
+			return nil
+		}
 		// обработка result
-	case <-timeoutChannel:
-		return fmt.Errorf("экспорты не завершились за %s", timeout)
+	case <-timeout:
+		return fmt.Errorf("экспорты не завершились вовремя")
 	}
 }
 ```
@@ -137,46 +137,40 @@ for received := 0; received < expected; {
   <summary>Решение</summary>
 
 ```go
-func waitForExports(results <-chan exportResult, expected int, timeout time.Duration) error {
-	timeoutChannel := time.After(timeout)
-
-	for received := 0; received < expected; {
+func waitForExportsUntil(results <-chan exportResult, timeout <-chan time.Time) error {
+	for {
 		select {
 		case result, open := <-results:
 			if !open {
-				return fmt.Errorf("канал результатов закрылся: получено %d из %d", received, expected)
+				return nil
 			}
-
-			received++
 
 			if result.Err != nil {
 				return fmt.Errorf("%s завершился с ошибкой: %w", result.Name, result.Err)
 			}
 
 			fmt.Printf("%s готов\n", result.Name)
-		case <-timeoutChannel:
-			return fmt.Errorf("экспорты не завершились за %s", timeout)
+		case <-timeout:
+			return fmt.Errorf("экспорты не завершились вовремя")
 		}
 	}
 
-	return nil
 }
 ```
 </details>
 
 ## Задание 4. Используйте таймаут в main
 
-Создайте две задачи, получите `results := saveExports(tasks)` из предыдущей главы и вызовите:
+Создайте две задачи, получите `results := startExports(tasks, textPath, jsonPath)` из предыдущей главы и вызовите обёртку:
 
 ```go
-waitForExports(results, 2, 3*time.Second)
+waitForExports(results, 3*time.Second)
 ```
 
 При ошибке выведите `Ошибка экспорта: <ошибка>` и завершите программу. При успехе выведите `Все экспорты готовы`.
 
 **Критерии проверки:**
 
-- в `main` передаётся ожидаемое число результатов `2`;
 - общий лимит равен трём секундам;
 - ошибка проверяется через `if err != nil`;
 - сообщение об успехе выводится только после успешного ожидания;
@@ -186,12 +180,56 @@ waitForExports(results, 2, 3*time.Second)
   <summary>Подсказка</summary>
 
 ```go
-if err := waitForExports(results, 2, 3*time.Second); err != nil {
+if err := waitForExports(results, 3*time.Second); err != nil {
 	fmt.Println("Ошибка экспорта:", err)
 	return
 }
 
 fmt.Println("Все экспорты готовы")
+```
+</details>
+
+## Задание 5. Протестируйте таймаут мгновенно
+
+Напишите тест для `waitForExportsUntil`, который проверяет таймаут без `time.Sleep` и без реального `time.After`. Создайте канал `timeout`, закройте его до вызова функции и убедитесь, что получена ошибка.
+
+Затем добавьте успешный сценарий: отправьте один или несколько `exportResult` в буферизированный канал, закройте его и проверьте, что функция вернула `nil`.
+
+**Критерии проверки:**
+
+- тест не ждёт реальное время;
+- закрытый `timeout`-канал используется как мгновенный сигнал таймаута;
+- успешный results-канал закрывается после отправки результатов;
+- ошибочный результат `exportResult{Err: ...}` возвращает ошибку;
+- все сценарии запускаются через `t.Run`;
+- `go test ./...` проходит быстро и стабильно.
+
+<details>
+  <summary>Подсказка</summary>
+
+```go
+timeout := make(chan time.Time)
+close(timeout)
+
+err := waitForExportsUntil(make(chan exportResult), timeout)
+if err == nil {
+	t.Fatal("ожидалась ошибка таймаута")
+}
+```
+</details>
+
+<details>
+  <summary>Фрагмент успешного сценария</summary>
+
+```go
+results := make(chan exportResult, 1)
+results <- exportResult{Name: "текстовый экспорт"}
+close(results)
+
+timeout := make(chan time.Time)
+if err := waitForExportsUntil(results, timeout); err != nil {
+	t.Fatalf("waitForExportsUntil вернул ошибку: %v", err)
+}
 ```
 </details>
 
@@ -204,4 +242,5 @@ fmt.Println("Все экспорты готовы")
 - добавить таймаут через `time.After`;
 - отличить общий таймаут от таймаута каждой итерации;
 - обработать закрытый канал через второй результат получения;
+- протестировать таймаут через готовый канал без `time.Sleep`;
 - объяснить, почему таймаут не отменяет работающую goroutine.

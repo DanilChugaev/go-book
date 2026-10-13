@@ -7,7 +7,7 @@ next: /guide/select-and-timeouts/tests.md
 
 ## Цель урока
 
-Научиться ждать несколько операций через `select`, выполнять неблокирующую проверку с `default`, ограничивать ожидание через `time.After` и корректно обрабатывать закрытые каналы.
+Научиться ждать несколько операций через `select`, выполнять неблокирующую проверку с `default`, ограничивать ожидание через `time.After`, корректно обрабатывать закрытые каналы и тестировать таймаут без реальной паузы.
 
 В Task Manager API текстовый и JSON-экспорты уже отправляют результаты в канал. Теперь ограничим общее время ожидания, чтобы программа не зависала бесконечно, если одна операция не завершилась.
 
@@ -173,52 +173,73 @@ type exportResult struct {
 	Err  error
 }
 
-func saveExports(tasks []task.Task) <-chan exportResult {
+func startExports(tasks []task.Task, textPath, jsonPath string) <-chan exportResult {
 	// запускает два экспорта и возвращает канал с двумя результатами
 }
 ```
 
-Добавим ожидание с общим таймаутом:
+Разделим ожидание и создание таймера. В production-коде обёртка использует `time.After`:
 
 ```go
-func waitForExports(results <-chan exportResult, expected int, timeout time.Duration) error {
-	timeoutChannel := time.After(timeout)
+func waitForExports(results <-chan exportResult, timeout time.Duration) error {
+	return waitForExportsUntil(results, time.After(timeout))
+}
 
-	for received := 0; received < expected; {
+func waitForExportsUntil(results <-chan exportResult, timeout <-chan time.Time) error {
+	for {
 		select {
 		case result, open := <-results:
 			if !open {
-				return fmt.Errorf("канал результатов закрылся: получено %d из %d", received, expected)
+				return nil
 			}
-
-			received++
 
 			if result.Err != nil {
 				return fmt.Errorf("%s завершился с ошибкой: %w", result.Name, result.Err)
 			}
 
 			fmt.Printf("%s готов\n", result.Name)
-		case <-timeoutChannel:
-			return fmt.Errorf("экспорты не завершились за %s", timeout)
+		case <-timeout:
+			return fmt.Errorf("экспорты не завершились вовремя")
 		}
 	}
-
-	return nil
 }
 ```
+
+`waitForExportsUntil` принимает готовый канал таймаута. Это делает её детерминированной в тесте: вместо реальных секунд тест может передать уже закрытый канал.
 
 Вызов из `main`:
 
 ```go
-results := saveExports(tasks)
+results := startExports(tasks, "tasks.txt", "tasks.json")
 
-if err := waitForExports(results, 2, 3*time.Second); err != nil {
+if err := waitForExports(results, 3*time.Second); err != nil {
 	fmt.Println("Ошибка экспорта:", err)
 	return
 }
 ```
 
 Функция не предполагает порядок результатов: текстовый и JSON-экспорт могут завершаться в любом порядке.
+
+## Тестирование таймаута без ожидания
+
+Тест не должен ждать три реальные секунды. Создайте канал `chan time.Time`, закройте его до вызова функции и передайте в `waitForExportsUntil`:
+
+```go
+func TestWaitForExportsUntilTimeout(t *testing.T) {
+	results := make(chan exportResult)
+	timeout := make(chan time.Time)
+	close(timeout)
+
+	err := waitForExportsUntil(results, timeout)
+	if err == nil {
+		t.Fatal("ожидалась ошибка таймаута")
+	}
+}
+```
+
+Закрытый канал готов к получению немедленно, поэтому `select` выбирает ветвь таймаута без паузы. Тест не зависит от скорости машины или планировщика.
+
+Проверьте отдельно успешное завершение: создайте буферизированный канал, отправьте в него результаты, закройте и убедитесь, что `waitForExportsUntil` возвращает `nil`.
 
 ## Почему таймаут не отменяет работу
 
@@ -264,6 +285,15 @@ default:
 ```
 
 Такой код не ждёт экспорт. Если результат должен прийти, используйте обычный `select` или таймаут.
+
+### Реальный `time.After` в unit-тесте
+
+```go
+// Тест будет ждать реальную секунду.
+err := waitForExports(results, time.Second)
+```
+
+Тестируйте `waitForExportsUntil` и передавайте готовый timeout-канал. Обёртка с `time.After` остаётся короткой и не требует отдельной задержки в тесте.
 
 ### Закрытие чужого канала
 

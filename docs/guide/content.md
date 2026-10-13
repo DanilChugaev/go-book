@@ -363,6 +363,7 @@
 - общий таймаут нескольких операций;
 - закрытые и `nil`-каналы в `select`;
 - ожидание экспортов с таймаутом.
+- тестируемый timeout-канал без `time.Sleep`.
 
 1. [Select и таймауты](select-and-timeouts/README.md)
 2. [Самопроверка](select-and-timeouts/tests.md)

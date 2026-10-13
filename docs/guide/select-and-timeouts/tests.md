@@ -99,5 +99,23 @@ const questions = [
       { text: 'Go перестаёт выполнять goroutine' },
     ],
   },
+  {
+    text: 'Зачем waitForExportsUntil принимает timeout <-chan time.Time вместо готовой duration?',
+    options: [
+      { text: 'Чтобы тест мог передать готовый канал таймаута без реальной паузы', correct: true },
+      { text: 'Чтобы time.After перестал работать' },
+      { text: 'Чтобы автоматически отменить goroutine' },
+      { text: 'Чтобы отправлять JSON в канал' },
+    ],
+  },
+  {
+    text: 'Как в тесте мгновенно имитировать истечение таймаута?',
+    options: [
+      { text: 'Создать chan time.Time и закрыть его до вызова функции', correct: true },
+      { text: 'Вызвать time.Sleep(time.Second)' },
+      { text: 'Закрыть results до запуска select' },
+      { text: 'Передать nil вместо timeout' },
+    ],
+  },
 ]
 </script>
