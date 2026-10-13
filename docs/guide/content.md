@@ -457,7 +457,10 @@
 - перенос HTTP-слоя Task Manager API с `net/http` на Gin без дублирования бизнес-логики;
 - Gin становится HTTP-слоем итоговой реализации Task Manager API.
 
-TODO добавить ссылки на страницы
+1. [HTTP API на Gin](gin/README.md)
+2. [Самопроверка](gin/tests.md)
+3. [Задания](gin/practice.md)
+4. [Рекомендации по коду](gin/best-practices.md)
 
 ### Глава 29. HTTP-клиент
 

@@ -308,6 +308,17 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Глава 28: HTTP API на Gin',
+          link: '/guide/gin/README.md',
+          collapsible: true,
+          children: [
+            '/guide/gin/README.md',
+            '/guide/gin/tests.md',
+            '/guide/gin/practice.md',
+            '/guide/gin/best-practices.md',
+          ],
+        },
+        {
           text: 'Справочник',
           link: '/guide/directory/base-directory.md',
           collapsible: true,
