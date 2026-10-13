@@ -1,0 +1,103 @@
+---
+prev: /guide/http-server/README.md
+next: /guide/http-server/practice.md
+---
+
+# Самопроверка
+
+<QuizContainer :questions />
+
+<script setup>
+const questions = [
+  {
+    text: 'За что отвечает http.ResponseWriter?',
+    options: [
+      { text: 'За формирование HTTP-ответа: заголовков, статуса и body', correct: true },
+      { text: 'За хранение задач в map' },
+      { text: 'За запуск goroutine' },
+      { text: 'За чтение переменных окружения' },
+    ],
+  },
+  {
+    text: 'В каком порядке нужно формировать JSON-ответ?',
+    options: [
+      { text: 'Установить заголовки, записать статус, затем записать body', correct: true },
+      { text: 'Сначала body, потом статус и заголовки' },
+      { text: 'Сначала закрыть соединение, затем body' },
+      { text: 'Порядок не имеет значения' },
+    ],
+  },
+  {
+    text: 'Как в Go 1.22 получить значение {id} из маршрута POST /tasks/{id}/complete?',
+    options: [
+      { text: 'r.PathValue("id")', correct: true },
+      { text: 'r.Header.Get("id")' },
+      { text: 'w.PathValue("id")' },
+      { text: 'json.Unmarshal(r.Body, &id)' },
+    ],
+  },
+  {
+    text: 'Какой статус нужно вернуть после успешного создания задачи?',
+    options: [
+      { text: '201 Created', correct: true },
+      { text: '200 OK всегда' },
+      { text: '400 Bad Request' },
+      { text: '500 Internal Server Error' },
+    ],
+  },
+  {
+    text: 'Что делает decoder.DisallowUnknownFields()?',
+    options: [
+      { text: 'Отклоняет JSON с полями, которых нет в структуре запроса', correct: true },
+      { text: 'Удаляет из ответа пустые поля' },
+      { text: 'Шифрует JSON-body' },
+      { text: 'Запрещает все строковые поля' },
+    ],
+  },
+  {
+    text: 'Зачем handler передаёт r.Context() в service?',
+    options: [
+      { text: 'Чтобы отмена запроса и дедлайн могли распространяться дальше', correct: true },
+      { text: 'Чтобы сериализовать response в JSON' },
+      { text: 'Чтобы создать новый mutex' },
+      { text: 'Чтобы получить путь из URL' },
+    ],
+  },
+  {
+    text: 'Кто должен хранить правила предметной области задачи?',
+    options: [
+      { text: 'Service или модель предметной области, а не HTTP handler', correct: true },
+      { text: 'Только http.ResponseWriter' },
+      { text: 'Только curl' },
+      { text: 'JSON-теги структуры' },
+    ],
+  },
+  {
+    text: 'Как преобразовать известную ошибку «задача не найдена» в API-ответ?',
+    options: [
+      { text: 'Проверить errors.Is и вернуть 404 Not Found', correct: true },
+      { text: 'Вернуть 500 и err.Error()' },
+      { text: 'Игнорировать ошибку и вернуть пустую задачу' },
+      { text: 'Вызвать panic' },
+    ],
+  },
+  {
+    text: 'Какие инструменты позволяют проверить handler без запуска сервера на порту?',
+    options: [
+      { text: 'httptest.NewRequest и httptest.NewRecorder', correct: true },
+      { text: 'time.Sleep и fmt.Println' },
+      { text: 'sync.WaitGroup' },
+      { text: 'os.Open' },
+    ],
+  },
+  {
+    text: 'Почему клиенту не стоит возвращать err.Error() для внутренней ошибки?',
+    options: [
+      { text: 'Ошибка может раскрыть внутренние технические детали', correct: true },
+      { text: 'HTTP не поддерживает строки' },
+      { text: 'errors.Is перестанет работать' },
+      { text: 'JSON не умеет передавать ошибки' },
+    ],
+  },
+]
+</script>

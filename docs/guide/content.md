@@ -437,7 +437,10 @@
 - обработка ошибок и логирование в HTTP-слое.
 - первая реализация Task Manager API только средствами стандартного `net/http` как база для сравнения с Gin.
 
-TODO добавить ссылки на страницы
+1. [HTTP-сервер и JSON API](http-server/README.md)
+2. [Самопроверка](http-server/tests.md)
+3. [Задания](http-server/practice.md)
+4. [Рекомендации по коду](http-server/best-practices.md)
 
 ### Глава 28. HTTP API на Gin
 

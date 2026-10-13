@@ -297,6 +297,17 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Глава 27: HTTP-сервер и JSON API',
+          link: '/guide/http-server/README.md',
+          collapsible: true,
+          children: [
+            '/guide/http-server/README.md',
+            '/guide/http-server/tests.md',
+            '/guide/http-server/practice.md',
+            '/guide/http-server/best-practices.md',
+          ],
+        },
+        {
           text: 'Справочник',
           link: '/guide/directory/base-directory.md',
           collapsible: true,

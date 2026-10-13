@@ -1,5 +1,6 @@
 ---
 prev: /guide/logging-and-debugging/practice.md
+next: /guide/http-server/README.md
 ---
 
 # Рекомендации по коду: логирование и отладка
