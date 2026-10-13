@@ -112,17 +112,18 @@ type exportResult struct {
 Напишите функцию:
 
 ```go
-func saveExports(tasks []task.Task) <-chan exportResult
+func startExports(tasks []task.Task, textPath, jsonPath string) <-chan exportResult
 ```
 
-Она запускает `exportText` и `exportJSON` в отдельных goroutine и возвращает канал с двумя результатами.
+Она запускает текстовый и JSON-экспорт в отдельных goroutine, возвращает канал с результатами и закрывает его после завершения обоих worker.
 
 **Критерии проверки:**
 
 - возвращаемый тип — `<-chan exportResult`;
 - внутри создан `make(chan exportResult, 2)`;
 - каждая goroutine отправляет `Name` и ошибку своей операции;
-- функция не использует `WaitGroup`;
+- `WaitGroup` ожидает завершения обоих отправителей;
+- отдельная goroutine закрывает results после `wg.Wait()`;
 - обе операции получают одинаковый слайс задач только для чтения.
 
 <details>
@@ -130,8 +131,8 @@ func saveExports(tasks []task.Task) <-chan exportResult
 
 ```go
 go func() {
-	err := exportText("tasks.txt", tasks)
-	results <- exportResult{Name: "текстовый экспорт", Err: err}
+	wg.Wait()
+	close(results)
 }()
 ```
 </details>
@@ -145,17 +146,26 @@ type exportResult struct {
 	Err  error
 }
 
-func saveExports(tasks []task.Task) <-chan exportResult {
+func startExports(tasks []task.Task, textPath, jsonPath string) <-chan exportResult {
 	results := make(chan exportResult, 2)
+	var wg sync.WaitGroup
+	wg.Add(2)
 
 	go func() {
-		err := exportText("tasks.txt", tasks)
+		defer wg.Done()
+		err := exportText(textPath, tasks)
 		results <- exportResult{Name: "текстовый экспорт", Err: err}
 	}()
 
 	go func() {
-		err := exportJSON("tasks.json", tasks)
+		defer wg.Done()
+		err := storage.SaveTasks(jsonPath, tasks)
 		results <- exportResult{Name: "JSON-экспорт", Err: err}
+	}()
+
+	go func() {
+		wg.Wait()
+		close(results)
 	}()
 
 	return results
@@ -165,11 +175,11 @@ func saveExports(tasks []task.Task) <-chan exportResult {
 
 ## Задание 4. Обработайте оба результата
 
-В `main` создайте две задачи, вызовите `saveExports` и получите два результата. Для каждого успешного результата выведите `<название> готов`, для ошибки — `Ошибка <название>: <ошибка>`.
+В `main` создайте две задачи, вызовите `startExports` с путями из временной директории и прочитайте результаты через `range`. Для каждого успешного результата выведите `<название> готов`, для ошибки — `Ошибка <название>: <ошибка>`.
 
 **Критерии проверки:**
 
-- результаты получают из канала ровно два раза;
+- результаты получаются через `range` до закрытия канала;
 - успех и ошибка обрабатываются отдельно;
 - нет `time.Sleep`;
 - `main` не предполагает порядок текстового и JSON-результата;
@@ -178,11 +188,10 @@ func saveExports(tasks []task.Task) <-chan exportResult {
 <details>
   <summary>Подсказка</summary>
 
-В Go 1.22+ удобно получить известное число результатов так:
+Канал закрывается координатором после завершения worker, поэтому можно читать его через `range`:
 
 ```go
-for range 2 {
-	result := <-results
+for result := range results {
 	// обработка
 }
 ```
@@ -192,10 +201,9 @@ for range 2 {
   <summary>Возможное решение</summary>
 
 ```go
-results := saveExports(tasks)
+results := startExports(tasks, textPath, jsonPath)
 
-for range 2 {
-	result := <-results
+for result := range results {
 
 	if result.Err != nil {
 		fmt.Printf("Ошибка %s: %v\n", result.Name, result.Err)
@@ -205,6 +213,31 @@ for range 2 {
 	fmt.Printf("%s готов\n", result.Name)
 }
 ```
+
+## Задание 5. Протестируйте результаты и закрытие
+
+Напишите `TestStartExports`. Передайте пути из `t.TempDir`, прочитайте канал через `range`, проверьте, что получены два результата без ошибок, а оба файла существуют после завершения цикла.
+
+**Критерии проверки:**
+
+- тест не использует `time.Sleep`;
+- `range` завершился, значит канал был закрыт;
+- получено ровно два результата;
+- каждый `exportResult.Err` равен `nil`;
+- `tasks.txt` и `tasks.json` существуют в временной директории;
+- тест запускается с `go test -race ./...`.
+
+<details>
+  <summary>Подсказка</summary>
+
+После цикла используйте `os.Stat`:
+
+```go
+if _, err := os.Stat(textPath); err != nil {
+	t.Errorf("текстовый экспорт не создан: %v", err)
+}
+```
+</details>
 </details>
 
 ## Проверьте себя
@@ -216,4 +249,6 @@ for range 2 {
 - объяснить блокировку небуферизированного канала;
 - выбрать буфер для двух известных результатов;
 - объяснить, кто и когда должен закрывать канал;
+- закрыть канал после нескольких отправителей через `WaitGroup`;
+- протестировать результаты и закрытие канала без `time.Sleep`;
 - вернуть канал только для чтения из функции.

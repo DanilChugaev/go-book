@@ -186,7 +186,7 @@ func printStatuses(statuses <-chan string) {
 
 ## Результаты параллельных экспортов
 
-В прошлой главе `WaitGroup` ожидал два экспорта, а ошибки записывались в отдельные переменные. Теперь каждая goroutine передаёт свой результат в канал.
+В прошлой главе `WaitGroup` ожидал два экспорта, а ошибки записывались в отдельные переменные. Теперь каждая goroutine передаёт свой результат в канал. Так получатель может обработать результаты по мере готовности и узнать момент завершения всех отправителей через закрытие канала.
 
 ```go
 type exportResult struct {
@@ -194,32 +194,40 @@ type exportResult struct {
 	Err  error
 }
 
-func saveExports(tasks []task.Task) <-chan exportResult {
+func startExports(tasks []task.Task, textPath, jsonPath string) <-chan exportResult {
 	results := make(chan exportResult, 2)
+	var wg sync.WaitGroup
+	wg.Add(2)
 
 	go func() {
-		err := exportText("tasks.txt", tasks)
+		defer wg.Done()
+		err := exportText(textPath, tasks)
 		results <- exportResult{Name: "текстовый экспорт", Err: err}
 	}()
 
 	go func() {
-		err := exportJSON("tasks.json", tasks)
+		defer wg.Done()
+		err := storage.SaveTasks(jsonPath, tasks)
 		results <- exportResult{Name: "JSON-экспорт", Err: err}
+	}()
+
+	go func() {
+		wg.Wait()
+		close(results)
 	}()
 
 	return results
 }
 ```
 
-У канала буфер размером `2`: обе goroutine могут отправить результат, даже если `main` начнёт получать их чуть позже. Возвращаемое значение `<-chan exportResult` сообщает вызывающему коду: он может только получать результаты.
+У канала буфер размером `2`: обе goroutine могут отправить результат, даже если получатель начнёт читать их чуть позже. `WaitGroup` нужен только координатору, который закрывает канал после завершения обоих отправителей. Возвращаемое значение `<-chan exportResult` сообщает вызывающему коду: он может только получать результаты.
 
-В `main` известно, что результатов ровно два, поэтому можно получить их циклом со счётчиком:
+Получатель может использовать `range` и не знать количество worker заранее:
 
 ```go
-results := saveExports(tasks)
+results := startExports(tasks, "tasks.txt", "tasks.json")
 
-for range 2 {
-	result := <-results
+for result := range results {
 
 	if result.Err != nil {
 		fmt.Printf("Ошибка %s: %v\n", result.Name, result.Err)
@@ -230,7 +238,41 @@ for range 2 {
 }
 ```
 
-В этом случае закрывать канал не обязательно: `main` точно знает, сколько результатов нужно получить. Когда число сообщений неизвестно или потребитель использует `range`, канал нужно закрыть после завершения всех отправителей. Способы координации нескольких отправителей расширим в следующих главах.
+Закрытие `results` — часть контракта `startExports`: после `range` вызывающий код знает, что все экспортные worker завершились. Получатель не закрывает канал, потому что не владеет отправителями.
+
+## Тестирование жизненного цикла канала
+
+Тест worker не должен использовать `time.Sleep` или получать «ровно два» результата по счётчику. Чтение `range` до закрытия канала одновременно проверяет три свойства:
+
+1. каждый worker отправил результат;
+2. координатор дождался worker через `WaitGroup`;
+3. канал корректно закрыт.
+
+```go
+func TestStartExports(t *testing.T) {
+	directory := t.TempDir()
+
+	results := startExports(
+		[]task.Task{{ID: 1, Title: "Купить молоко", Priority: 2}},
+		filepath.Join(directory, "tasks.txt"),
+		filepath.Join(directory, "tasks.json"),
+	)
+
+	resultCount := 0
+	for result := range results {
+		resultCount++
+		if result.Err != nil {
+			t.Errorf("%s export returned error: %v", result.Name, result.Err)
+		}
+	}
+
+	if resultCount != 2 {
+		t.Errorf("получено результатов: %d, ожидалось 2", resultCount)
+	}
+}
+```
+
+После `range` отдельно проверьте существование обоих файлов через `os.Stat`. Пути из `t.TempDir` изолируют тест от рабочей папки проекта.
 
 ## Частые ошибки
 
@@ -256,6 +298,21 @@ for result := range results {
 ### Закрытие канала получателем
 
 Получатель не должен закрывать канал, если другой код ещё может отправить значение. Это может вызвать `panic: send on closed channel`.
+
+### Несколько отправителей закрывают один канал
+
+```go
+go func() {
+	results <- textResult
+	close(results)
+}()
+
+go func() {
+	results <- jsonResult // может отправить в уже закрытый канал
+}()
+```
+
+Когда отправителей несколько, отдельная координирующая goroutine должна дождаться их через `WaitGroup` и только затем вызвать `close(results)`.
 
 ### Использование канала как мьютекса без понимания
 
