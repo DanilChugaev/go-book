@@ -38,13 +38,15 @@ export default defineUserConfig({
         icon: '/icons/go-book-180.png',
       },
       manifest: {
-        id: '/',
+        // GitHub Pages публикует учебник в подпути. Эти три поля должны
+        // быть внутри base, иначе браузер считает PWA приложением сайта в корне.
+        id: '/go-book/',
         name: 'Учебник Go',
         short_name: 'Учебник Go',
         description: 'Интерактивный учебник Go: теория, самопроверка и практика',
         lang: 'ru-RU',
-        start_url: '/',
-        scope: '/',
+        start_url: '/go-book/',
+        scope: '/go-book/',
         display: 'standalone',
         background_color: '#FFFFFF',
         theme_color: '#00ADD8',
