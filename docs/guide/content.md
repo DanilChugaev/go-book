@@ -398,6 +398,8 @@
 - `context.Canceled` и `context.DeadlineExceeded`;
 - кооперативная отмена goroutine;
 - отменяемые экспорты.
+- тестирование ручной отмены без `time.Sleep`;
+- проверка отменённого экспорта до записи файла.
 
 1. [Context: отмена и дедлайны](context/README.md)
 2. [Самопроверка](context/tests.md)

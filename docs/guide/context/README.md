@@ -57,7 +57,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"sync"
 )
 
 func work(ctx context.Context) {
@@ -69,6 +68,7 @@ func work(ctx context.Context) {
 
 func main() {
 	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
 
 	go work(ctx)
 	cancel()
@@ -177,7 +177,7 @@ func exportText(ctx context.Context, path string, tasks []task.Task) error {
 		return err
 	}
 
-	var content string
+	var builder strings.Builder
 	for _, currentTask := range tasks {
 		select {
 		case <-ctx.Done():
@@ -185,16 +185,19 @@ func exportText(ctx context.Context, path string, tasks []task.Task) error {
 		default:
 		}
 
-		content += currentTask.Summary() + "\n"
+		builder.WriteString(currentTask.Summary())
+		builder.WriteString("\n")
 	}
 
 	if err := ctx.Err(); err != nil {
 		return err
 	}
 
-	return os.WriteFile(path, []byte(content), 0o644)
+	return os.WriteFile(path, []byte(builder.String()), 0o644)
 }
 ```
+
+Для этой версии экспорта добавьте импорт `strings`.
 
 JSON-экспорт устроен аналогично:
 
@@ -227,7 +230,12 @@ type exportResult struct {
 	Err  error
 }
 
-func saveExports(ctx context.Context, tasks []task.Task) <-chan exportResult {
+func startExports(
+	ctx context.Context,
+	tasks []task.Task,
+	textPath string,
+	jsonPath string,
+) <-chan exportResult {
 	results := make(chan exportResult, 2)
 	var wg sync.WaitGroup
 	wg.Add(2)
@@ -236,7 +244,7 @@ func saveExports(ctx context.Context, tasks []task.Task) <-chan exportResult {
 		defer wg.Done()
 		result := exportResult{
 			Name: "текстовый экспорт",
-			Err:  exportText(ctx, "tasks.txt", tasks),
+			Err:  exportText(ctx, textPath, tasks),
 		}
 
 		select {
@@ -249,7 +257,7 @@ func saveExports(ctx context.Context, tasks []task.Task) <-chan exportResult {
 		defer wg.Done()
 		result := exportResult{
 			Name: "JSON-экспорт",
-			Err:  exportJSON(ctx, "tasks.json", tasks),
+			Err:  exportJSON(ctx, jsonPath, tasks),
 		}
 
 		select {
@@ -300,7 +308,7 @@ func waitForExports(ctx context.Context, results <-chan exportResult) error {
 ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 defer cancel()
 
-results := saveExports(ctx, tasks)
+results := startExports(ctx, tasks, "tasks.txt", "tasks.json")
 
 if err := waitForExports(ctx, results); err != nil {
 	if errors.Is(err, context.DeadlineExceeded) {
@@ -313,6 +321,57 @@ if err := waitForExports(ctx, results); err != nil {
 ```
 
 Контекст связывает ожидание и саму работу: после истечения дедлайна `waitForExports` прекращает ожидание, а экспорты замечают отмену при следующей проверке.
+
+## Тестирование отмены без `time.Sleep`
+
+Ручную отмену можно тестировать детерминированно: worker сообщает о завершении через канал, а тест сам вызывает `cancel`. Не нужно ждать произвольное время.
+
+```go
+func waitForCancel(ctx context.Context, done chan<- error) {
+	defer close(done)
+
+	<-ctx.Done()
+	done <- ctx.Err()
+}
+
+func TestWaitForCancel(t *testing.T) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	done := make(chan error, 1)
+	go waitForCancel(ctx, done)
+
+	cancel()
+
+	err, open := <-done
+	if !open {
+		t.Fatal("worker завершился без результата")
+	}
+	if !errors.Is(err, context.Canceled) {
+		t.Fatalf("ошибка = %v, ожидалась context.Canceled", err)
+	}
+
+	if _, open := <-done; open {
+		t.Fatal("канал done должен быть закрыт")
+	}
+}
+```
+
+Буфер `done` размером один позволяет worker отправить ошибку и завершиться, даже если планировщик ещё не переключился на тест. Закрытие `done` — явный сигнал, что worker больше не будет отправлять результаты.
+
+Для теста отменяемого экспорта заранее отмените контекст **до** вызова функции:
+
+```go
+ctx, cancel := context.WithCancel(context.Background())
+cancel()
+
+err := exportText(ctx, path, tasks)
+if !errors.Is(err, context.Canceled) {
+	t.Fatalf("exportText error = %v, ожидалась context.Canceled", err)
+}
+```
+
+Так проверяется важный контракт: отменённая операция не начинает запись. Путь создавайте через `filepath.Join(t.TempDir(), "tasks.txt")` и после вызова убедитесь, что файла нет.
 
 ## Не используйте context для данных
 

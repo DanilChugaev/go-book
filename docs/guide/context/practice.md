@@ -174,12 +174,12 @@ func exportText(ctx context.Context, path string, tasks []task.Task) error {
 
 ## Задание 4. Добавьте context к экспортам
 
-Измените `saveExports` и `waitForExports` так, чтобы они принимали `context.Context`. В `main` создайте общий `WithTimeout` на три секунды, запустите экспорты и обработайте `context.DeadlineExceeded` отдельным сообщением.
+Измените `startExports` и `waitForExports` так, чтобы они принимали `context.Context`. В `main` создайте общий `WithTimeout` на три секунды, запустите экспорты и обработайте `context.DeadlineExceeded` отдельным сообщением.
 
 **Критерии проверки:**
 
-- один контекст передаётся в `saveExports`, `exportText`, `exportJSON` и `waitForExports`;
-- `saveExports` закрывает канал результатов после отправки обоих результатов;
+- один контекст передаётся в `startExports`, `exportText`, `exportJSON` и `waitForExports`;
+- `startExports` закрывает канал результатов после отправки обоих результатов;
 - `waitForExports` слушает и `results`, и `ctx.Done()`;
 - при дедлайне `main` сообщает, что экспорты не завершились вовремя;
 - в каждом `WithTimeout` есть `defer cancel()`.
@@ -191,7 +191,7 @@ func exportText(ctx context.Context, path string, tasks []task.Task) error {
 ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 defer cancel()
 
-results := saveExports(ctx, tasks)
+results := startExports(ctx, tasks, textPath, jsonPath)
 err := waitForExports(ctx, results)
 ```
 </details>
@@ -203,7 +203,7 @@ err := waitForExports(ctx, results)
 ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 defer cancel()
 
-results := saveExports(ctx, tasks)
+results := startExports(ctx, tasks, textPath, jsonPath)
 
 if err := waitForExports(ctx, results); err != nil {
 	if errors.Is(err, context.DeadlineExceeded) {
@@ -219,6 +219,87 @@ fmt.Println("Все экспорты готовы")
 ```
 </details>
 
+## Задание 5. Протестируйте worker с отменой
+
+Напишите тест, в котором worker получает context, ждёт `ctx.Done()`, отправляет `ctx.Err()` в буферизированный канал и закрывает канал после результата. Тест должен вызвать `cancel` вручную и проверить `context.Canceled` без `time.Sleep`.
+
+**Критерии проверки:**
+
+- worker получает context параметром;
+- worker не использует фиксированную задержку;
+- тест вызывает `cancel()` после запуска worker;
+- результат проверяется через `errors.Is`;
+- тест проверяет закрытие канала после результата;
+- `go test ./...` и `go test -race ./...` проходят успешно.
+
+<details>
+  <summary>Подсказка</summary>
+
+Буферизированный канал размера `1` позволит worker отправить ошибку, даже если тест ещё не начал чтение:
+
+```go
+done := make(chan error, 1)
+```
+</details>
+
+<details>
+  <summary>Решение</summary>
+
+```go
+func waitForCancel(ctx context.Context, done chan<- error) {
+	defer close(done)
+
+	<-ctx.Done()
+	done <- ctx.Err()
+}
+
+func TestWaitForCancel(t *testing.T) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	done := make(chan error, 1)
+	go waitForCancel(ctx, done)
+
+	cancel()
+
+	err, open := <-done
+	if !open {
+		t.Fatal("worker завершился без результата")
+	}
+	if !errors.Is(err, context.Canceled) {
+		t.Fatalf("ошибка = %v, ожидалась context.Canceled", err)
+	}
+
+	if _, open := <-done; open {
+		t.Fatal("канал done должен быть закрыт")
+	}
+}
+```
+</details>
+
+## Задание 6. Отмените экспорт до записи
+
+Создайте отменённый context до вызова `exportText`. Путь к файлу постройте через `filepath.Join(t.TempDir(), "tasks.txt")`. Проверьте, что функция возвращает `context.Canceled`, а файл не создаётся.
+
+**Критерии проверки:**
+
+- используется `t.TempDir`;
+- context отменён до вызова экспорта;
+- ошибка проверяется через `errors.Is`;
+- проверяется отсутствие файла через `os.Stat` и `os.IsNotExist`;
+- тест не использует `time.Sleep`.
+
+<details>
+  <summary>Подсказка</summary>
+
+```go
+ctx, cancel := context.WithCancel(context.Background())
+cancel()
+
+err := exportText(ctx, path, tasks)
+```
+</details>
+
 ## Проверьте себя
 
 Перед следующей главой убедитесь, что вы можете:
@@ -229,3 +310,5 @@ fmt.Println("Все экспорты готовы")
 - вернуть `ctx.Err()` из отменяемой функции;
 - отличить `context.Canceled` от `context.DeadlineExceeded`;
 - передать общий context по цепочке экспортов.
+- протестировать отмену worker без `time.Sleep`;
+- проверить, что отменённый экспорт не создаёт файл.
