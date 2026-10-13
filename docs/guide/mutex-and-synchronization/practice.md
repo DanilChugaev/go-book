@@ -151,7 +151,40 @@ func (store *TaskStore) Complete(id int) error {
 ```
 </details>
 
-## Задание 4. Проверьте конкурентный доступ
+## Задание 4. Напишите последовательные тесты TaskStore
+
+Создайте `internal/store/store_test.go` рядом с `TaskStore`. Напишите table-driven tests для:
+
+- успешного добавления задачи;
+- повторного ID и `ErrTaskAlreadyExists`;
+- `Get` существующей и отсутствующей задачи;
+- `Rename` и `Complete` отсутствующей задачи с `ErrTaskNotFound`.
+
+**Критерии проверки:**
+
+- каждый subtest создаёт новый `TaskStore`;
+- известные ошибки проверяются через `errors.Is`;
+- сценарии не используют одну общую map или Store;
+- успешный Add проверяется последующим Get;
+- `go test ./...` проходит успешно.
+
+<details>
+  <summary>Подсказка</summary>
+
+```go
+t.Run("повторный ID", func(t *testing.T) {
+	store := NewTaskStore()
+	_ = store.Add(task.Task{ID: 1, Title: "Первая задача", Priority: 1})
+
+	err := store.Add(task.Task{ID: 1, Title: "Вторая задача", Priority: 2})
+	if !errors.Is(err, ErrTaskAlreadyExists) {
+		t.Fatalf("Add error = %v", err)
+	}
+})
+```
+</details>
+
+## Задание 5. Проверьте конкурентный доступ
 
 Создайте `TaskStore`, добавьте задачу с ID `1`, затем запустите две goroutine:
 
@@ -166,7 +199,7 @@ func (store *TaskStore) Complete(id int) error {
 - `WaitGroup` ждёт обе goroutine;
 - ошибки `Rename` и `Complete` не игнорируются: их можно вывести из goroutine;
 - итоговая задача имеет `Completed: true` и новое название;
-- `go run -race .` не сообщает о гонке данных.
+- `go test -race ./...` не сообщает о гонке данных.
 
 <details>
   <summary>Подсказка</summary>
@@ -210,6 +243,29 @@ if currentTask, exists := store.Get(1); exists {
 ```
 </details>
 
+## Задание 6. Одновременный Add
+
+Запустите несколько goroutine, каждая из которых пытается добавить задачу с ID `1`. Дождитесь их через `WaitGroup`. После завершения проверьте:
+
+- в Store есть одна задача с ID `1`;
+- ровно один вызов `Add` завершился успешно;
+- все остальные ошибки распознаются как `ErrTaskAlreadyExists`;
+- тест проходит с `go test -race ./...`.
+
+**Критерии проверки:**
+
+- используется один `TaskStore`;
+- успешный вызов не привязан к конкретной goroutine;
+- доступ к счётчикам результатов теста синхронизирован или собирается после worker через канал;
+- ошибки проверяются через `errors.Is`;
+- нет `time.Sleep`.
+
+<details>
+  <summary>Подсказка</summary>
+
+Поскольку глава о каналах уже пройдена, удобно отправлять результат каждого `Add` в буферизированный `chan error` и читать его после `wg.Wait()`.
+</details>
+
 ## Проверьте себя
 
 Перед следующей главой убедитесь, что вы можете:
@@ -220,3 +276,5 @@ if currentTask, exists := store.Get(1); exists {
 - защитить чтение через `RLock` и `defer RUnlock`;
 - объяснить разницу задач `WaitGroup`, мьютекса и канала;
 - не копировать структуру с уже используемым мьютексом.
+- тестировать последовательный и конкурентный контракт TaskStore;
+- запускать хранилище с `go test -race ./...`.

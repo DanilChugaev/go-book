@@ -380,6 +380,8 @@
 - роли `WaitGroup`, mutex и каналов;
 - потокобезопасный `TaskStore`;
 - короткие критические секции.
+- последовательные и конкурентные тесты TaskStore;
+- `go test -race ./...` для проверки хранилища.
 
 1. [Mutex и синхронизация](mutex-and-synchronization/README.md)
 2. [Самопроверка](mutex-and-synchronization/tests.md)

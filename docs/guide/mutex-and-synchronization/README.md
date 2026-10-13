@@ -7,7 +7,7 @@ next: /guide/mutex-and-synchronization/tests.md
 
 ## Цель урока
 
-Научиться распознавать гонки данных, защищать общее изменяемое состояние через `sync.Mutex` и `sync.RWMutex`, а также создать безопасное хранилище задач `TaskStore`.
+Научиться распознавать гонки данных, защищать общее изменяемое состояние через `sync.Mutex` и `sync.RWMutex`, создать безопасное хранилище задач `TaskStore` и проверить его через `go test -race`.
 
 Каналы подходят для передачи данных между goroutine. Но иногда несколько goroutine должны обращаться к одной структуре данных — например, к map задач. В этом случае доступ нужно синхронизировать мьютексом.
 
@@ -328,6 +328,115 @@ func main() {
 
 Для краткости в `main` ошибки методов игнорируются через `_`. В реальном приложении их нужно обрабатывать; в практических заданиях ниже это будет сделано явно.
 
+## Тестирование TaskStore
+
+У `TaskStore` есть два уровня проверки:
+
+1. последовательные unit-тесты контракта `Add`, `Get`, `Rename` и `Complete`;
+2. конкурентные тесты, которые запускают операции из нескольких goroutine и проверяются с `-race`.
+
+### Последовательные операции
+
+Table-driven tests помогают проверить нормальные и ошибочные сценарии без дублирования setup:
+
+```go
+func TestTaskStoreAdd(t *testing.T) {
+	testCases := []struct {
+		name    string
+		setup   func(*TaskStore)
+		current task.Task
+		wantErr error
+	}{
+		{
+			name:    "новая задача",
+			current: task.Task{ID: 1, Title: "Купить молоко", Priority: 2},
+		},
+		{
+			name: "повторный ID",
+			setup: func(store *TaskStore) {
+				_ = store.Add(task.Task{ID: 1, Title: "Первая задача", Priority: 1})
+			},
+			current: task.Task{ID: 1, Title: "Вторая задача", Priority: 2},
+			wantErr: ErrTaskAlreadyExists,
+		},
+	}
+
+	for _, testCase := range testCases {
+		t.Run(testCase.name, func(t *testing.T) {
+			store := NewTaskStore()
+			if testCase.setup != nil {
+				testCase.setup(store)
+			}
+
+			err := store.Add(testCase.current)
+			if !errors.Is(err, testCase.wantErr) {
+				t.Fatalf("Add error = %v, ожидалось %v", err, testCase.wantErr)
+			}
+		})
+	}
+}
+```
+
+Каждый subtest создаёт новый `TaskStore`: сценарии не влияют на состояние друг друга.
+
+### Конкурентный сценарий
+
+Тест должен проверять итоговое состояние, а не порядок выполнения goroutine. Например, `Complete` и `Rename` меняют разные поля задачи, поэтому после ожидания обе операции должны быть видны:
+
+```go
+func TestTaskStoreConcurrentUpdate(t *testing.T) {
+	store := NewTaskStore()
+	if err := store.Add(task.Task{ID: 1, Title: "Купить молоко", Priority: 2}); err != nil {
+		t.Fatalf("Add вернул ошибку: %v", err)
+	}
+
+	var wg sync.WaitGroup
+	wg.Add(2)
+
+	go func() {
+		defer wg.Done()
+		if err := store.Complete(1); err != nil {
+			t.Errorf("Complete вернул ошибку: %v", err)
+		}
+	}()
+
+	go func() {
+		defer wg.Done()
+		if err := store.Rename(1, "Купить продукты"); err != nil {
+			t.Errorf("Rename вернул ошибку: %v", err)
+		}
+	}()
+
+	wg.Wait()
+
+	currentTask, exists := store.Get(1)
+	if !exists {
+		t.Fatal("задача не найдена")
+	}
+
+	if !currentTask.Completed {
+		t.Error("задача должна быть выполненной")
+	}
+	if currentTask.Title != "Купить продукты" {
+		t.Errorf("Title = %q, ожидалось %q", currentTask.Title, "Купить продукты")
+	}
+}
+```
+
+Запускайте такой тест с детектором гонок:
+
+```bash
+go test -race ./...
+```
+
+Обычный `go test` подтверждает ожидаемый результат этого запуска. `-race` дополнительно следит за одновременным небезопасным доступом к данным во время выполнения теста.
+
+### Конкурентное добавление с одинаковым ID
+
+Одновременная попытка добавить один ID — полезная проверка границы `Add`. Итог должен быть предсказуем: один вызов успешен, остальные возвращают `ErrTaskAlreadyExists`.
+
+Не требуйте, чтобы успешной была конкретная goroutine: её порядок не определён. Проверяйте количество успехов, количество ожидаемых ошибок и наличие ровно одной задачи в Store.
+
 ## WaitGroup и Mutex решают разные задачи
 
 Эти инструменты часто используются вместе, но отвечают на разные вопросы:
@@ -400,6 +509,10 @@ Map не поддерживает конкурентное чтение и за�
 ### Копировать Mutex
 
 Не передавайте `sync.Mutex`, `sync.RWMutex` и `sync.WaitGroup` по значению после первого использования. Передавайте указатель на структуру, которая их содержит.
+
+### Тест без `-race`
+
+Успешный `go test` не гарантирует отсутствие гонок. Конкурентные тесты запускайте также с `go test -race ./...`.
 
 ## Дальше
 
