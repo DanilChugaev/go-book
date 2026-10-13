@@ -134,6 +134,115 @@ if currentTask.DueAt.IsZero() {
 ```
 </details>
 
+## Задание 4. Протестируйте дедлайн
+
+В `internal/task/task_test.go` добавьте table-driven tests для `IsOverdue` и `Remaining`. Создайте фиксированное значение:
+
+```go
+now := time.Date(2026, time.January, 1, 12, 0, 0, 0, time.UTC)
+```
+
+Проверьте сценарии:
+
+- дедлайн отсутствует;
+- дедлайн на минуту раньше `now`;
+- дедлайн равен `now`;
+- дедлайн через час после `now`.
+
+**Критерии проверки:**
+
+- тест не вызывает `time.Now()`;
+- каждый сценарий запускается через `t.Run`;
+- для `IsOverdue` проверяется `bool`;
+- для `Remaining` проверяется ожидаемая `time.Duration`;
+- равный `now` дедлайн в текущем контракте не считается просроченным;
+- запуск `go test ./...` проходит успешно.
+
+<details>
+  <summary>Подсказка</summary>
+
+```go
+testCases := []struct {
+	name          string
+	dueAt         time.Time
+	wantOverdue   bool
+	wantRemaining time.Duration
+}{
+	// сценарии
+}
+```
+</details>
+
+<details>
+  <summary>Решение</summary>
+
+```go
+func TestTaskDeadline(t *testing.T) {
+	now := time.Date(2026, time.January, 1, 12, 0, 0, 0, time.UTC)
+
+	testCases := []struct {
+		name          string
+		dueAt         time.Time
+		wantOverdue   bool
+		wantRemaining time.Duration
+	}{
+		{
+			name: "дедлайн не установлен",
+		},
+		{
+			name:          "дедлайн в прошлом",
+			dueAt:         now.Add(-time.Minute),
+			wantOverdue:   true,
+			wantRemaining: -time.Minute,
+		},
+		{
+			name: "дедлайн равен now",
+			dueAt: now,
+		},
+		{
+			name:          "дедлайн через час",
+			dueAt:         now.Add(time.Hour),
+			wantRemaining: time.Hour,
+		},
+	}
+
+	for _, testCase := range testCases {
+		t.Run(testCase.name, func(t *testing.T) {
+			currentTask := Task{DueAt: testCase.dueAt}
+
+			if got := currentTask.IsOverdue(now); got != testCase.wantOverdue {
+				t.Errorf("IsOverdue() = %t, ожидалось %t", got, testCase.wantOverdue)
+			}
+
+			if got := currentTask.Remaining(now); got != testCase.wantRemaining {
+				t.Errorf("Remaining() = %s, ожидалось %s", got, testCase.wantRemaining)
+			}
+		})
+	}
+}
+```
+</details>
+
+## Задание 5. Проверьте JSON round-trip дедлайна
+
+Создайте задачу с `DueAt` в UTC, сериализуйте её через `json.Marshal`, восстановите через `json.Unmarshal` и проверьте, что загруженный дедлайн описывает тот же момент времени.
+
+**Критерии проверки:**
+
+- дедлайн создаётся через `time.Date` в `time.UTC`;
+- проверяются ошибки `Marshal` и `Unmarshal`;
+- момент времени сравнивается через `gotTask.DueAt.Equal(wantDueAt)`;
+- не используется `gotTask.DueAt == wantDueAt`;
+- тест является независимым от текущего времени компьютера.
+
+<details>
+  <summary>Подсказка</summary>
+
+```go
+wantDueAt := time.Date(2026, time.December, 31, 18, 0, 0, 0, time.UTC)
+```
+</details>
+
 ## Проверьте себя
 
 Перед следующей главой убедитесь, что вы можете:
@@ -143,3 +252,4 @@ if currentTask.DueAt.IsZero() {
 - проверить дедлайн и вычислить оставшееся время;
 - хранить `time.Time` в JSON-модели задачи;
 - объяснить, зачем API использует UTC.
+- написать детерминированный тест дедлайна с фиксированным `now`.

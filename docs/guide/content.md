@@ -309,6 +309,8 @@
 - UTC и RFC3339;
 - поле `DueAt`;
 - методы `IsOverdue` и `Remaining`.
+- table-driven tests дедлайна с фиксированным `now`;
+- JSON round-trip для `DueAt`.
 
 1. [Время и дедлайны](time/README.md)
 2. [Самопроверка](time/tests.md)

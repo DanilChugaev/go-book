@@ -99,5 +99,23 @@ const questions = [
       { text: 'Это обязательно для JSON' },
     ],
   },
+  {
+    text: 'Какой результат должен дать IsOverdue(now), если DueAt точно равен now в текущем контракте?',
+    options: [
+      { text: 'false, потому что now ещё не позже дедлайна', correct: true },
+      { text: 'true, любой равный момент уже просрочен' },
+      { text: 'panic' },
+      { text: 'nil' },
+    ],
+  },
+  {
+    text: 'Как сравнить момент времени после JSON round-trip с исходным?',
+    options: [
+      { text: 'gotDueAt.Equal(wantDueAt)', correct: true },
+      { text: 'gotDueAt == wantDueAt всегда' },
+      { text: 'len(gotDueAt) == len(wantDueAt)' },
+      { text: 'strings.Compare(gotDueAt, wantDueAt)' },
+    ],
+  },
 ]
 </script>

@@ -32,6 +32,12 @@ type Task struct {
 }
 ```
 
+Для этой модели пакет `internal/task` должен импортировать `time`:
+
+```go
+import "time"
+```
+
 Нулевое значение `time.Time` означает отсутствие установленной даты:
 
 ```go
@@ -161,6 +167,99 @@ if currentTask.IsOverdue(now) {
 }
 ```
 
+## Тестирование дедлайнов с фиксированным временем
+
+Не вызывайте `time.Now()` прямо в unit-тесте проверки дедлайна. Реальное время постоянно меняется, поэтому такой тест может стать нестабильным. Создайте фиксированное значение `now` и передайте его в методы:
+
+```go
+now := time.Date(2026, time.January, 1, 12, 0, 0, 0, time.UTC)
+```
+
+Табличный тест может проверить основные сценарии:
+
+```go
+func TestTaskIsOverdue(t *testing.T) {
+	now := time.Date(2026, time.January, 1, 12, 0, 0, 0, time.UTC)
+
+	testCases := []struct {
+		name    string
+		dueAt   time.Time
+		want    bool
+	}{
+		{
+			name: "дедлайн не установлен",
+		},
+		{
+			name:  "дедлайн в прошлом",
+			dueAt:  now.Add(-time.Minute),
+			want:   true,
+		},
+		{
+			name:  "дедлайн равен текущему времени",
+			dueAt:  now,
+			want:   false,
+		},
+		{
+			name:  "дедлайн в будущем",
+			dueAt:  now.Add(time.Hour),
+			want:   false,
+		},
+	}
+
+	for _, testCase := range testCases {
+		t.Run(testCase.name, func(t *testing.T) {
+			currentTask := Task{DueAt: testCase.dueAt}
+
+			if got := currentTask.IsOverdue(now); got != testCase.want {
+				t.Errorf("IsOverdue() = %t, ожидалось %t", got, testCase.want)
+			}
+		})
+	}
+}
+```
+
+В текущем контракте дедлайн считается просроченным, только если `now` **строго позже** `DueAt`. Поэтому при точном равенстве `IsOverdue` возвращает `false`. Это правило должно быть явно зафиксировано тестом, чтобы его случайно не изменить при рефакторинге.
+
+Проверьте `Remaining` отдельными сценариями:
+
+- дедлайн не установлен → `0`;
+- дедлайн через час → `time.Hour`;
+- дедлайн в прошлом → отрицательная длительность, например `-time.Minute`.
+
+Отрицательное значение `Remaining` само по себе не ошибка: его можно использовать для отображения просрочки. Если вызывающему коду нужна только оставшаяся положительная длительность, он должен отдельно проверить `IsOverdue`.
+
+## JSON round-trip для `DueAt`
+
+`time.Time` автоматически кодируется в JSON строкой RFC3339. При сохранении и загрузке задачи момент времени должен остаться тем же:
+
+```go
+func TestTaskDueAtJSONRoundTrip(t *testing.T) {
+	wantDueAt := time.Date(2026, time.December, 31, 18, 0, 0, 0, time.UTC)
+	wantTask := Task{
+		ID:       1,
+		Title:    "Купить молоко",
+		Priority: 2,
+		DueAt:    wantDueAt,
+	}
+
+	data, err := json.Marshal(wantTask)
+	if err != nil {
+		t.Fatalf("Marshal вернул ошибку: %v", err)
+	}
+
+	var gotTask Task
+	if err := json.Unmarshal(data, &gotTask); err != nil {
+		t.Fatalf("Unmarshal вернул ошибку: %v", err)
+	}
+
+	if !gotTask.DueAt.Equal(wantDueAt) {
+		t.Errorf("DueAt = %s, ожидалось %s", gotTask.DueAt, wantDueAt)
+	}
+}
+```
+
+Для сравнения времени используйте `Equal`, а не `==`: JSON round-trip меняет внутреннее представление `time.Time`, но не сам момент времени.
+
 ## Частые ошибки
 
 ### Неверный layout даты
@@ -183,6 +282,16 @@ first.Equal(second)
 ### `24 * time.Hour` как «завтра в то же локальное время»
 
 Для UTC-дедлайнов это обычно нормально. При переходах летнего времени для календарных вычислений используйте `time.AddDate` и явную `Location`.
+
+### Тест с `time.Now()`
+
+```go
+if task.IsOverdue(time.Now()) {
+	// Такой тест зависит от момента запуска.
+}
+```
+
+В unit-тесте создавайте фиксированный `now` через `time.Date` и передавайте его в метод.
 
 ## Дальше
 
