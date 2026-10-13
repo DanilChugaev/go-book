@@ -229,7 +229,10 @@
 - отличие ожидаемой ошибки от panic;
 - безопасное закрытие ресурсов Task Manager API.
 
-TODO добавить ссылки на страницы
+1. [`defer`, `panic` и `recover`](defer-panic-recover/README.md)
+2. [Самопроверка](defer-panic-recover/tests.md)
+3. [Задания](defer-panic-recover/practice.md)
+4. [Рекомендации по коду](defer-panic-recover/best-practices.md)
 
 ### Глава 16. Пакеты и модули
 

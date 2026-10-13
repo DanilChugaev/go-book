@@ -1,6 +1,6 @@
 ---
 prev: /guide/errors/practice.md
-next: /guide/packages-and-modules/README.md
+next: /guide/defer-panic-recover/README.md
 ---
 
 # Рекомендации по коду: ошибки

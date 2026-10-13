@@ -165,7 +165,18 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
-          text: 'Глава 15: Пакеты и модули',
+          text: 'Глава 15: defer, panic и recover',
+          link: '/guide/defer-panic-recover/README.md',
+          collapsible: true,
+          children: [
+            '/guide/defer-panic-recover/README.md',
+            '/guide/defer-panic-recover/tests.md',
+            '/guide/defer-panic-recover/practice.md',
+            '/guide/defer-panic-recover/best-practices.md',
+          ],
+        },
+        {
+          text: 'Глава 16: Пакеты и модули',
           link: '/guide/packages-and-modules/README.md',
           collapsible: true,
           children: [
@@ -176,7 +187,7 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
-          text: 'Глава 16: Файлы и ввод-вывод',
+          text: 'Глава 17: Файлы и ввод-вывод',
           link: '/guide/file-io/README.md',
           collapsible: true,
           children: [
@@ -187,7 +198,7 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
-          text: 'Глава 17: JSON и сериализация',
+          text: 'Глава 18: JSON и сериализация',
           link: '/guide/json/README.md',
           collapsible: true,
           children: [
@@ -198,7 +209,7 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
-          text: 'Глава 18: Время и дедлайны',
+          text: 'Глава 19: Время и дедлайны',
           link: '/guide/time/README.md',
           collapsible: true,
           children: [
@@ -209,7 +220,7 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
-          text: 'Глава 19: Goroutine',
+          text: 'Глава 20: Goroutine',
           link: '/guide/goroutines/README.md',
           collapsible: true,
           children: [
@@ -220,7 +231,7 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
-          text: 'Глава 20: Каналы',
+          text: 'Глава 21: Каналы',
           link: '/guide/channels/README.md',
           collapsible: true,
           children: [
@@ -231,7 +242,7 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
-          text: 'Глава 21: Select и таймауты',
+          text: 'Глава 22: Select и таймауты',
           link: '/guide/select-and-timeouts/README.md',
           collapsible: true,
           children: [
@@ -242,7 +253,7 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
-          text: 'Глава 22: Mutex и синхронизация',
+          text: 'Глава 23: Mutex и синхронизация',
           link: '/guide/mutex-and-synchronization/README.md',
           collapsible: true,
           children: [
@@ -253,7 +264,7 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
-          text: 'Глава 23: Context',
+          text: 'Глава 24: Context',
           link: '/guide/context/README.md',
           collapsible: true,
           children: [

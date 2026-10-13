@@ -1,5 +1,5 @@
 ---
-prev: /guide/errors/practice.md
+prev: /guide/defer-panic-recover/best-practices.md
 next: /guide/packages-and-modules/tests.md
 ---
 
