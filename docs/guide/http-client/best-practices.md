@@ -1,5 +1,6 @@
 ---
 prev: /guide/http-client/practice.md
+next: /guide/resty/README.md
 ---
 
 # Рекомендации по коду: HTTP-клиент

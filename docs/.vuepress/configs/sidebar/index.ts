@@ -330,6 +330,17 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Глава 30: HTTP-клиент на Resty',
+          link: '/guide/resty/README.md',
+          collapsible: true,
+          children: [
+            '/guide/resty/README.md',
+            '/guide/resty/tests.md',
+            '/guide/resty/practice.md',
+            '/guide/resty/best-practices.md',
+          ],
+        },
+        {
           text: 'Справочник',
           link: '/guide/directory/base-directory.md',
           collapsible: true,
