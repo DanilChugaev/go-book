@@ -94,10 +94,10 @@ Goroutine — ответственность вызывающего кода. Ф
 Напишите функцию:
 
 ```go
-func saveExports(tasks []task.Task) (error, error)
+func saveExports(tasks []task.Task, textPath, jsonPath string) (error, error)
 ```
 
-Она должна параллельно вызвать `exportText("tasks.txt", tasks)` и `exportJSON("tasks.json", tasks)`, дождаться обеих операций и вернуть две ошибки.
+Она должна параллельно вызвать текстовый и JSON-экспорт по переданным путям, дождаться обеих операций и вернуть две ошибки.
 
 **Критерии проверки:**
 
@@ -134,12 +134,12 @@ func saveExports(tasks []task.Task) (error, error) {
 
 	go func() {
 		defer wg.Done()
-		textErr = exportText("tasks.txt", tasks)
+		textErr = exportText(textPath, tasks)
 	}()
 
 	go func() {
 		defer wg.Done()
-		jsonErr = exportJSON("tasks.json", tasks)
+		jsonErr = storage.SaveTasks(jsonPath, tasks)
 	}()
 
 	wg.Wait()
@@ -148,9 +148,64 @@ func saveExports(tasks []task.Task) (error, error) {
 ```
 </details>
 
-## Задание 4. Обработайте результаты
+## Задание 4. Протестируйте параллельных работников
 
-Создайте две задачи, вызовите `saveExports` и обработайте каждую ошибку отдельно. Если обе ошибки равны `nil`, выведите `Все экспорты готовы`.
+Напишите `startExports`, которая запускает текстовый и JSON-экспорт в goroutine, возвращает канал `<-chan exportResult` и закрывает его после завершения обоих worker через `WaitGroup`. Напишите тест во временной директории: он должен прочитать все результаты из канала и убедиться, что `tasks.txt` и `tasks.json` созданы.
+
+Это первое точечное применение канала. Детально устройство каналов будет разобрано в следующей главе.
+
+**Критерии проверки:**
+
+- `WaitGroup` ожидает ровно две goroutine;
+- каждая goroutine отправляет один `exportResult`;
+- отдельная goroutine закрывает канал только после `wg.Wait()`;
+- тест строит пути через `filepath.Join(t.TempDir(), ...)`;
+- тест не использует `time.Sleep`;
+- после чтения закрытого канала существуют оба экспортных файла.
+
+<details>
+  <summary>Подсказка</summary>
+
+```go
+go func() {
+	wg.Wait()
+	close(results)
+}()
+
+for result := range results {
+	if result.Err != nil {
+		t.Errorf("%s export returned error: %v", result.Name, result.Err)
+	}
+}
+```
+</details>
+
+<details>
+  <summary>Фрагмент теста</summary>
+
+```go
+func TestStartExports(t *testing.T) {
+	directory := t.TempDir()
+	tasks := []task.Task{{ID: 1, Title: "Купить молоко", Priority: 2}}
+
+	results := startExports(
+		tasks,
+		filepath.Join(directory, "tasks.txt"),
+		filepath.Join(directory, "tasks.json"),
+	)
+
+	for result := range results {
+		if result.Err != nil {
+			t.Errorf("%s export returned error: %v", result.Name, result.Err)
+		}
+	}
+}
+```
+</details>
+
+## Задание 5. Обработайте результаты
+
+Создайте две задачи, вызовите `saveExports` с двумя путями внутри временной папки и обработайте каждую ошибку отдельно. Если обе ошибки равны `nil`, выведите `Все экспорты готовы`.
 
 **Критерии проверки:**
 
@@ -163,7 +218,12 @@ func saveExports(tasks []task.Task) (error, error) {
   <summary>Подсказка</summary>
 
 ```go
-textErr, jsonErr := saveExports(tasks)
+directory := t.TempDir()
+textErr, jsonErr := saveExports(
+	tasks,
+	filepath.Join(directory, "tasks.txt"),
+	filepath.Join(directory, "tasks.json"),
+)
 
 if textErr != nil {
 	fmt.Println("Ошибка текстового экспорта:", textErr)
@@ -183,4 +243,5 @@ if jsonErr != nil {
 - правильно использовать `Add`, `Done` и `Wait`;
 - объяснить, почему `defer wg.Done()` стоит в начале goroutine;
 - дождаться двух независимых экспортов без `time.Sleep`;
+- протестировать фоновых worker без ожидания фиксированное время;
 - не полагаться на порядок выполнения goroutine.

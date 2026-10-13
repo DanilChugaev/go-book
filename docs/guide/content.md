@@ -329,6 +329,7 @@
 - `defer wg.Done()`;
 - goroutine в цикле;
 - параллельная подготовка экспортов.
+- тестирование фоновых worker через `t.TempDir` и сигнал завершения.
 
 1. [Goroutine](goroutines/README.md)
 2. [Самопроверка](goroutines/tests.md)

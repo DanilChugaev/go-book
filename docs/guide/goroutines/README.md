@@ -7,7 +7,7 @@ next: /guide/goroutines/tests.md
 
 ## Цель урока
 
-Научиться запускать независимую работу параллельно через `go`, ждать её завершения с `sync.WaitGroup` и понимать, почему порядок вывода goroutine нельзя считать предсказуемым.
+Научиться запускать независимую работу параллельно через `go`, ждать её завершения с `sync.WaitGroup`, тестировать фоновых работников без `time.Sleep` и понимать, почему порядок выполнения goroutine нельзя считать предсказуемым.
 
 В Task Manager API goroutine пригодятся для независимых операций: например, можно одновременно подготовить текстовый экспорт и JSON-файл задач. Каналы появятся в следующей главе; пока для ожидания завершения достаточно `WaitGroup`.
 
@@ -179,7 +179,7 @@ wg.Wait()
 Текстовый и JSON-экспорт используют один и тот же неизменяемый список задач, но записывают разные файлы. Это хороший первый случай для goroutine: операции независимы.
 
 ```go
-func saveExports(tasks []task.Task) (error, error) {
+func saveExports(tasks []task.Task, textPath, jsonPath string) (error, error) {
 	var wg sync.WaitGroup
 	var textErr error
 	var jsonErr error
@@ -188,12 +188,12 @@ func saveExports(tasks []task.Task) (error, error) {
 
 	go func() {
 		defer wg.Done()
-		textErr = exportText("tasks.txt", tasks)
+		textErr = exportText(textPath, tasks)
 	}()
 
 	go func() {
 		defer wg.Done()
-		jsonErr = saveTasks("tasks.json", tasks)
+		jsonErr = storage.SaveTasks(jsonPath, tasks)
 	}()
 
 	wg.Wait()
@@ -201,12 +201,12 @@ func saveExports(tasks []task.Task) (error, error) {
 }
 ```
 
-Каждая goroutine записывает только свою переменную ошибки, а `main` читает результаты только после `wg.Wait()`. В следующих главах каналы дадут более гибкий способ получать результаты из goroutine.
+Каждая goroutine записывает только свою переменную ошибки, а вызывающий код читает результаты только после `wg.Wait()`. Пути передаются параметрами: это позволяет не создавать файлы в рабочей папке при тестировании.
 
 Использование:
 
 ```go
-textErr, jsonErr := saveExports(tasks)
+textErr, jsonErr := saveExports(tasks, "tasks.txt", "tasks.json")
 
 if textErr != nil {
 	fmt.Println("Ошибка текстового экспорта:", textErr)
@@ -215,6 +215,73 @@ if jsonErr != nil {
 	fmt.Println("Ошибка JSON-экспорта:", jsonErr)
 }
 ```
+
+## Тестирование goroutine без `time.Sleep`
+
+Тест не должен ждать «достаточно долго» в надежде, что работники уже завершились. Вместо этого он должен получить явный сигнал завершения. Для проверки параллельного экспорта удобно использовать временную директорию и канал результатов.
+
+Каналы подробно появятся в следующей главе. Здесь достаточно использовать один буферизированный канал как тестовый контракт: каждый worker отправляет результат, а отдельная goroutine закрывает канал после `wg.Wait()`.
+
+```go
+type exportResult struct {
+	Name string
+	Err  error
+}
+
+func startExports(tasks []task.Task, textPath, jsonPath string) <-chan exportResult {
+	results := make(chan exportResult, 2)
+	var wg sync.WaitGroup
+	wg.Add(2)
+
+	go func() {
+		defer wg.Done()
+		result := exportResult{
+			Name: "text",
+			Err:  exportText(textPath, tasks),
+		}
+		results <- result
+	}()
+
+	go func() {
+		defer wg.Done()
+		result := exportResult{
+			Name: "json",
+			Err:  storage.SaveTasks(jsonPath, tasks),
+		}
+		results <- result
+	}()
+
+	go func() {
+		wg.Wait()
+		close(results)
+	}()
+
+	return results
+}
+```
+
+Тест читает канал до закрытия. Это означает, что оба worker завершились, и никаких искусственных пауз не нужно:
+
+```go
+func TestStartExports(t *testing.T) {
+	directory := t.TempDir()
+	tasks := []task.Task{{ID: 1, Title: "Купить молоко", Priority: 2}}
+
+	results := startExports(
+		tasks,
+		filepath.Join(directory, "tasks.txt"),
+		filepath.Join(directory, "tasks.json"),
+	)
+
+	for result := range results {
+		if result.Err != nil {
+			t.Errorf("%s export returned error: %v", result.Name, result.Err)
+		}
+	}
+}
+```
+
+В следующей главе разберём, почему отправка и получение через канал работают именно так, как закрывать канал при нескольких отправителях и как выражать направление канала в API.
 
 ## Что пока не делать
 
@@ -268,6 +335,15 @@ time.Sleep(time.Second)
 ```
 
 Время не доказывает завершение работы. Синхронизация должна отражать событие завершения, а не предположение о скорости компьютера.
+
+### Тест без ожидания завершения
+
+```go
+go saveExports(tasks, textPath, jsonPath)
+// Сразу проверяется файл: worker мог ещё не успеть его создать.
+```
+
+В тесте дождитесь `WaitGroup` или прочитайте все результаты из канала, который закрывается после завершения worker.
 
 ## Дальше
 
