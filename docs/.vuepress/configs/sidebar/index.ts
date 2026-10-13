@@ -319,6 +319,17 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Глава 29: HTTP-клиент',
+          link: '/guide/http-client/README.md',
+          collapsible: true,
+          children: [
+            '/guide/http-client/README.md',
+            '/guide/http-client/tests.md',
+            '/guide/http-client/practice.md',
+            '/guide/http-client/best-practices.md',
+          ],
+        },
+        {
           text: 'Справочник',
           link: '/guide/directory/base-directory.md',
           collapsible: true,

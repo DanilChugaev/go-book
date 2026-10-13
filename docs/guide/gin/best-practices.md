@@ -1,5 +1,6 @@
 ---
 prev: /guide/gin/practice.md
+next: /guide/http-client/README.md
 ---
 
 # Рекомендации по коду: Gin
