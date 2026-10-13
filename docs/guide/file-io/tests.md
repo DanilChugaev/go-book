@@ -99,5 +99,23 @@ const questions = [
       { text: 'Он удаляет файл после чтения' },
     ],
   },
+  {
+    text: 'Как безопасно собрать путь к tasks.txt внутри папки data?',
+    options: [
+      { text: 'filepath.Join("data", "tasks.txt")', correct: true },
+      { text: '"data" + "/" + "tasks.txt"' },
+      { text: 'os.Path("data", "tasks.txt")' },
+      { text: 'strings.Split("data/tasks.txt", "/")' },
+    ],
+  },
+  {
+    text: 'Зачем в тесте файлового экспорта используют t.TempDir()?',
+    options: [
+      { text: 'Чтобы создать изолированную временную папку, которую Go удалит после теста', correct: true },
+      { text: 'Чтобы навсегда сохранить результаты теста' },
+      { text: 'Чтобы отключить ошибки os.WriteFile' },
+      { text: 'Чтобы заменить filepath.Join' },
+    ],
+  },
 ]
 </script>

@@ -257,7 +257,7 @@
 - table-driven tests;
 - subtests;
 - проверки ошибок через `errors.Is`;
-- тестирование `Task`, `TaskStore` и JSON-хранилища;
+- тестирование `Task` и простого Store;
 - покрытие тестами;
 - `go test -race ./...`.
 
@@ -272,9 +272,11 @@
 - `os.Open`, `os.Create`, `io.ReadAll`;
 - закрытие файла через `defer file.Close()`;
 - пути к файлам;
+- `filepath.Join` и `os.MkdirAll`;
 - `os.ErrNotExist`;
 - текстовый экспорт задач;
 - `strings.Builder` для формирования экспорта.
+- тестирование файлового кода через `t.TempDir`.
 
 1. [Файлы и ввод-вывод](file-io/README.md)
 2. [Самопроверка](file-io/tests.md)

@@ -28,6 +28,60 @@ err := os.WriteFile("tasks.txt", []byte(content), 0o644)
 ```
 </details>
 
+## Задание 5. Протестируйте текстовый экспорт
+
+Создайте `export_test.go` рядом с файлом, где находится `exportTasks`. Напишите `TestExportTasks`: передайте путь внутри `t.TempDir()`, экспортируйте одну или две задачи, затем прочитайте файл через `os.ReadFile` и сравните текст с ожидаемым.
+
+**Критерии проверки:**
+
+- тестовый файл заканчивается на `_test.go`;
+- путь собирается через `filepath.Join(t.TempDir(), "tasks.txt")`;
+- тест не создаёт файл в рабочей папке проекта;
+- ошибка `exportTasks` проверяется через `t.Fatal` или `t.Fatalf`;
+- содержимое файла проверяется целиком;
+- `go test ./...` проходит успешно.
+
+<details>
+  <summary>Подсказка</summary>
+
+```go
+path := filepath.Join(t.TempDir(), "tasks.txt")
+
+if err := exportTasks(path, tasks); err != nil {
+	t.Fatalf("exportTasks вернул ошибку: %v", err)
+}
+```
+</details>
+
+<details>
+  <summary>Решение</summary>
+
+```go
+func TestExportTasks(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "tasks.txt")
+	tasks := []task.Task{
+		{ID: 1, Title: "Купить молоко", Priority: 2},
+	}
+
+	if err := exportTasks(path, tasks); err != nil {
+		t.Fatalf("exportTasks вернул ошибку: %v", err)
+	}
+
+	content, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatalf("не удалось прочитать экспорт: %v", err)
+	}
+
+	want := "1. Купить молоко | приоритет: 2 | выполнена: false\n"
+	if string(content) != want {
+		t.Errorf("экспорт = %q, ожидалось %q", content, want)
+	}
+}
+```
+
+Для теста нужны импорты `os`, `path/filepath`, `testing` и пакет с `Task`.
+</details>
+
 <details>
   <summary>Решение</summary>
 
@@ -218,3 +272,4 @@ func exportTasks(path string, tasks []task.Task) error {
 - объяснить роль `defer file.Close()`;
 - открыть файл через `os.Open` и прочитать его через `io.ReadAll`;
 - экспортировать summary задач в текстовый файл.
+- проверить экспорт через `t.TempDir` без создания файлов в проекте.
