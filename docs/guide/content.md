@@ -545,7 +545,10 @@
 - подключение к локальному PostgreSQL из Docker Compose через DBeaver;
 - просмотр таблиц, данных и результатов миграций в DBeaver.
 
-TODO добавить ссылки на страницы
+1. [SQL и PostgreSQL](sql-postgresql/README.md)
+2. [Самопроверка](sql-postgresql/tests.md)
+3. [Задания](sql-postgresql/practice.md)
+4. [Рекомендации по коду](sql-postgresql/best-practices.md)
 
 ### Глава 34. CI/CD и деплой
 

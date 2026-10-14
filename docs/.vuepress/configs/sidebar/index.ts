@@ -363,6 +363,17 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Глава 33: SQL и PostgreSQL',
+          link: '/guide/sql-postgresql/README.md',
+          collapsible: true,
+          children: [
+            '/guide/sql-postgresql/README.md',
+            '/guide/sql-postgresql/tests.md',
+            '/guide/sql-postgresql/practice.md',
+            '/guide/sql-postgresql/best-practices.md',
+          ],
+        },
+        {
           text: 'Справочник',
           link: '/guide/directory/base-directory.md',
           collapsible: true,
