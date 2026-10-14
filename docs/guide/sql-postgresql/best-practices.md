@@ -1,5 +1,6 @@
 ---
 prev: /guide/sql-postgresql/practice.md
+next: /guide/ci-cd-deploy/README.md
 ---
 
 # Рекомендации по коду: SQL и PostgreSQL

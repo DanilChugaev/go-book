@@ -374,6 +374,17 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Глава 34: CI/CD и деплой',
+          link: '/guide/ci-cd-deploy/README.md',
+          collapsible: true,
+          children: [
+            '/guide/ci-cd-deploy/README.md',
+            '/guide/ci-cd-deploy/tests.md',
+            '/guide/ci-cd-deploy/practice.md',
+            '/guide/ci-cd-deploy/best-practices.md',
+          ],
+        },
+        {
           text: 'Справочник',
           link: '/guide/directory/base-directory.md',
           collapsible: true,

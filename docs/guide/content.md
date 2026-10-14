@@ -561,7 +561,10 @@
 - проверки после деплоя и health-check;
 - различие локального Docker Compose и production-окружения.
 
-TODO добавить ссылки на страницы
+1. [CI/CD и деплой](ci-cd-deploy/README.md)
+2. [Самопроверка](ci-cd-deploy/tests.md)
+3. [Задания](ci-cd-deploy/practice.md)
+4. [Рекомендации по коду](ci-cd-deploy/best-practices.md)
 
 ### Глава 35. Итоговая интеграция
 
