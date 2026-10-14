@@ -1,5 +1,6 @@
 ---
 prev: /guide/resty/practice.md
+next: /guide/configuration-and-lifecycle/README.md
 ---
 
 # Рекомендации по коду: Resty

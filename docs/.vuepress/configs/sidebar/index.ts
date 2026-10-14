@@ -341,6 +341,17 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Глава 31: Конфигурация и жизненный цикл',
+          link: '/guide/configuration-and-lifecycle/README.md',
+          collapsible: true,
+          children: [
+            '/guide/configuration-and-lifecycle/README.md',
+            '/guide/configuration-and-lifecycle/tests.md',
+            '/guide/configuration-and-lifecycle/practice.md',
+            '/guide/configuration-and-lifecycle/best-practices.md',
+          ],
+        },
+        {
           text: 'Справочник',
           link: '/guide/directory/base-directory.md',
           collapsible: true,

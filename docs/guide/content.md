@@ -507,7 +507,10 @@
 - закрытие файловых и сетевых ресурсов;
 - health-check.
 
-TODO добавить ссылки на страницы
+1. [Конфигурация и жизненный цикл](configuration-and-lifecycle/README.md)
+2. [Самопроверка](configuration-and-lifecycle/tests.md)
+3. [Задания](configuration-and-lifecycle/practice.md)
+4. [Рекомендации по коду](configuration-and-lifecycle/best-practices.md)
 
 ### Глава 32. Docker и локальное окружение
 
