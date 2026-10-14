@@ -20,6 +20,10 @@ summary {
     cursor: pointer;
 }
 
+.vp-page .vp-page-nav .auto-link {
+  padding: 0.25rem 0.75rem 0.5rem;
+}
+
 @media (max-width: 719px) {
     .vp-back-to-top-button {
         bottom: 112px;

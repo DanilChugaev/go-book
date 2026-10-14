@@ -119,10 +119,10 @@ func main() {
 
 ## Мини-задача для будущего Task Manager API
 
-Создайте отдельную папку `task-manager` и инициализируйте в ней модуль `example.com/task-manager`. Код писать пока не нужно: это будет основой сквозного проекта.
+Создайте отдельную папку `task-manager-api` и инициализируйте в ней модуль `example.com/task-manager-api`. Код писать пока не нужно: это будет основой сквозного проекта.
 
-**Критерий проверки:** в папке `task-manager` есть файл `go.mod` с первой строкой:
+**Критерий проверки:** в папке `task-manager-api` есть файл `go.mod` с первой строкой:
 
 ```text
-module example.com/task-manager
+module example.com/task-manager-api
 ```

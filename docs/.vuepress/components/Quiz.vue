@@ -2,7 +2,7 @@
   <div class="quiz">
     <h2 :id tabindex="-1" class="quiz__title">
       <a class="header-anchor" :href="`#${id}`">
-        <span>{{ id }}. {{ question.text }}</span>
+        <span>{{ id }}.</span> <span v-html="formatCode(question.text)"></span>
       </a>
     </h2>
 
@@ -28,7 +28,7 @@
         >
 
         <div>
-          <span>{{ option.text }}</span>
+          <span v-html="formatCode(option.text)"></span>
 
           <p class="quiz__result quiz__result--correct">Правильно!</p>
           <p class="quiz__result quiz__result--wrong">Неправильно.</p>
@@ -69,6 +69,15 @@ const options = computed(() => {
 
   return shuffledOptions
 })
+
+function formatCode(text: string) {
+  const escaped = text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+
+  return escaped.replace(/`([^`\n]+)`/g, '<code>$1</code>')
+}
 
 function selectAnswer(answer: string) {
   emit('select', answer)

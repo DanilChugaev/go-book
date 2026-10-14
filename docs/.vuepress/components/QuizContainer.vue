@@ -112,9 +112,8 @@ function isKnownAnswer(questionKey: string, answer: string) {
 }
 
 .quiz-container__saved-notice {
-  padding: 1rem;
-  background: var(--c-bg-light);
-  border-left: 0.25rem solid var(--c-brand);
+  border-left: 0.15rem solid var(--vp-c-accent-bg);
+  padding: 0.5rem 0.75rem;
 }
 
 .quiz-container__saved-notice p {
@@ -123,10 +122,10 @@ function isKnownAnswer(questionKey: string, answer: string) {
 
 .quiz-container__reset {
   padding: 0.5rem 0.75rem;
-  color: var(--c-bg);
+  color: var(--vp-c-text);
   font: inherit;
-  background: var(--c-brand);
-  border: 1px solid var(--c-brand);
+  background: var(--vp-c-bg);
+  border: 1px solid var(--vp-c-border);
   border-radius: 0.25rem;
   cursor: pointer;
 }
