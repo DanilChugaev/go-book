@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Сообщить об уязвимости
+    url: https://github.com/DanilChugaev/go-book/security/advisories/new
+    about: Не публикуйте уязвимости, secrets и чувствительные детали в открытых issues.
+  - name: Предисловие и программа курса
+    url: https://danilchugaev.github.io/go-book/guide/
+    about: Начните здесь, если ищете материалы учебника, а не хотите сообщить об ошибке сайта.

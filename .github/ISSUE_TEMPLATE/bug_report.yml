@@ -1,0 +1,47 @@
+name: Сообщение об ошибке
+description: Сообщите о неточности, нерабочем примере или проблеме сайта
+title: "bug: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Спасибо за помощь. Не публикуйте здесь токены, пароли, cookies или детали уязвимостей. Для безопасности используйте SECURITY.md.
+  - type: input
+    id: page
+    attributes:
+      label: Страница или файл
+      description: Вставьте URL сайта или путь в репозитории.
+      placeholder: https://danilchugaev.github.io/go-book/guide/...
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Что произошло?
+      description: Опишите фактический результат, текст ошибки или неточность.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Какой результат ожидался?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Как воспроизвести?
+      description: Укажите команды, минимальный код и шаги. Для примеров Go добавьте версию Go и ОС.
+      placeholder: |
+        1. ...
+        2. ...
+        Go: go version go...
+        ОС: ...
+    validations:
+      required: true
+  - type: textarea
+    id: additional
+    attributes:
+      label: Дополнительный контекст
+      description: Скриншоты, логи или возможный вариант исправления.

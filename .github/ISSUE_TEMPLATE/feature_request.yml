@@ -1,0 +1,32 @@
+name: Предложение улучшения
+description: Предложите новую тему, упражнение, объяснение или улучшение сайта
+title: "docs: "
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: Спасибо за идею. Для большой темы сначала опишите учебную цель и место в программе.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Какую проблему читателя решает предложение?
+      description: Опишите ситуацию и целевую аудиторию.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Предлагаемое решение
+      description: Укажите тему, формат, примерный scope и место в учебной программе.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Рассмотренные альтернативы
+      description: Какие другие решения или форматы возможны?
+  - type: textarea
+    id: context
+    attributes:
+      label: Дополнительный контекст
+      description: Ссылки на официальную документацию, примеры или макеты.
