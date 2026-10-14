@@ -352,6 +352,17 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Глава 32: Docker и локальное окружение',
+          link: '/guide/docker/README.md',
+          collapsible: true,
+          children: [
+            '/guide/docker/README.md',
+            '/guide/docker/tests.md',
+            '/guide/docker/practice.md',
+            '/guide/docker/best-practices.md',
+          ],
+        },
+        {
           text: 'Справочник',
           link: '/guide/directory/base-directory.md',
           collapsible: true,

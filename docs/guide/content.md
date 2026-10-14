@@ -526,7 +526,10 @@
 - команды `docker compose up`, `down`, `logs`, `exec`;
 - подготовка адреса, учётных данных и переменных окружения для следующей главы.
 
-TODO добавить ссылки на страницы
+1. [Docker и локальное окружение](docker/README.md)
+2. [Самопроверка](docker/tests.md)
+3. [Задания](docker/practice.md)
+4. [Рекомендации по коду](docker/best-practices.md)
 
 ### Глава 33. SQL и PostgreSQL
 
