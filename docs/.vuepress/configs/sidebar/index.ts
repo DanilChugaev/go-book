@@ -385,6 +385,17 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Глава 35: Итоговая интеграция',
+          link: '/guide/final-integration/README.md',
+          collapsible: true,
+          children: [
+            '/guide/final-integration/README.md',
+            '/guide/final-integration/tests.md',
+            '/guide/final-integration/practice.md',
+            '/guide/final-integration/best-practices.md',
+          ],
+        },
+        {
           text: 'Справочник',
           link: '/guide/directory/base-directory.md',
           collapsible: true,

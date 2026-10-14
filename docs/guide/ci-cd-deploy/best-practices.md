@@ -1,5 +1,6 @@
 ---
 prev: /guide/ci-cd-deploy/practice.md
+next: /guide/final-integration/README.md
 ---
 
 # Рекомендации по коду: CI/CD и деплой

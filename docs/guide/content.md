@@ -575,7 +575,10 @@
 - итоговый чек-лист качества;
 - направления дальнейшего развития: авторизация, фильтрация, пагинация, метрики и rate limiting.
 
-TODO добавить ссылки на страницы
+1. [Итоговая интеграция](final-integration/README.md)
+2. [Самопроверка](final-integration/tests.md)
+3. [Задания](final-integration/practice.md)
+4. [Рекомендации по коду](final-integration/best-practices.md)
 
 ## Часть VI. Продвинутый Go
 
