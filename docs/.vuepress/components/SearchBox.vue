@@ -136,7 +136,6 @@
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { useKeys } from '@vuepress/helper/client'
 import { useRouter } from 'vue-router'
 
 import type { ISearchIndex, ISearchPage } from '../configs/search/types.js'
@@ -703,22 +702,42 @@ const onDocumentMouseDown = (event: MouseEvent): void => {
   if (root.value && !root.value.contains(event.target as Node)) close()
 }
 
+/**
+ * Ctrl K / ⌘ K — фокус на поиске с любого места страницы.
+ *
+ * `useKeys` из @vuepress/helper здесь не подходит: в текущей версии
+ * библиотеки строковый хоткей ('ctrl+k') не парсится, а сравнивается
+ * целиком с `event.key`, а объектная форма хоткея не имеет модификатора
+ * `meta` — то есть ⌘K на macOS вообще нельзя выразить. Поэтому
+ * обработчик висит на `window` напрямую.
+ */
+const onGlobalKeydown = (event: KeyboardEvent): void => {
+  if (event.isComposing) return
+  // Alt сохраняем: на macOS/Windows Alt+клавиша часто вводит
+  // спецсимволы и используется другими обработчиками.
+  if (event.altKey) return
+  if (!event.metaKey && !event.ctrlKey) return
+  // Проверяем и `code`, и `key`: на русской раскладке физическая
+  // клавиша K даёт символ «к», а код остаётся 'KeyK'.
+  if (event.code !== 'KeyK' && event.key.toLowerCase() !== 'k') return
+  event.preventDefault()
+
+  if (isMobile()) {
+    openMobile()
+  } else {
+    open.value = true
+    requestAnimationFrame(() => input.value?.focus())
+  }
+}
+
 onMounted(() => {
   document.addEventListener('mousedown', onDocumentMouseDown)
-
-  // Ctrl K / ⌘ K — фокус на поиске с любого места страницы
-  useKeys(['ctrl+k', 'meta+k'], () => {
-    if (isMobile()) {
-      openMobile()
-    } else {
-      open.value = true
-      requestAnimationFrame(() => input.value?.focus())
-    }
-  })
+  window.addEventListener('keydown', onGlobalKeydown)
 })
 
 onBeforeUnmount(() => {
   document.removeEventListener('mousedown', onDocumentMouseDown)
+  window.removeEventListener('keydown', onGlobalKeydown)
 })
 
 </script>
