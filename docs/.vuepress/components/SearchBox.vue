@@ -1,0 +1,992 @@
+<template>
+  <div ref="root" class="search-box">
+    <!-- Мобильный режим: кнопка в шапке -->
+    <button
+      class="search-box__toggle"
+      type="button"
+      title="Поиск по учебнику"
+      aria-label="Поиск по учебнику"
+      @click="openMobile"
+    >
+      <svg
+        class="search-box__icon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        aria-hidden="true"
+      >
+        <circle cx="11" cy="11" r="7" />
+        <line x1="20" y1="20" x2="16.5" y2="16.5" />
+      </svg>
+    </button>
+
+    <!-- Десктопный режим: поле поиска в шапке -->
+    <div class="search-box__field">
+      <svg
+        class="search-box__field-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        aria-hidden="true"
+      >
+        <circle cx="11" cy="11" r="7" />
+        <line x1="20" y1="20" x2="16.5" y2="16.5" />
+      </svg>
+      <input
+        ref="input"
+        class="search-box__input"
+        type="text"
+        role="combobox"
+        aria-label="Поиск по учебнику"
+        :aria-expanded="open ? 'true' : 'false'"
+        :placeholder="placeholder"
+        v-model="query"
+        autocomplete="off"
+        @focus="openPanel"
+        @keydown="onKeydown"
+      >
+      <span v-show="query === ''" class="search-box__kbd">{{ kbdLabel }}</span>
+    </div>
+
+    <!-- Панель результатов: выпадающая на десктопе,
+         прикреплённая под шапку на мобильных -->
+    <div v-if="open" class="search-box__panel">
+      <div class="search-box__panel-bar">
+        <input
+          ref="mobileInput"
+          class="search-box__panel-input"
+          type="text"
+          :placeholder="placeholder"
+          v-model="query"
+          autocomplete="off"
+          @keydown="onKeydown"
+        >
+        <button
+          class="search-box__close"
+          type="button"
+          aria-label="Закрыть поиск"
+          @click="close"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            aria-hidden="true"
+          >
+            <line x1="6" y1="6" x2="18" y2="18" />
+            <line x1="18" y1="6" x2="6" y2="18" />
+          </svg>
+        </button>
+      </div>
+
+      <div ref="results" class="search-box__results">
+        <p v-if="loading" class="search-box__state">Готовим индекс…</p>
+        <p v-else-if="groups.length === 0" class="search-box__state">
+          <template v-if="query.trim() !== ''">
+            Ничего не найдено по запросу «{{ query.trim() }}»
+          </template>
+          <template v-else>Пока нет данных для поиска</template>
+        </p>
+
+        <template v-else>
+          <template v-for="group in groups" :key="group.title">
+            <a
+              class="search-box__chapter"
+              :class="{
+                'search-box__chapter--active': active === group.order,
+              }"
+              :href="group.path"
+              :title="group.title"
+              @click.prevent="navigate(group.path)"
+              @mouseenter="active = group.order"
+            >
+              {{ group.title }}
+            </a>
+            <a
+              v-for="page in group.pages"
+              :key="page.path"
+              class="search-box__page"
+              :class="{ 'search-box__page--active': active === page.order }"
+              :href="page.path"
+              @click.prevent="navigate(page.path)"
+              @mouseenter="active = page.order"
+            >
+              <span class="search-box__page-title" v-html="page.titleHtml"></span>
+              <span
+                v-if="page.snippetHtml !== ''"
+                class="search-box__page-snippet"
+                v-html="page.snippetHtml"
+              ></span>
+            </a>
+          </template>
+        </template>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { useKeys } from '@vuepress/helper/client'
+import { useRouter } from 'vue-router'
+
+import type { ISearchIndex, ISearchPage } from '../configs/search/types.js'
+
+/**
+ * Поле поиска по учебнику в шапке сайта.
+ *
+ * Индекс собирается плагином `searchPlugin` (configs/search/plugin.ts)
+ * в момент сборки и пишется в `.vuepress/.temp/search/data.js`. Компонент
+ * импортирует этот модуль лениво, так что индекс попадает в отдельный
+ * чанк и скачивается только при первом реальном использовании поиска.
+ *
+ * Поддерживаются:
+ * - структурный поиск: главы и страницы по названиям;
+ * - полнотекстовый поиск: весь текст страниц, включая код и викторины,
+ *   с фрагментом совпадения и подсветкой;
+ * - игнорирование регистра и взаимозаменяемость `ё`/`е`;
+ * - навигация с клавиатуры (Ctrl/⌘ K, стрелки, Enter, Esc);
+ * - мобильная версия и тёмная тема.
+ */
+
+const MAX_ROWS = 30
+const SNIPPET_RADIUS = 90
+
+const root = ref<HTMLElement | null>(null)
+const input = ref<HTMLInputElement | null>(null)
+const mobileInput = ref<HTMLInputElement | null>(null)
+const results = ref<HTMLElement | null>(null)
+
+const query = ref('')
+const open = ref(false)
+const active = ref(-1)
+const loading = ref(false)
+const index = ref<ISearchIndex | null>(null)
+
+const placeholder = 'Поиск по учебнику…'
+
+const isMac =
+  typeof navigator !== 'undefined' &&
+  /mac|iphone|ipad|ipod/i.test(navigator.platform ?? navigator.userAgent)
+
+const kbdLabel = isMac ? '⌘ K' : 'Ctrl K'
+
+const isMobile = (): boolean =>
+  typeof window !== 'undefined' &&
+  window.matchMedia('(max-width: 719px)').matches
+
+let indexPromise: Promise<ISearchIndex> | null = null
+
+const loadIndex = (): Promise<ISearchIndex> => {
+  if (!indexPromise) {
+    indexPromise = import(
+      // Файл появляется в .temp после прогона плагина поиска,
+      // поэтому модуль не проверяется статически.
+      /* webpackChunkName: "search-data" */
+      // @ts-ignore -- см. комментарий выше
+      '../.temp/search/data.js'
+    ).then(
+      (module: { searchIndex: ISearchIndex }) => module.searchIndex
+    )
+  }
+  return indexPromise
+}
+
+const ensureIndex = async (): Promise<void> => {
+  if (index.value !== null || loading.value) return
+
+  loading.value = true
+  try {
+    index.value = await loadIndex()
+  } catch (error) {
+    console.error('Не удалось загрузить индекс поиска', error)
+  } finally {
+    loading.value = false
+  }
+}
+
+interface PageMeta {
+  normTitle: string
+  normText: string
+}
+
+/**
+ * Нормализация один-в-один: каждому символу соответствует ровно один
+ * символ, поэтому смещения в нормализованном тексте совпадают со
+ * смещениями в исходном. Замена `ё` → `е` делает взаимно
+ * нахожимыми оба написания слова.
+ */
+const toNorm = (value: string): string => {
+  let result = ''
+  for (const char of value) {
+    if (char === 'ё' || char === 'Ё') {
+      result += 'е'
+    } else {
+      const lower = char.toLowerCase()
+      result += lower.length === 1 ? lower : char
+    }
+  }
+  return result
+}
+
+const normCache = new Map<string, PageMeta>()
+
+const getPageMeta = (page: ISearchPage): PageMeta => {
+  let meta = normCache.get(page.path)
+  if (!meta) {
+    meta = {
+      normTitle: toNorm(page.title),
+      normText: toNorm(page.text),
+    }
+    normCache.set(page.path, meta)
+  }
+  return meta
+}
+
+const normalizeQuery = (value: string): string =>
+  value
+    .toLowerCase()
+    .replace(/ё/g, 'е')
+    .replace(/\s+/g, ' ')
+    .trim()
+
+const queryTokens = computed<string[]>(() => {
+  const normalized = normalizeQuery(query.value)
+  if (normalized === '') return []
+  return [...new Set(normalized.split(' '))]
+})
+
+const chapterMatches = (title: string, tokens: string[]): boolean => {
+  const norm = toNorm(title)
+  return tokens.every((token) => norm.includes(token))
+}
+
+interface PageMatch {
+  page: ISearchPage
+  titleHit: boolean
+  textHit: boolean
+  score: number
+}
+
+/**
+ * Полнотекстовый поиск: страница попадает в результат, если все
+ * токены запроса найдены в её названии или во всём тексте. Рейтинг:
+ * совпадение названия важнее совпадения по тексту, в тексте —
+ * количество вхождений.
+ */
+const searchPages = (
+  searchIndex: ISearchIndex,
+  tokens: string[]
+): PageMatch[] => {
+  const matches: PageMatch[] = []
+
+  for (const page of searchIndex.pages) {
+    const meta = getPageMeta(page)
+
+    let allTitle = true
+    let titleScore = 0
+    for (const token of tokens) {
+      if (meta.normTitle.includes(token)) {
+        titleScore += 100
+      } else {
+        allTitle = false
+      }
+    }
+
+    let allText = true
+    let textScore = 0
+    for (const token of tokens) {
+      let count = 0
+      let pos = meta.normText.indexOf(token)
+      while (pos !== -1) {
+        count += 1
+        if (count > 30) break
+        pos = meta.normText.indexOf(token, pos + 1)
+      }
+      if (count === 0) {
+        allText = false
+      } else {
+        textScore += count * 5
+      }
+    }
+
+    if (!allTitle && !allText) continue
+
+    let score = 0
+    if (allTitle) score += 1000 + titleScore
+    if (allText) score += 100 + textScore
+
+    matches.push({
+      page,
+      titleHit: allTitle,
+      textHit: allText,
+      score,
+    })
+  }
+
+  return matches.sort((a, b) => b.score - a.score)
+}
+
+const escapeHtml = (value: string): string =>
+  value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+
+interface Range {
+  start: number
+  end: number
+}
+
+/**
+ * Подсвечивает вхождения всех токенов запроса в тексте. Диапазоны
+ * вычисляются по нормализованному тексту (один-в-один с исходным) и
+ * переносятся на исходный, поэтому регистр в подсветке сохраняется.
+ */
+const highlight = (
+  text: string,
+  norm: string,
+  tokens: string[]
+): string => {
+  const ranges: Range[] = []
+  for (const token of tokens) {
+    let pos = norm.indexOf(token)
+    while (pos !== -1) {
+      ranges.push({ start: pos, end: pos + token.length })
+      pos = norm.indexOf(token, pos + 1)
+    }
+  }
+
+  ranges.sort((a, b) => a.start - b.start || b.end - a.end)
+  const merged: Range[] = []
+  for (const range of ranges) {
+    const last = merged[merged.length - 1]
+    if (last !== undefined && range.start <= last.end) {
+      last.end = Math.max(last.end, range.end)
+    } else {
+      merged.push({ ...range })
+    }
+  }
+
+  let html = ''
+  let cursor = 0
+  for (const range of merged) {
+    html += escapeHtml(text.slice(cursor, range.start))
+    html += `<mark>${escapeHtml(text.slice(range.start, range.end))}</mark>`
+    cursor = range.end
+  }
+  html += escapeHtml(text.slice(cursor))
+  return html
+}
+
+/**
+ * Фрагмент текста вокруг лучшего совпадения: окно выбирается так,
+ * чтобы в нём попадало как можно больше разных токенов запроса.
+ */
+const buildSnippet = (
+  meta: PageMeta,
+  text: string,
+  tokens: string[]
+): string => {
+  const hits: number[] = []
+  for (const token of tokens) {
+    let pos = meta.normText.indexOf(token)
+    let count = 0
+    while (pos !== -1 && count < 40) {
+      hits.push(pos)
+      count += 1
+      pos = meta.normText.indexOf(token, pos + 1)
+    }
+  }
+
+  if (hits.length === 0) return ''
+
+  let bestStart = 0
+  let bestEnd = 0
+  let bestScore = -1
+  for (const hit of hits) {
+    const start = Math.max(0, hit - SNIPPET_RADIUS)
+    const end = Math.min(meta.normText.length, hit + SNIPPET_RADIUS + 1)
+    const window = meta.normText.slice(start, end)
+    const score = tokens.filter((token) => window.includes(token)).length
+    if (score > bestScore) {
+      bestScore = score
+      bestStart = start
+      bestEnd = end
+    }
+  }
+
+  // Расширяем до границ слов
+  while (bestStart > 0 && !/\s/.test(meta.normText[bestStart - 1])) {
+    bestStart -= 1
+  }
+  while (
+    bestEnd < meta.normText.length &&
+    !/\s/.test(meta.normText[bestEnd])
+  ) {
+    bestEnd += 1
+  }
+
+  const prefix = bestStart > 0 ? '… ' : ''
+  const suffix = bestEnd < meta.normText.length ? ' …' : ''
+  const segmentNorm = meta.normText.slice(bestStart, bestEnd)
+  const segment = text.slice(bestStart, bestEnd)
+
+  return (
+    escapeHtml(prefix) +
+    highlight(segment, segmentNorm, tokens) +
+    escapeHtml(suffix)
+  )
+}
+
+interface RenderedPage {
+  path: string
+  titleHtml: string
+  snippetHtml: string
+  order: number
+}
+
+interface RenderedGroup {
+  title: string
+  path: string
+  pages: RenderedPage[]
+  order: number
+}
+
+const GENERAL_GROUP = 'Общие страницы'
+
+/**
+ * Результаты, сгруппированные по главам.
+ *
+ * Пустой запрос — режим обзора: список всех глав и общих страниц
+ * (предисловие, содержание, ресурсы). Заполненный запрос — главы,
+ * найденные по названию, идут первыми, затем главы со страницами,
+ * совпавшими по названию или тексту.
+ */
+const groups = computed<RenderedGroup[]>(() => {
+  if (index.value === null) return []
+
+  const tokens = queryTokens.value
+
+  if (tokens.length === 0) {
+    const browse: RenderedGroup[] = index.value.chapters.map((chapter) => ({
+      title: chapter.title,
+      path: chapter.path,
+      pages: [],
+      order: -1,
+    }))
+
+    const generalPages = index.value.pages.filter((page) => !page.chapter)
+    if (generalPages.length > 0) {
+      browse.push({
+        title: GENERAL_GROUP,
+        path: generalPages[0].path,
+        order: -1,
+        pages: generalPages.map((page) => ({
+          path: page.path,
+          titleHtml: escapeHtml(page.title),
+          snippetHtml: '',
+          order: -1,
+        })),
+      })
+    }
+
+    return limitRows(browse)
+  }
+
+  const matches = searchPages(index.value, tokens)
+  const chaptersByTitle = new Map(
+    index.value.chapters.map((chapter) => [chapter.title, chapter])
+  )
+  const matchedChapters = index.value.chapters.filter((chapter) =>
+    chapterMatches(chapter.title, tokens)
+  )
+
+  const groupMap = new Map<string, RenderedGroup>()
+  const getGroup = (chapter: { title: string; path: string }): RenderedGroup => {
+    let group = groupMap.get(chapter.title)
+    if (!group) {
+      group = {
+        title: chapter.title,
+        path: chapter.path,
+        pages: [],
+        order: -1,
+      }
+      groupMap.set(chapter.title, group)
+    }
+    return group
+  }
+
+  for (const chapter of matchedChapters) {
+    getGroup(chapter)
+  }
+
+  for (const match of matches) {
+    const chapter = match.page.chapter
+      ? chaptersByTitle.get(match.page.chapter)
+      : undefined
+    const group = chapter
+      ? getGroup(chapter)
+      : getGroup({ title: GENERAL_GROUP, path: match.page.path })
+
+    const meta = getPageMeta(match.page)
+    group.pages.push({
+      path: match.page.path,
+      titleHtml: highlight(match.page.title, meta.normTitle, tokens),
+      snippetHtml: match.textHit
+        ? buildSnippet(meta, match.page.text, tokens)
+        : '',
+      order: -1,
+    })
+  }
+
+  const ordered: RenderedGroup[] = []
+  const seen = new Set<string>()
+  for (const chapter of matchedChapters) {
+    const group = groupMap.get(chapter.title)
+    if (group) {
+      ordered.push(group)
+      seen.add(chapter.title)
+    }
+  }
+  for (const chapter of index.value.chapters) {
+    if (seen.has(chapter.title)) continue
+    const group = groupMap.get(chapter.title)
+    if (group && group.pages.length > 0) {
+      ordered.push(group)
+      seen.add(chapter.title)
+    }
+  }
+  const general = groupMap.get(GENERAL_GROUP)
+  if (general && general.pages.length > 0) ordered.push(general)
+
+  return limitRows(ordered)
+})
+
+/**
+ * Ограничивает общее число строк (главы + страницы) и назначает
+ * последовательные номера для навигации с клавиатуры.
+ */
+const limitRows = (
+  groupsList: RenderedGroup[]
+): RenderedGroup[] => {
+  const flat: Array<{ group: RenderedGroup; page?: RenderedPage }> = []
+  for (const group of groupsList) {
+    flat.push({ group })
+    for (const page of group.pages) flat.push({ group, page })
+  }
+
+  const visible = new Set<RenderedGroup | RenderedPage>(
+    flat.slice(0, MAX_ROWS).map((item) => item.page ?? item.group)
+  )
+
+  let counter = 0
+  return groupsList
+    .map((group) => {
+      const pages = group.pages.filter((page) => visible.has(page))
+      if (!visible.has(group) && pages.length === 0) return null
+
+      const renderedGroup: RenderedGroup = {
+        ...group,
+        pages,
+        order: visible.has(group) ? counter++ : -1,
+      }
+      for (const page of renderedGroup.pages) {
+        page.order = counter++
+      }
+      return renderedGroup
+    })
+    .filter((group): group is RenderedGroup => group !== null)
+}
+
+const rows = computed<{ path: string }[]>(() => {
+  const list: { path: string }[] = []
+  for (const group of groups.value) {
+    list.push({ path: group.path })
+    for (const page of group.pages) list.push({ path: page.path })
+  }
+  return list
+})
+
+watch(query, (value) => {
+  active.value = -1
+  if (value.trim() !== '') void ensureIndex()
+})
+
+watch(open, (value) => {
+  if (!value) return
+
+  active.value = -1
+  void ensureIndex()
+  if (isMobile()) {
+    requestAnimationFrame(() => mobileInput.value?.focus())
+  }
+})
+
+const openPanel = (): void => {
+  if (!open.value) open.value = true
+}
+
+const openMobile = (): void => {
+  if (open.value) {
+    close()
+  } else {
+    open.value = true
+  }
+}
+
+const close = (): void => {
+  open.value = false
+  query.value = ''
+  active.value = -1
+  input.value?.blur()
+  mobileInput.value?.blur()
+}
+
+const router = useRouter()
+
+const navigate = (path: string): void => {
+  const current = router.currentRoute.value.path
+  close()
+  if (current !== path) void router.push(path)
+}
+
+// Панель закрывается при переходе на другую страницу
+router.afterEach(() => {
+  close()
+})
+
+const scrollActive = (): void => {
+  const element = results.value?.querySelector(
+    '.search-box__page--active, .search-box__chapter--active'
+  )
+  element?.scrollIntoView({ block: 'nearest' })
+}
+
+const onKeydown = (event: KeyboardEvent): void => {
+  if (event.key === 'Escape') {
+    event.preventDefault()
+    close()
+    return
+  }
+
+  if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+    event.preventDefault()
+    if (rows.value.length === 0) return
+    const delta = event.key === 'ArrowDown' ? 1 : -1
+    const next = active.value + delta
+    active.value = (next + rows.value.length) % rows.value.length
+    scrollActive()
+    return
+  }
+
+  if (event.key === 'Enter') {
+    if (rows.value.length === 0) return
+    event.preventDefault()
+    const row = rows.value[active.value === -1 ? 0 : active.value]
+    if (row) navigate(row.path)
+  }
+}
+
+// Панель закрывается при клике вне её
+const onDocumentMouseDown = (event: MouseEvent): void => {
+  if (!open.value) return
+  if (root.value && !root.value.contains(event.target as Node)) close()
+}
+
+onMounted(() => {
+  document.addEventListener('mousedown', onDocumentMouseDown)
+
+  // Ctrl K / ⌘ K — фокус на поиске с любого места страницы
+  useKeys(['ctrl+k', 'meta+k'], () => {
+    if (isMobile()) {
+      openMobile()
+    } else {
+      open.value = true
+      requestAnimationFrame(() => input.value?.focus())
+    }
+  })
+})
+
+onBeforeUnmount(() => {
+  document.removeEventListener('mousedown', onDocumentMouseDown)
+})
+
+</script>
+
+<style lang="scss">
+// Стили без scoped: подсветка <mark> рендерится через v-html,
+// а префикс search-box__ исключает конфликты с другими компонентами.
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.search-box__toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: none;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: var(--vp-c-text);
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--vp-c-bg-alt);
+  }
+}
+
+.search-box__icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.search-box__field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.search-box__field-icon {
+  position: absolute;
+  left: 0.65rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  color: var(--vp-c-text-mute);
+  pointer-events: none;
+}
+
+.search-box__input {
+  width: 15rem;
+  height: 100%;
+  padding: 0 4.25rem 0 2rem;
+  border: 1px solid var(--vp-c-border);
+  border-radius: 8px;
+  background-color: var(--vp-c-bg-alt);
+  color: var(--vp-c-text);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &::placeholder {
+    color: var(--vp-c-text-mute);
+  }
+
+  &:focus {
+    border-color: var(--vp-c-accent);
+    box-shadow: 0 0 0 2px var(--vp-c-accent-soft);
+  }
+}
+
+.search-box__kbd {
+  position: absolute;
+  right: 0.55rem;
+  padding: 0.05rem 0.35rem;
+  border: 1px solid var(--vp-c-border);
+  border-radius: 0.3rem;
+  background-color: var(--vp-c-bg);
+  color: var(--vp-c-text-mute);
+  font-size: 0.7rem;
+  line-height: 1.3;
+  pointer-events: none;
+}
+
+.search-box__panel {
+  position: absolute;
+  top: calc(100% + 0.6rem);
+  right: 0;
+  z-index: 30;
+  width: 24rem;
+  max-height: min(28rem, calc(100vh - var(--navbar-height) - 2rem));
+  overflow-y: auto;
+  background-color: var(--vp-c-bg-elv);
+  border: 1px solid var(--vp-c-border);
+  border-radius: 0.75rem;
+  box-shadow: 0 1rem 2.5rem var(--vp-c-shadow, rgba(0, 0, 0, 0.12));
+}
+
+.search-box__panel-bar {
+  display: none;
+}
+
+.search-box__results {
+  min-height: 2rem;
+}
+
+.search-box__chapter {
+  display: block;
+  padding: 0.55rem 1rem;
+  border-top: 1px solid var(--vp-c-border);
+  color: var(--vp-c-text);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+
+  &:hover {
+    background-color: var(--vp-c-bg-alt);
+  }
+}
+
+.search-box__chapter--active {
+  background-color: var(--vp-c-accent-soft);
+}
+
+.search-box__page {
+  display: block;
+  padding: 0.45rem 1rem 0.55rem 1.5rem;
+  color: var(--vp-c-text);
+  text-decoration: none;
+
+  &:hover {
+    background-color: var(--vp-c-bg-alt);
+  }
+}
+
+.search-box__page--active {
+  background-color: var(--vp-c-accent-soft);
+}
+
+.search-box__page-title {
+  display: block;
+  font-size: 0.875rem;
+}
+
+.search-box__page-snippet {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--vp-c-text-mute);
+  font-size: 0.8rem;
+  line-height: 1.45;
+  text-wrap: auto;
+}
+
+.search-box__chapter mark,
+.search-box__page mark {
+  padding: 0 0.1rem;
+  border-radius: 0.15rem;
+  background-color: var(--vp-c-accent-hover);
+  color: var(--vp-c-accent-text);
+}
+
+.search-box__state {
+  padding: 1rem;
+  margin: 0;
+  color: var(--vp-c-text-mute);
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+// Мобильная версия: в шапке только кнопка, панель — под шапкой
+@media screen and (max-width: 719px) {
+  .search-box {
+    position: static;
+  }
+
+  .search-box__toggle {
+    display: flex;
+  }
+
+  .search-box__field {
+    display: none;
+  }
+
+  .search-box__panel {
+    position: fixed;
+    top: var(--navbar-height);
+    left: 0;
+    right: 0;
+    width: auto;
+    max-height: calc(100vh - var(--navbar-height));
+    overflow: hidden;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .search-box__panel-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--vp-c-border);
+    background-color: var(--vp-c-bg-elv);
+  }
+
+  .search-box__panel-input {
+    flex: 1;
+    height: 2.5rem;
+    padding: 0 0.75rem;
+    border: 1px solid var(--vp-c-border);
+    border-radius: 0.5rem;
+    background-color: var(--vp-c-bg);
+    color: var(--vp-c-text);
+    font-size: 0.9rem;
+    outline: none;
+
+    &::placeholder {
+      color: var(--vp-c-text-mute);
+    }
+
+    &:focus {
+      border-color: var(--vp-c-accent);
+    }
+  }
+
+  .search-box__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    border: none;
+    border-radius: 0.5rem;
+    background: transparent;
+    color: var(--vp-c-text-mute);
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--vp-c-bg-alt);
+      color: var(--vp-c-text);
+    }
+  }
+
+  .search-box__close svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .search-box__results {
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .search-box__chapter {
+    border-top: none;
+
+    &:first-of-type {
+      border-top: 1px solid var(--vp-c-border);
+    }
+  }
+}
+</style>
+

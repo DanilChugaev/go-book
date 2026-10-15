@@ -4,7 +4,7 @@ import { defaultTheme } from '@vuepress/theme-default'
 import { viteBundler } from '@vuepress/bundler-vite'
 import { pwaPlugin } from '@vuepress/plugin-pwa'
 
-import { sidebarEn } from './configs'
+import { searchPlugin, sidebarEn } from './configs'
 
 export default defineUserConfig({
   lang: 'ru-RU',
@@ -26,6 +26,10 @@ export default defineUserConfig({
   }),
 
   plugins: [
+    // Индекс поиска по учебнику: собирается из сайдбара и страниц,
+    // пишется в `.vuepress/.temp/search/data.js` и подгружается
+    // компонентом SearchBox лениво, отдельным чанком.
+    searchPlugin(),
     pwaPlugin({
       appendBase: true,
       showInstall: true,
