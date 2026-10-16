@@ -410,6 +410,20 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Продвинутая глава B: Типы и generics',
+          link: '/guide/advanced-types-generics/README.md',
+          collapsible: true,
+          children: [
+            '/guide/advanced-types-generics/README.md',
+            '/guide/advanced-types-generics/type-parameters.md',
+            '/guide/advanced-types-generics/constraints-type-sets.md',
+            '/guide/advanced-types-generics/generic-types-design.md',
+            '/guide/advanced-types-generics/tests.md',
+            '/guide/advanced-types-generics/practice.md',
+            '/guide/advanced-types-generics/best-practices.md',
+          ],
+        },
+        {
           text: 'Справочник',
           link: '/guide/directory/base-directory.md',
           collapsible: true,

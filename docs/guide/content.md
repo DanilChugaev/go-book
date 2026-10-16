@@ -614,7 +614,13 @@
 - generic-типы;
 - оправданное и избыточное применение generics.
 
-TODO добавить ссылки на страницы
+1. [Defined types, alias и underlying type](advanced-types-generics/README.md)
+2. [Параметры типов и generic-функции](advanced-types-generics/type-parameters.md)
+3. [Constraints, type sets и оператор `~`](advanced-types-generics/constraints-type-sets.md)
+4. [Generic-типы и выбор абстракции](advanced-types-generics/generic-types-design.md)
+5. [Самопроверка](advanced-types-generics/tests.md)
+6. [Задания](advanced-types-generics/practice.md)
+7. [Рекомендации по коду](advanced-types-generics/best-practices.md)
 
 ### Продвинутая глава C. Конкурентные паттерны
 
