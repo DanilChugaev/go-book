@@ -424,6 +424,20 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Продвинутая глава C: Конкурентные паттерны',
+          link: '/guide/advanced-concurrency-patterns/README.md',
+          collapsible: true,
+          children: [
+            '/guide/advanced-concurrency-patterns/README.md',
+            '/guide/advanced-concurrency-patterns/fan-out-pipeline.md',
+            '/guide/advanced-concurrency-patterns/errgroup-lifecycle.md',
+            '/guide/advanced-concurrency-patterns/goroutine-leaks.md',
+            '/guide/advanced-concurrency-patterns/tests.md',
+            '/guide/advanced-concurrency-patterns/practice.md',
+            '/guide/advanced-concurrency-patterns/best-practices.md',
+          ],
+        },
+        {
           text: 'Справочник',
           link: '/guide/directory/base-directory.md',
           collapsible: true,

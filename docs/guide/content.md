@@ -634,7 +634,13 @@
 - backpressure;
 - утечки goroutine и их диагностика.
 
-TODO добавить ссылки на страницы
+1. [Worker pool, ограничение параллелизма и backpressure](advanced-concurrency-patterns/README.md)
+2. [Fan-out, fan-in и pipeline](advanced-concurrency-patterns/fan-out-pipeline.md)
+3. [errgroup, отмена и graceful shutdown](advanced-concurrency-patterns/errgroup-lifecycle.md)
+4. [Утечки goroutine и диагностика](advanced-concurrency-patterns/goroutine-leaks.md)
+5. [Самопроверка](advanced-concurrency-patterns/tests.md)
+6. [Задания](advanced-concurrency-patterns/practice.md)
+7. [Рекомендации по коду](advanced-concurrency-patterns/best-practices.md)
 
 ### Продвинутая глава D. Производительность и диагностика
 
