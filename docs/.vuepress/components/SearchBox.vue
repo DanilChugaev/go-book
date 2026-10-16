@@ -167,6 +167,8 @@ import type { ISearchIndex, ISearchPage } from '../configs/search/types.js'
  * - структурный поиск: главы и страницы по названиям;
  * - полнотекстовый поиск: весь текст страниц, включая код и викторины,
  *   с фрагментом совпадения и подсветкой;
+ * - список глав показывается целиком: ограничение строк действует
+ *   только на строки страниц (полнотекстовые совпадения);
  * - игнорирование регистра и взаимозаменяемость `ё`/`е`;
  * - навигация с клавиатуры (Ctrl/⌘ K, стрелки, Enter, Esc);
  * - «расширение» при открытии: на десктопе поле тянется до логотипа,
@@ -175,7 +177,7 @@ import type { ISearchIndex, ISearchPage } from '../configs/search/types.js'
  * - мобильная версия и тёмная тема.
  */
 
-const MAX_ROWS = 30
+const MAX_PAGE_ROWS = 30
 const SNIPPET_RADIUS = 90
 
 const root = ref<HTMLElement | null>(null)
@@ -595,39 +597,37 @@ const groups = computed<RenderedGroup[]>(() => {
 })
 
 /**
- * Ограничивает общее число строк (главы + страницы) и назначает
- * последовательные номера для навигации с клавиатуры.
+ * Назначает последовательные номера для навигации с клавиатуры и
+ * ограничивает общее число строк страниц (полнотекстовых совпадений).
+ *
+ * Строки глав никогда не обрезаются: это структурный каркас учебника,
+ * и при их большом числе достаточно просто прокрутки. Потолок
+ * действует только
+ * на строки страниц — защита от патологического запроса, способного
+ * дать сотни совпадений.
  */
-const limitRows = (
-  groupsList: RenderedGroup[]
-): RenderedGroup[] => {
-  const flat: Array<{ group: RenderedGroup; page?: RenderedPage }> = []
-  for (const group of groupsList) {
-    flat.push({ group })
-    for (const page of group.pages) flat.push({ group, page })
-  }
-
-  const visible = new Set<RenderedGroup | RenderedPage>(
-    flat.slice(0, MAX_ROWS).map((item) => item.page ?? item.group)
-  )
-
+const limitRows = (groupsList: RenderedGroup[]): RenderedGroup[] => {
+  let pageBudget = MAX_PAGE_ROWS
   let counter = 0
-  return groupsList
-    .map((group) => {
-      const pages = group.pages.filter((page) => visible.has(page))
-      if (!visible.has(group) && pages.length === 0) return null
 
-      const renderedGroup: RenderedGroup = {
-        ...group,
-        pages,
-        order: visible.has(group) ? counter++ : -1,
-      }
-      for (const page of renderedGroup.pages) {
-        page.order = counter++
-      }
-      return renderedGroup
-    })
-    .filter((group): group is RenderedGroup => group !== null)
+  return groupsList.map((group) => {
+    const pages: RenderedPage[] = []
+    for (const page of group.pages) {
+      if (pageBudget <= 0) break
+      pageBudget -= 1
+      pages.push(page)
+    }
+
+    const renderedGroup: RenderedGroup = {
+      ...group,
+      pages,
+      order: counter++,
+    }
+    for (const page of renderedGroup.pages) {
+      page.order = counter++
+    }
+    return renderedGroup
+  })
 }
 
 const rows = computed<{ path: string }[]>(() => {

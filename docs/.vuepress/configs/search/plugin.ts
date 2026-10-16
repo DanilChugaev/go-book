@@ -158,8 +158,10 @@ const toPlainText = (markdown: string): string => {
 /**
  * Собирает индекс поиска:
  *
- * - главы — из структуры сайдбара (маршруты нормализуются к ключам
- *   таблицы маршрутов);
+ * - главы — из структуры сайдбара, плюс «автоглавы»: директории
+ *   в `/guide/`, которые в сайдбаре не перечислены (именно они
+ *   подхватывают новые главы без изменения кода); маршруты
+ *   нормализуются к ключам таблицы маршрутов;
  * - страницы — из `app.pages`, каждая сопоставляется со своей главой,
  *   текст извлекается из markdown.
  */
@@ -196,6 +198,65 @@ const buildIndex = (app: { pages: Page[] }): ISearchIndex => {
     }
   }
 
+  /**
+   * Директорию-главу, которой принадлежит страница `/guide/`:
+   * `/guide/strings/tests.html` и `/guide/strings/` — оба дают
+   * `/guide/strings/`.
+   */
+  const chapterDirOf = (path: string): string | null => {
+    const match = path.match(/^\/guide\/[^/]+\/.*$/)
+    return match === null
+      ? null
+      : match[0].slice(0, match[0].lastIndexOf('/') + 1)
+  }
+
+  // Директорию, у которой в сайдбаре уже есть глава, не превращаем в
+  // автоглаву, даже если часть её страниц в сайдбар не внесена.
+  const coveredDirs = new Set<string>()
+  for (const page of app.pages) {
+    if (page.path === '/404.html') continue
+    if (chapterByLogical.get(toLogical(page.path)) === undefined) continue
+    const dir = chapterDirOf(page.path)
+    if (dir !== null) coveredDirs.add(dir)
+  }
+
+  // Автоглавы: директории в `/guide/` со страницами, но без главы в
+  // структуре сайдбара. Именно они подхватывают новые главы
+  // автоматически — ничего менять в коде не нужно. Название берётся
+  // из H1 индексной страницы (README) директории.
+  const autoChapters = new Map<string, ChapterEntry>()
+  for (const page of app.pages) {
+    if (page.path === '/404.html') continue
+    if (chapterByLogical.get(toLogical(page.path)) !== undefined) continue
+    const dir = chapterDirOf(page.path)
+    if (dir === null || coveredDirs.has(dir)) continue
+
+    const title = (page.data?.title ?? '').trim() || page.title?.trim() || ''
+    const chapter = autoChapters.get(dir) ?? {
+      title,
+      link: page.path,
+      children: [],
+    }
+    if (toLogical(page.path) === dir) {
+      // Индексная страница директории — главная страница главы
+      chapter.title = title
+      chapter.link = page.path
+    }
+    chapter.children.push(page.path)
+    autoChapters.set(dir, chapter)
+  }
+
+  const allChapters: ChapterEntry[] = [
+    ...chapters,
+    ...[...autoChapters.values()].sort((a, b) => a.link.localeCompare(b.link)),
+  ]
+  for (const chapter of allChapters) {
+    chapterByLogical.set(toLogical(chapter.link), chapter)
+    for (const child of chapter.children) {
+      chapterByLogical.set(toLogical(child), chapter)
+    }
+  }
+
   const pages: ISearchPage[] = app.pages
     // Страница «404» в поиске бесполежна
     .filter((page) => page.path !== '/404.html')
@@ -216,7 +277,7 @@ const buildIndex = (app: { pages: Page[] }): ISearchIndex => {
     })
 
   return {
-    chapters: chapters.map((chapter) => ({
+    chapters: allChapters.map((chapter) => ({
       title: chapter.title,
       path: chapterRoute(chapter),
     })),
