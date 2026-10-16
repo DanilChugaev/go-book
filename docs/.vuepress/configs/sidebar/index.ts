@@ -489,7 +489,14 @@ export const sidebarEn: SidebarOptions = {
             '/guide/directory/advanced-directory.md',
           ],          
         },
-        '/guide/resources.md',
+        {
+          text: 'Дополнительные ресурсы',
+          link: '/guide/resources.md',
+          collapsible: true,
+          children: [
+            '/guide/resources.md',
+          ],
+        },
       ],
     },
   ],
