@@ -12,6 +12,10 @@ html[data-theme=light] {
     height: calc(100vh - 60px);
 }
 
+.vp-hero .vp-hero-image {
+  margin-top: 0;
+}
+
 .vp-footer {
     border: none;
 }
@@ -60,4 +64,13 @@ summary {
   .vp-page [vp-content] {
     padding: 1.6rem;
   }
+}
+
+.vp-toggle-color-mode-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-inline-start: 0;
+  width: 2.2rem;
+  height: 2.2rem;
 }
