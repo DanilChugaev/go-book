@@ -56,6 +56,26 @@
         @keydown="onKeydown"
       >
       <span v-show="query === ''" class="search-box__kbd">{{ kbdLabel }}</span>
+      <button
+        v-show="query !== ''"
+        class="search-box__clear"
+        type="button"
+        aria-label="Очистить запрос"
+        @click="clearQuery('desktop')"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <line x1="6" y1="6" x2="18" y2="18" />
+          <line x1="18" y1="6" x2="6" y2="18" />
+        </svg>
+      </button>
     </div>
 
     <!-- Подложка: затемняет страницу за открытой панелью.
@@ -82,6 +102,26 @@
           autocomplete="off"
           @keydown="onKeydown"
         >
+        <button
+          v-show="query !== ''"
+          class="search-box__clear"
+          type="button"
+          aria-label="Очистить запрос"
+          @click="clearQuery('mobile')"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            aria-hidden="true"
+          >
+            <line x1="6" y1="6" x2="18" y2="18" />
+            <line x1="18" y1="6" x2="6" y2="18" />
+          </svg>
+        </button>
         <button
           class="search-box__close"
           type="button"
@@ -683,6 +723,15 @@ const close = (): void => {
   mobileInput.value?.blur()
 }
 
+// Крестик в поле: стирает введённый запрос, чтобы можно было
+// сразу продолжить ввод — фокус остаётся в том же поле.
+const clearQuery = (field: 'desktop' | 'mobile'): void => {
+  query.value = ''
+  active.value = -1
+  const target = field === 'mobile' ? mobileInput.value : input.value
+  target?.focus()
+}
+
 const router = useRouter()
 
 const navigate = (path: string): void => {
@@ -920,6 +969,41 @@ onBeforeUnmount(() => {
   pointer-events: none;
 }
 
+// «×» очистки запроса: показывается, когда в поле есть текст,
+// и занимает то же место, где при пустом поле висит подсказка
+// о хоткее. В мобильной панели кнопка сидит в баре перед
+// кнопкой закрытия.
+.search-box__clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  border: none;
+  border-radius: 0.3rem;
+  background: transparent;
+  color: var(--vp-c-text-mute);
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--vp-c-bg);
+    color: var(--vp-c-text);
+  }
+}
+
+.search-box__clear svg {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+// В десктопном поле кнопка прижата к его правому краю
+// (само поле — position: relative)
+.search-box__field .search-box__clear {
+  position: absolute;
+  right: 0.45rem;
+}
+
 // На десктопе панель выровнена по левому краю расширенного поля
 // (логотипу); смещение --sb-expand-left наследуется от поля и ещё
 // служит защитой от выхода за экран на узких окнах.
@@ -1124,6 +1208,13 @@ onBeforeUnmount(() => {
   .search-box__close svg {
     width: 1.25rem;
     height: 1.25rem;
+  }
+
+  // «×» в мобильном баре по размеру совпадает с кнопкой закрытия
+  .search-box__panel-bar .search-box__clear {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
   }
 
   .search-box__results {
