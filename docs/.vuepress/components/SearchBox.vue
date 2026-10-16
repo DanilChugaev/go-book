@@ -907,6 +907,7 @@ onBeforeUnmount(() => {
   background: transparent;
   color: var(--vp-c-text);
   cursor: pointer;
+  margin-right: -0.625rem;
 
   &:hover {
     background-color: var(--vp-c-bg-alt);

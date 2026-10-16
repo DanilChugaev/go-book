@@ -30,3 +30,34 @@ summary {
         right: 30px;
     }
 }
+
+// На страницах без сайдбара (главная) бургер на мобильных скрываем:
+// иначе тема открывает дровер без единого пункта.
+// Если в config.js включим navbar, правила ниже придётся пересмотреть —
+// в дровере тогда появятся ссылки navbar'а, и его скрывать нельзя.
+@media (max-width: 719px) {
+    // Селекторы начинаются с .vp-theme-container, чтобы не уступить
+    // спецификой правилам темы (у них тоже три класса).
+    .vp-theme-container.no-sidebar .vp-toggle-sidebar-button {
+        display: none;
+    }
+
+    // 4rem — padding темы, который оставляет место под бургер.
+    // Кнопки нет, поэтому возвращаем обычный padding.
+    .vp-theme-container.no-sidebar .vp-navbar {
+        padding-inline-start: var(--navbar-padding-h);
+    }
+
+    // Свайп с левого края (Layout.vue) тоже не должен открывать
+    // пустой дровер, иначе затемняющая маска «мигает».
+    .vp-theme-container.no-sidebar .vp-sidebar,
+    .vp-theme-container.no-sidebar .vp-sidebar-mask {
+        display: none;
+    }
+}
+
+@media (max-width: 959px) {
+  .vp-page [vp-content] {
+    padding: 1.6rem;
+  }
+}
