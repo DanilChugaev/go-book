@@ -654,7 +654,13 @@
 - измерение до оптимизации;
 - `strings.Builder` и `sync.Pool` с ограничениями применения.
 
-TODO добавить ссылки на страницы
+1. [Методика измерений](advanced-performance/README.md)
+2. [Benchmarks и `benchstat`](advanced-performance/benchmarks.md)
+3. [CPU, память и `pprof`](advanced-performance/pprof.md)
+4. [Аллокации, escape analysis и оптимизации](advanced-performance/allocations-optimization.md)
+5. [Самопроверка](advanced-performance/tests.md)
+6. [Задания](advanced-performance/practice.md)
+7. [Рекомендации по коду](advanced-performance/best-practices.md)
 
 ### Продвинутая глава E. Reflection, `unsafe` и cgo
 

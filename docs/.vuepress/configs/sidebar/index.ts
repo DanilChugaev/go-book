@@ -438,6 +438,20 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Продвинутая глава D: Производительность',
+          link: '/guide/advanced-performance/README.md',
+          collapsible: true,
+          children: [
+            '/guide/advanced-performance/README.md',
+            '/guide/advanced-performance/benchmarks.md',
+            '/guide/advanced-performance/pprof.md',
+            '/guide/advanced-performance/allocations-optimization.md',
+            '/guide/advanced-performance/tests.md',
+            '/guide/advanced-performance/practice.md',
+            '/guide/advanced-performance/best-practices.md',
+          ],
+        },
+        {
           text: 'Справочник',
           link: '/guide/directory/base-directory.md',
           collapsible: true,
