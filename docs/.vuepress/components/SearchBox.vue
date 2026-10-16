@@ -242,11 +242,10 @@ const onMediaChange = (event: MediaQueryListEvent): void => {
 
 const placeholder = 'Поиск по учебнику…'
 
-const isMac =
-  typeof navigator !== 'undefined' &&
-  /mac|iphone|ipad|ipod/i.test(navigator.platform ?? navigator.userAgent)
-
-const kbdLabel = isMac ? '⌘ K' : 'Ctrl K'
+// Сервер не знает платформу браузера. Если определить её при SSR, сервер
+// отрендерит «Ctrl K», а macOS-клиент — «⌘ K», что нарушит hydration.
+const isMac = ref(false)
+const kbdLabel = computed(() => (isMac.value ? '⌘ K' : 'Ctrl K'))
 
 let indexPromise: Promise<ISearchIndex> | null = null
 
@@ -836,6 +835,10 @@ const updateExpandMetrics = (): void => {
 }
 
 onMounted(() => {
+  isMac.value = /mac|iphone|ipad|ipod/i.test(
+    navigator.platform ?? navigator.userAgent,
+  )
+
   document.addEventListener('mousedown', onDocumentMouseDown)
   window.addEventListener('keydown', onGlobalKeydown)
   window.addEventListener('resize', updateExpandMetrics)
@@ -1232,4 +1235,3 @@ onBeforeUnmount(() => {
   }
 }
 </style>
-

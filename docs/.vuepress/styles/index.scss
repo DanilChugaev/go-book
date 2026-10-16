@@ -12,6 +12,10 @@ html[data-theme=light] {
     height: calc(100vh - 60px);
 }
 
+.vp-hero .vp-hero-image {
+  margin-top: 0;
+}
+
 .vp-footer {
     border: none;
 }
