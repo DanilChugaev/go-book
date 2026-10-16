@@ -33,11 +33,26 @@ export default defineUserConfig({
     pwaPlugin({
       appendBase: true,
       showInstall: true,
-      update: 'hint',
+      // Режим «available»: когда новая версия готова (waiting),
+      // показывается постоянный попап, а «Обновить» шлёт SKIP_WAITING —
+      // новый service worker активируется сразу, страница автоперезагружается.
+      // Режим «hint» сломан в rc.137 плагина: тост исчезает ровно тогда,
+      // когда версия готова, а его кнопка только перезагружает страницу,
+      // что не активирует waiting-worker.
+      update: 'available',
       cacheHTML: true,
       cacheImage: true,
+      // Навигация на страницу, которой нет в precache (опечатка,
+      // битая ссылка, оффлайн), обслуживается 404-страницей вместо
+      // экрана «нет сети» браузера. Относительный путь резолвится
+      // от директории service worker (/go-book/).
+      generateSWConfig: {
+        navigateFallback: '404.html',
+      },
       themeColor: '#00ADD8',
-      favicon: '/icons/go-book-192.png',
+      // Явный favicon не нужен: плагин уже вставляет ссылку на
+      // 192-иконку из manifest — дублировать один и тот же файл дважды
+      // в <head> нет смысла.
       apple: {
         icon: '/icons/go-book-180.png',
       },
