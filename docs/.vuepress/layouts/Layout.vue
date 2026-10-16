@@ -75,7 +75,7 @@ const onBeforeLeave = scrollPromise.pending
     <slot name="navbar">
       <VPNavbar v-if="shouldShowNavbar" @toggle-sidebar="toggleSidebar">
         <template #before><slot name="navbar-before" /></template>
-        <template #after><slot name="navbar-after" /><BookmarksMenu /></template>
+        <template #after><slot name="navbar-after" /><ClientOnly><BookmarksMenu /></ClientOnly></template>
       </VPNavbar>
     </slot>
 
