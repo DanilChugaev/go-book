@@ -21,7 +21,7 @@ import type { Bookmark } from '../composables/useBookmarks'
 import type { ISearchIndex } from '../configs/search/types.js'
 
 const router = useRouter()
-const { bookmarks, loaded, load } = useBookmarks()
+const { bookmarks, load } = useBookmarks()
 const searchIndex = ref<ISearchIndex | null>(null)
 
 function navigate(path: string): void {
