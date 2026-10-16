@@ -452,6 +452,20 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Продвинутая глава E: Reflection, unsafe и cgo',
+          link: '/guide/advanced-reflection-unsafe-cgo/README.md',
+          collapsible: true,
+          children: [
+            '/guide/advanced-reflection-unsafe-cgo/README.md',
+            '/guide/advanced-reflection-unsafe-cgo/reflection.md',
+            '/guide/advanced-reflection-unsafe-cgo/unsafe.md',
+            '/guide/advanced-reflection-unsafe-cgo/cgo.md',
+            '/guide/advanced-reflection-unsafe-cgo/tests.md',
+            '/guide/advanced-reflection-unsafe-cgo/practice.md',
+            '/guide/advanced-reflection-unsafe-cgo/best-practices.md',
+          ],
+        },
+        {
           text: 'Справочник',
           link: '/guide/directory/base-directory.md',
           collapsible: true,

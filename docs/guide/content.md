@@ -672,7 +672,13 @@
 - основы cgo;
 - случаи, когда эти инструменты лучше не использовать.
 
-TODO добавить ссылки на страницы
+1. [Границы применения reflection, `unsafe` и cgo](advanced-reflection-unsafe-cgo/README.md)
+2. [Reflection: `reflect.Type` и `reflect.Value`](advanced-reflection-unsafe-cgo/reflection.md)
+3. [`unsafe`: память и границы гарантий](advanced-reflection-unsafe-cgo/unsafe.md)
+4. [cgo: вызов C-кода из Go](advanced-reflection-unsafe-cgo/cgo.md)
+5. [Самопроверка](advanced-reflection-unsafe-cgo/tests.md)
+6. [Задания](advanced-reflection-unsafe-cgo/practice.md)
+7. [Рекомендации по коду](advanced-reflection-unsafe-cgo/best-practices.md)
 
 ### Продвинутая глава F. Архитектура production-сервиса
 
