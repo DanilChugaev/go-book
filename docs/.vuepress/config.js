@@ -40,8 +40,8 @@ export default defineUserConfig({
       // когда версия готова, а его кнопка только перезагружает страницу,
       // что не активирует waiting-worker.
       update: 'available',
-      cacheHTML: true,
-      cacheImage: true,
+      //cacheHTML: true,
+      //cacheImage: true,
       // Навигация на страницу, которой нет в precache (опечатка,
       // битая ссылка, оффлайн), обслуживается 404-страницей вместо
       // экрана «нет сети» браузера. Относительный путь резолвится
