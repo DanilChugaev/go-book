@@ -1,5 +1,5 @@
 <template>
-  <section v-if="loaded" class="bookmarks-home" aria-labelledby="bookmarks-home-title">
+  <section class="bookmarks-home" aria-labelledby="bookmarks-home-title">
     <h2 id="bookmarks-home-title">Ваши закладки</h2>
     <p v-if="bookmarks.length === 0" class="bookmarks-home__empty">
       Закладок пока нет. На нужной странице откройте кнопку с иконкой закладки в шапке и сохраните её.

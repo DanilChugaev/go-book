@@ -102,5 +102,5 @@ export function useBookmarks() {
     }
   }
 
-  return { bookmarks: readonly(bookmarks), loaded: readonly(loaded), load, add, remove, clear }
+  return { bookmarks: readonly(bookmarks), load, add, remove, clear }
 }
