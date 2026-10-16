@@ -693,7 +693,14 @@
 - безопасность API;
 - code review checklist.
 
-TODO добавить ссылки на страницы
+1. [Слои, зависимости и интерфейсы](advanced-production-architecture/README.md)
+2. [Конфигурация, секреты и health-checks](advanced-production-architecture/config-health.md)
+3. [Observability: логи, метрики и tracing](advanced-production-architecture/observability.md)
+4. [Timeouts, retries, idempotency и rate limiting](advanced-production-architecture/reliability.md)
+5. [Безопасность API и code review](advanced-production-architecture/security-review.md)
+6. [Самопроверка](advanced-production-architecture/tests.md)
+7. [Задания](advanced-production-architecture/practice.md)
+8. [Рекомендации по коду](advanced-production-architecture/best-practices.md)
 
 ## Справочник
 

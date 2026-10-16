@@ -466,6 +466,21 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Продвинутая глава F: Production-архитектура',
+          link: '/guide/advanced-production-architecture/README.md',
+          collapsible: true,
+          children: [
+            '/guide/advanced-production-architecture/README.md',
+            '/guide/advanced-production-architecture/config-health.md',
+            '/guide/advanced-production-architecture/observability.md',
+            '/guide/advanced-production-architecture/reliability.md',
+            '/guide/advanced-production-architecture/security-review.md',
+            '/guide/advanced-production-architecture/tests.md',
+            '/guide/advanced-production-architecture/practice.md',
+            '/guide/advanced-production-architecture/best-practices.md',
+          ],
+        },
+        {
           text: 'Справочник',
           link: '/guide/directory/base-directory.md',
           collapsible: true,
