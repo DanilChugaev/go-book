@@ -9,7 +9,3 @@ actions:
 
 footer: 'Статус: в процессе...'
 ---
-
-<ClientOnly>
-  <BookmarksHome />
-</ClientOnly>
