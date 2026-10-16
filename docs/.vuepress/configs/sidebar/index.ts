@@ -396,6 +396,20 @@ export const sidebarEn: SidebarOptions = {
           ],
         },
         {
+          text: 'Продвинутая глава A: Ошибки и ресурсы',
+          link: '/guide/advanced-errors-resources/README.md',
+          collapsible: true,
+          children: [
+            '/guide/advanced-errors-resources/README.md',
+            '/guide/advanced-errors-resources/defer-resources.md',
+            '/guide/advanced-errors-resources/panic-recover.md',
+            '/guide/advanced-errors-resources/http-api-errors.md',
+            '/guide/advanced-errors-resources/tests.md',
+            '/guide/advanced-errors-resources/practice.md',
+            '/guide/advanced-errors-resources/best-practices.md',
+          ],
+        },
+        {
           text: 'Справочник',
           link: '/guide/directory/base-directory.md',
           collapsible: true,

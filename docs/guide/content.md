@@ -595,7 +595,13 @@
 - проектирование ошибок HTTP API;
 - границы между ошибкой, логом и panic.
 
-TODO добавить ссылки на страницы
+1. [Цепочки и типы ошибок](advanced-errors-resources/README.md)
+2. [`defer` и жизненный цикл ресурсов](advanced-errors-resources/defer-resources.md)
+3. [`panic` и `recover` в библиотечном коде](advanced-errors-resources/panic-recover.md)
+4. [Ошибки HTTP API: контракт, логи и panic](advanced-errors-resources/http-api-errors.md)
+5. [Самопроверка](advanced-errors-resources/tests.md)
+6. [Задания](advanced-errors-resources/practice.md)
+7. [Рекомендации по коду](advanced-errors-resources/best-practices.md)
 
 ### Продвинутая глава B. Типы и generics
 
