@@ -1,5 +1,9 @@
 <template>
-  <div ref="root" class="search-box">
+  <div
+    ref="root"
+    class="search-box"
+    :class="{ 'search-box--expanded': open && !mobile }"
+  >
     <!-- Мобильный режим: кнопка в шапке -->
     <button
       class="search-box__toggle"
@@ -53,6 +57,17 @@
       >
       <span v-show="query === ''" class="search-box__kbd">{{ kbdLabel }}</span>
     </div>
+
+    <!-- Подложка: затемняет страницу за открытой панелью.
+         Телепортируется в body: её z-index (19) должен быть ниже шапки
+         (20), а элементы внутри шапки туда поместить нельзя -->
+    <Teleport to="body">
+      <div
+        v-if="open && !mobile"
+        class="search-box__backdrop"
+        aria-hidden="true"
+      ></div>
+    </Teleport>
 
     <!-- Панель результатов: выпадающая на десктопе,
          прикреплённая под шапку на мобильных -->
@@ -154,6 +169,9 @@ import type { ISearchIndex, ISearchPage } from '../configs/search/types.js'
  *   с фрагментом совпадения и подсветкой;
  * - игнорирование регистра и взаимозаменяемость `ё`/`е`;
  * - навигация с клавиатуры (Ctrl/⌘ K, стрелки, Enter, Esc);
+ * - «расширение» при открытии: на десктопе поле тянется до логотипа,
+ *   накрывает навигационные ссылки и кнопку смены темы, а страница
+ *   за панелью затемняется;
  * - мобильная версия и тёмная тема.
  */
 
@@ -171,6 +189,15 @@ const active = ref(-1)
 const loading = ref(false)
 const index = ref<ISearchIndex | null>(null)
 
+// Мобильный viewport: управляет мобильной панелью, а на десктопе
+// отключает «расширение» поискового поля
+const mobile = ref(false)
+let mediaQuery: MediaQueryList | null = null
+
+const onMediaChange = (event: MediaQueryListEvent): void => {
+  mobile.value = event.matches
+}
+
 const placeholder = 'Поиск по учебнику…'
 
 const isMac =
@@ -178,10 +205,6 @@ const isMac =
   /mac|iphone|ipad|ipod/i.test(navigator.platform ?? navigator.userAgent)
 
 const kbdLabel = isMac ? '⌘ K' : 'Ctrl K'
-
-const isMobile = (): boolean =>
-  typeof window !== 'undefined' &&
-  window.matchMedia('(max-width: 719px)').matches
 
 let indexPromise: Promise<ISearchIndex> | null = null
 
@@ -621,12 +644,21 @@ watch(query, (value) => {
   if (value.trim() !== '') void ensureIndex()
 })
 
+// Блокирует прокрутку страницы, пока панель открыта (иначе
+// «затемнение» фона прерывалось бы листанием)
+const lockBodyScroll = (locked: boolean): void => {
+  if (typeof document === 'undefined') return
+  document.body.style.overflow = locked ? 'hidden' : ''
+}
+
 watch(open, (value) => {
+  lockBodyScroll(value)
+
   if (!value) return
 
   active.value = -1
   void ensureIndex()
-  if (isMobile()) {
+  if (mobile.value) {
     requestAnimationFrame(() => mobileInput.value?.focus())
   }
 })
@@ -722,7 +754,7 @@ const onGlobalKeydown = (event: KeyboardEvent): void => {
   if (event.code !== 'KeyK' && event.key.toLowerCase() !== 'k') return
   event.preventDefault()
 
-  if (isMobile()) {
+  if (mobile.value) {
     openMobile()
   } else {
     open.value = true
@@ -730,14 +762,54 @@ const onGlobalKeydown = (event: KeyboardEvent): void => {
   }
 }
 
+/**
+ * Замеряет смещение «расширения»: левый край поля встаёт у правого
+ * края логотипа. Шапка занимает всю ширину, поэтому поле позиционируется
+ * через `position: fixed` относительно viewport — иначе абсолютно
+ * позиционированный .vp-navbar-items-wrapper сдвигался бы, когда поле
+ * выходит из потока. Бренд — первая ссылка в шапке (кнопка сайдбара —
+ * это <div>).
+ */
+const updateExpandMetrics = (): void => {
+  const box = root.value
+  if (box === null) return
+
+  const navbar = box.closest('.vp-navbar')
+  if (navbar === null) return
+
+  const brand = navbar.querySelector('a')
+  const logoRight =
+    brand !== null
+      ? brand.getBoundingClientRect().right
+      : navbar.getBoundingClientRect().left
+
+  box.style.setProperty('--sb-expand-left', `${Math.round(logoRight + 75 + 24)}px`)
+}
+
 onMounted(() => {
   document.addEventListener('mousedown', onDocumentMouseDown)
   window.addEventListener('keydown', onGlobalKeydown)
+  window.addEventListener('resize', updateExpandMetrics)
+
+  const media = window.matchMedia('(max-width: 719px)')
+  mediaQuery = media
+  mobile.value = media.matches
+  media.addEventListener('change', onMediaChange)
+
+  updateExpandMetrics()
+
+  // Перезамер после загрузки веб-шрифтов — логотип мог изменить размер
+  if (document.fonts !== undefined) {
+    void document.fonts.ready.then(() => updateExpandMetrics())
+  }
 })
 
 onBeforeUnmount(() => {
   document.removeEventListener('mousedown', onDocumentMouseDown)
   window.removeEventListener('keydown', onGlobalKeydown)
+  window.removeEventListener('resize', updateExpandMetrics)
+  mediaQuery?.removeEventListener('change', onMediaChange)
+  lockBodyScroll(false)
 })
 
 </script>
@@ -750,6 +822,28 @@ onBeforeUnmount(() => {
   display: flex;
   align-items: center;
   height: 100%;
+}
+
+// Открытая панель «расширяет» поле: от правого края логотипа
+// (--sb-expand-left, замеряется JS) до правого края шапки, накрывая
+// навигационные ссылки и кнопку смены темы.
+.search-box--expanded {
+  position: fixed;
+  top: 0;
+  left: var(--sb-expand-left);
+  right: var(--navbar-padding-h, 1.5rem);
+  z-index: 1; // над содержимым шапки (ссылками и кнопками)
+  height: var(--navbar-height);
+  animation: search-box-fade-in 0.15s ease;
+
+  .search-box__field {
+    width: 100%;
+    height: var(--navbar-line-height, 2.2rem);
+
+    .search-box__input {
+      width: 100%;
+    }
+  }
 }
 
 .search-box__toggle {
@@ -826,18 +920,55 @@ onBeforeUnmount(() => {
   pointer-events: none;
 }
 
+// На десктопе панель выровнена по левому краю расширенного поля
+// (логотипу); смещение --sb-expand-left наследуется от поля и ещё
+// служит защитой от выхода за экран на узких окнах.
 .search-box__panel {
   position: absolute;
   top: calc(100% + 0.6rem);
-  right: 0;
+  left: 0;
   z-index: 30;
-  width: 24rem;
+  width: 100%;
+  max-width: calc(100vw - var(--sb-expand-left, 0px) - 1.5rem);
   max-height: min(28rem, calc(100vh - var(--navbar-height) - 2rem));
   overflow-y: auto;
   background-color: var(--vp-c-bg-elv);
   border: 1px solid var(--vp-c-border);
   border-radius: 0.75rem;
   box-shadow: 0 1rem 2.5rem var(--vp-c-shadow, rgba(0, 0, 0, 0.12));
+  animation: search-box-panel-in 0.18s ease;
+}
+
+// Затемняет страницу за открытой панелью: z-index 19 ниже шапки
+// (z-index: 20), поэтому темнеет только контент страницы.
+.search-box__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 19;
+  background-color: rgba(0, 0, 0, 0.35);
+  animation: search-box-fade-in 0.15s ease;
+}
+
+@keyframes search-box-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes search-box-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.35rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .search-box__panel-bar {
@@ -931,6 +1062,7 @@ onBeforeUnmount(() => {
     left: 0;
     right: 0;
     width: auto;
+    max-width: none;
     max-height: calc(100vh - var(--navbar-height));
     overflow: hidden;
     border-top: none;
