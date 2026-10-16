@@ -3,6 +3,12 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [master]
+  workflow_dispatch:
+    inputs:
+      restore_gh_pages_commit:
+        description: 'Необязательно: commit из ветки gh-pages, артефакты которого нужно опубликовать без пересборки'
+        required: false
+        type: string
 
 permissions:
   contents: write
@@ -19,10 +25,19 @@ jobs:
           cache: npm
 
       - name: Install dependencies
+        if: ${{ inputs.restore_gh_pages_commit == '' }}
         run: npm ci
 
       - name: Build documentation
+        if: ${{ inputs.restore_gh_pages_commit == '' }}
         run: npm run docs:build
+
+      - name: Restore a published artifact
+        if: ${{ inputs.restore_gh_pages_commit != '' }}
+        run: |
+          git fetch origin gh-pages
+          git archive --format=tar ${{ inputs.restore_gh_pages_commit }} | tar -x -C docs/.vuepress/dist
+
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
