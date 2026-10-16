@@ -8,3 +8,6 @@ actions:
     type: primary
 
 footer: 'Статус: в процессе...'
+---
+
+<BookmarksHome />
