@@ -31,8 +31,8 @@ export default defineUserConfig({
     // компонентом SearchBox лениво, отдельным чанком.
     searchPlugin(),
     pwaPlugin({
-      // appendBase: true,
-      // showInstall: true,
+      appendBase: true,
+      showInstall: true,
       // Режим «available»: когда новая версия готова (waiting),
       // показывается постоянный попап, а «Обновить» шлёт SKIP_WAITING —
       // новый service worker активируется сразу, страница автоперезагружается.
