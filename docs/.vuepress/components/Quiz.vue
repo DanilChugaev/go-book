@@ -155,7 +155,7 @@ function createSeededRandom(seed: string) {
   width: 0.5rem;
   height: 0.5rem;
   content: '';
-  background: var(--c-brand);
+  background: var(--vp-c-accent);
   border-radius: 50%;
   opacity: 0;
 }
@@ -165,7 +165,7 @@ function createSeededRandom(seed: string) {
 }
 
 .quiz__option:has(input[type='radio']:focus-visible)::before {
-  outline: 2px solid var(--c-brand);
+  outline: 2px solid var(--vp-c-accent);
   outline-offset: 2px;
 }
 
