@@ -59,7 +59,9 @@ import (
 	"fmt"
 )
 
-func work(ctx context.Context) {
+func work(ctx context.Context, done chan<- struct{}) {
+	defer close(done)
+
 	select {
 	case <-ctx.Done():
 		fmt.Println("Работа отменена:", ctx.Err())
@@ -70,12 +72,14 @@ func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	go work(ctx)
+	done := make(chan struct{})
+	go work(ctx, done)
 	cancel()
+	<-done
 }
 ```
 
-`defer cancel()` нужен даже если ожидается естественное завершение: он освобождает ресурсы дочернего контекста, когда текущая функция завершается раньше срока.
+Канал `done` не даёт `main` завершиться раньше worker: после `cancel()` программа ждёт, пока goroutine заметит отмену и напечатает сообщение. `defer cancel()` нужен даже если ожидается естественное завершение: он освобождает ресурсы дочернего контекста, когда текущая функция завершается раньше срока.
 
 ## Дедлайн: `context.WithTimeout`
 
