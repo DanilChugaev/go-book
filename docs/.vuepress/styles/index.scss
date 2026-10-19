@@ -80,3 +80,11 @@ summary {
 .vp-navbar-items-wrapper .bookmarks-menu {
   order: 0;
 }
+
+.vp-navbar > .vp-toggle-sidebar-button + span {
+  display: inline-flex;
+}
+
+.vp-navbar-items-wrapper {
+  gap: 0.4rem;
+}

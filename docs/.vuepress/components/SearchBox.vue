@@ -845,6 +845,11 @@ const onDocumentMouseDown = (event: MouseEvent): void => {
  */
 const onGlobalKeydown = (event: KeyboardEvent): void => {
   if (event.isComposing) return
+  if (event.key === 'Escape' && open.value) {
+    event.preventDefault()
+    close()
+    return
+  }
   // Alt сохраняем: на macOS/Windows Alt+клавиша часто вводит
   // спецсимволы и используется другими обработчиками.
   if (event.altKey) return

@@ -20,10 +20,22 @@
       <div v-if="open && !mobile" class="bookmarks-menu__backdrop" aria-hidden="true"></div>
     </Teleport>
 
-    <section v-if="open" id="bookmarks-panel" class="bookmarks-menu__panel" aria-label="Закладки">
+    <section
+      v-if="open"
+      id="bookmarks-panel"
+      ref="panel"
+      class="bookmarks-menu__panel"
+      aria-label="Закладки"
+    >
       <header class="bookmarks-menu__header">
         <h2>Закладки</h2>
-        <button class="bookmarks-menu__close" type="button" aria-label="Закрыть закладки" @click="close">
+        <button
+          ref="closeButton"
+          class="bookmarks-menu__close"
+          type="button"
+          aria-label="Закрыть закладки"
+          @click="close(true)"
+        >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
             <line x1="6" y1="6" x2="18" y2="18" />
             <line x1="18" y1="6" x2="6" y2="18" />
@@ -81,6 +93,8 @@ import type { ISearchIndex, ISearchPage } from '../configs/search/types.js'
 
 const root = ref<HTMLElement | null>(null)
 const toggle = ref<HTMLButtonElement | null>(null)
+const panel = ref<HTMLElement | null>(null)
+const closeButton = ref<HTMLButtonElement | null>(null)
 const open = ref(false)
 const mobile = ref(false)
 const searchIndex = ref<ISearchIndex | null>(null)
@@ -101,13 +115,22 @@ const currentTitle = computed(() => {
 const currentChapter = computed(() => indexedPage.value?.chapter)
 const currentBookmarked = computed(() => bookmarks.value.some((bookmark) => bookmark.path === currentPath.value))
 
-function close(): void {
+function close(restoreFocus = false): void {
   open.value = false
+  if (restoreFocus) {
+    void nextTick(() => toggle.value?.focus())
+  }
 }
 
 function togglePanel(): void {
-  open.value = !open.value
-  if (open.value && searchIndex.value === null) {
+  if (open.value) {
+    close()
+    return
+  }
+
+  open.value = true
+  void nextTick(() => closeButton.value?.focus())
+  if (searchIndex.value === null) {
     void loadCurrentPageMeta()
   }
 }
@@ -159,8 +182,25 @@ function onDocumentMouseDown(event: MouseEvent): void {
 
 function onKeydown(event: KeyboardEvent): void {
   if (event.key === 'Escape' && open.value) {
-    close()
-    void nextTick(() => toggle.value?.focus())
+    close(true)
+    return
+  }
+
+  if (event.key !== 'Tab' || !open.value || panel.value === null) return
+
+  const focusable = [...panel.value.querySelectorAll<HTMLElement>(
+    'button:not(:disabled), [href], input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex="-1"])',
+  )]
+  if (focusable.length === 0) return
+
+  const first = focusable[0]
+  const last = focusable[focusable.length - 1]
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault()
+    last.focus()
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault()
+    first.focus()
   }
 }
 
