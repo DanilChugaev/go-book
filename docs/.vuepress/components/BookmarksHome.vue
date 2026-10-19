@@ -13,40 +13,27 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
 import { useRouter } from 'vuepress/client'
 
 import { useBookmarks } from '../composables/useBookmarks'
 import type { Bookmark } from '../composables/useBookmarks'
-import type { ISearchIndex } from '../configs/search/types.js'
 
 const router = useRouter()
 const { bookmarks, load } = useBookmarks()
-const searchIndex = ref<ISearchIndex | null>(null)
 
 function navigate(path: string): void {
   void router.push(path)
 }
 
 function formatBookmark(bookmark: Bookmark): string {
-  const indexed = searchIndex.value?.pages.find((page) => page.path === bookmark.path)
-  const chapter = indexed?.chapter ?? bookmark.chapter
-  const title = indexed?.title || bookmark.title
-  return chapter ? `${chapter} — ${title}` : title
+  return bookmark.chapter
+    ? `${bookmark.chapter} — ${bookmark.title}`
+    : bookmark.title
 }
 
-onMounted(async () => {
+onMounted(() => {
   load()
-
-  try {
-    const module: { searchIndex: ISearchIndex } = await import(
-      // @ts-ignore Индекс создаётся search plugin во время сборки VuePress.
-      '../.temp/search/data.js'
-    )
-    searchIndex.value = module.searchIndex
-  } catch {
-    searchIndex.value = null
-  }
 })
 </script>
 

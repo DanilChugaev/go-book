@@ -49,6 +49,23 @@ export default defineUserConfig({
       // от директории service worker (/go-book/).
       generateSWConfig: {
         navigateFallback: '404.html',
+        // Полнотекстовый индекс загружается только при первом использовании
+        // поиска или закладок. Его нельзя добавлять в precache: иначе service
+        // worker скачивает более 1 МБ до любого действия пользователя.
+        globIgnores: ['assets/data-*.js'],
+        runtimeCaching: [
+          {
+            urlPattern: /\/go-book\/assets\/data-[\w-]+\.js$/,
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'go-book-search-index',
+              expiration: {
+                maxEntries: 1,
+                maxAgeSeconds: 60 * 60 * 24 * 30,
+              },
+            },
+          },
+        ],
       },
       themeColor: '#00ADD8',
       // Явный favicon не нужен: плагин уже вставляет ссылку на
