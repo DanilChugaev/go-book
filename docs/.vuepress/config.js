@@ -130,6 +130,12 @@ export default defineUserConfig({
   // вызванные логотипом, а атрибут fetchpriority позволяет определить главный логотип как элемент LCP.
   bundler: viteBundler({
     viteOptions: {
+      build: {
+        // Стили редких интерактивных компонентов не должны блокировать
+        // первую отрисовку. Vite загрузит их вместе с соответствующим
+        // асинхронным JavaScript-чанком.
+        cssCodeSplit: true,
+      },
       resolve: {
         alias: {
           '@theme/VPHomeHero.vue': fileURLToPath(
