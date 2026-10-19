@@ -107,6 +107,9 @@ function close(): void {
 
 function togglePanel(): void {
   open.value = !open.value
+  if (open.value && searchIndex.value === null) {
+    void loadCurrentPageMeta()
+  }
 }
 
 function toggleCurrent(): void {
@@ -172,7 +175,6 @@ onMounted(() => {
   mediaQuery = window.matchMedia('(max-width: 719px)')
   mobile.value = mediaQuery.matches
   mediaQuery.addEventListener('change', onMediaChange)
-  void loadCurrentPageMeta()
 })
 
 onBeforeUnmount(() => {
