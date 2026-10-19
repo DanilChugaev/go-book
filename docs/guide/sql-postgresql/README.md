@@ -449,7 +449,7 @@ docker compose exec postgres createdb -U task_manager task_manager_test
 export TEST_DATABASE_URL='postgresql://task_manager:local-development-only@localhost:5432/task_manager_test?sslmode=disable'
 ```
 
-Тесты никогда не должны получать `DATABASE_URL` production или development-базы. Проверяйте, что имя БД оканчивается на `_test`:
+Тесты никогда не должны получать `DATABASE_URL` production или development-базы. Разбирайте URL и проверяйте **именно имя базы**, а не наличие `_test` во всей строке: эта подстрока может случайно оказаться в имени пользователя, пароле или query-параметре.
 
 ```go
 func testDatabaseURL(t *testing.T) string {
@@ -459,12 +459,21 @@ func testDatabaseURL(t *testing.T) string {
 	if databaseURL == "" {
 		t.Skip("TEST_DATABASE_URL не задан")
 	}
-	if !strings.Contains(databaseURL, "_test") {
-	.Fatalf("TEST_DATABASE_URL должен указывать на отдельную тестовую БД")
+
+	parsedURL, err := url.Parse(databaseURL)
+	if err != nil {
+		t.Fatalf("разобрать TEST_DATABASE_URL: %v", err)
+	}
+
+	databaseName := strings.TrimPrefix(parsedURL.Path, "/")
+	if databaseName != "task_manager_test" {
+		t.Fatalf("TEST_DATABASE_URL должен указывать на task_manager_test, получено %q", databaseName)
 	}
 	return databaseURL
 }
 ```
+
+Для этого helper понадобятся импорты `net/url` и `strings`. Если в вашем проекте тестовая БД называется иначе, вынесите разрешённое имя в константу и измените её явно.
 
 Примените к ней миграции в `TestMain` или до тестового запуска:
 
