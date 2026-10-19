@@ -48,7 +48,10 @@
         type="text"
         role="combobox"
         aria-label="Поиск по учебнику"
+        aria-autocomplete="list"
+        aria-controls="search-results"
         :aria-expanded="open ? 'true' : 'false'"
+        :aria-activedescendant="activeDescendant"
         :placeholder="placeholder"
         v-model="query"
         autocomplete="off"
@@ -97,6 +100,12 @@
           ref="mobileInput"
           class="search-box__panel-input"
           type="text"
+          role="combobox"
+          aria-label="Поиск по учебнику"
+          aria-autocomplete="list"
+          aria-controls="search-results"
+          :aria-expanded="open ? 'true' : 'false'"
+          :aria-activedescendant="activeDescendant"
           :placeholder="placeholder"
           v-model="query"
           autocomplete="off"
@@ -143,7 +152,13 @@
         </button>
       </div>
 
-      <div ref="results" class="search-box__results">
+      <div
+        id="search-results"
+        ref="results"
+        class="search-box__results"
+        role="listbox"
+        aria-label="Результаты поиска"
+      >
         <p v-if="loading" class="search-box__state">Готовим индекс…</p>
         <p v-else-if="loadError" class="search-box__state">
           Не удалось загрузить поиск.
@@ -161,7 +176,10 @@
         <template v-else>
           <template v-for="group in groups" :key="group.title">
             <a
+              :id="resultId(group.order)"
               class="search-box__chapter"
+              role="option"
+              :aria-selected="active === group.order ? 'true' : 'false'"
               :class="{
                 'search-box__chapter--active': active === group.order,
               }"
@@ -175,7 +193,10 @@
             <a
               v-for="page in group.pages"
               :key="page.path"
+              :id="resultId(page.order)"
               class="search-box__page"
+              role="option"
+              :aria-selected="active === page.order ? 'true' : 'false'"
               :class="{ 'search-box__page--active': active === page.order }"
               :href="page.path"
               @click.prevent="navigate(page.path)"
@@ -698,6 +719,16 @@ const rows = computed<{ path: string }[]>(() => {
   }
   return list
 })
+
+const activeDescendant = computed(() =>
+  active.value >= 0 && rows.value[active.value] !== undefined
+    ? resultId(active.value)
+    : undefined,
+)
+
+function resultId(order: number): string {
+  return `search-result-${order}`
+}
 
 watch(query, (value) => {
   active.value = -1
