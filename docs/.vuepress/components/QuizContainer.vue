@@ -57,11 +57,11 @@ onMounted(() => {
   }
 })
 
-function getQuestionKey(question: IQuestion, index: number) {
+function getQuestionKey(question: IQuestion, index: number): string {
   return `${index}:${question.text}`
 }
 
-function saveAnswer(questionKey: string, answer: string) {
+function saveAnswer(questionKey: string, answer: string): void {
   answers.value = {
     ...answers.value,
     [questionKey]: answer,
@@ -70,7 +70,7 @@ function saveAnswer(questionKey: string, answer: string) {
   persistAnswers()
 }
 
-function resetAnswers() {
+function resetAnswers(): void {
   answers.value = {}
 
   if (storageKey.value) {
@@ -78,7 +78,7 @@ function resetAnswers() {
   }
 }
 
-function persistAnswers() {
+function persistAnswers(): void {
   if (!storageKey.value) {
     return
   }
@@ -96,9 +96,10 @@ function isAnswerRecord(value: unknown): value is Record<string, string> {
     && Object.values(value).every((answer) => typeof answer === 'string')
 }
 
-function isKnownAnswer(questionKey: string, answer: string) {
-  const questionIndex = Number(questionKey.slice(0, questionKey.indexOf(':')))
-  const question = props.questions[questionIndex]
+function isKnownAnswer(questionKey: string, answer: string): boolean {
+  const question = props.questions.find(
+    (currentQuestion, index) => getQuestionKey(currentQuestion, index) === questionKey,
+  )
 
   return question !== undefined && question.options.some((option) => option.text === answer)
 }
