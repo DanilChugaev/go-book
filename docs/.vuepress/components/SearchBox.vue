@@ -566,7 +566,11 @@ const groups = computed<RenderedGroup[]>(() => {
     return limitRows(browse)
   }
 
-  const matches = searchPages(index.value, tokens)
+  // Сначала выбираем наиболее релевантные страницы из всей выдачи, и
+  // только затем группируем их по главам. Если применить лимит после
+  // группировки, ранние главы из сайдбара могут занять весь budget и
+  // скрыть более точное совпадение из следующей главы.
+  const matches = searchPages(index.value, tokens).slice(0, MAX_PAGE_ROWS)
   const chaptersByTitle = new Map(
     index.value.chapters.map((chapter) => [chapter.title, chapter])
   )
