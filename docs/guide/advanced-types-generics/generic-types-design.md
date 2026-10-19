@@ -155,7 +155,8 @@ func findCachedTitle(cache map[TaskID]string, id TaskID) Optional[string] {
 
 ```go
 func findCachedTitle(cache map[TaskID]string, id TaskID) (string, bool) {
-	return cache[id]
+	title, exists := cache[id]
+	return title, exists
 }
 ```
 
