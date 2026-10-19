@@ -132,7 +132,7 @@ function isKnownAnswer(questionKey: string, answer: string): boolean {
 }
 
 .quiz-container__reset:hover {
-  background: var(--c-brand-light);
-  border-color: var(--c-brand-light);
+  background: var(--vp-c-accent-hover);
+  border-color: var(--vp-c-accent-hover);
 }
 </style>

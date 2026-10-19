@@ -61,36 +61,36 @@ async function copyCode() {
   justify-content: center;
   min-height: 2.25rem;
   padding: 0.4rem 0.75rem;
-  color: var(--c-text);
+  color: var(--vp-c-text);
   font: inherit;
   line-height: 1.25;
   text-decoration: none;
-  background: var(--c-bg);
-  border: 1px solid var(--c-border);
+  background: var(--vp-c-bg);
+  border: 1px solid var(--vp-c-border);
   border-radius: 0.25rem;
   cursor: pointer;
 }
 
 .go-playground__button:hover {
-  color: var(--c-brand);
-  border-color: var(--c-brand);
+  color: var(--vp-c-accent);
+  border-color: var(--vp-c-accent);
 }
 
 .go-playground__button--primary {
-  color: var(--c-bg);
-  background: var(--c-brand);
-  border-color: var(--c-brand);
+  color: var(--vp-c-accent-text);
+  background: var(--vp-c-accent-bg);
+  border-color: var(--vp-c-accent-bg);
 }
 
 .go-playground__button--primary:hover {
-  color: var(--c-bg);
-  background: var(--c-brand-light);
-  border-color: var(--c-brand-light);
+  color: var(--vp-c-accent-text);
+  background: var(--vp-c-accent-hover);
+  border-color: var(--vp-c-accent-hover);
 }
 
 .go-playground__hint {
   margin: 0.75rem 0 0;
-  color: var(--c-text-light);
+  color: var(--vp-c-text-mute);
   font-size: 0.9rem;
 }
 </style>

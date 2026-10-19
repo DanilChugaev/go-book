@@ -143,7 +143,7 @@ function createSeededRandom(seed: string) {
   height: 1rem;
   margin-top: 0.2rem;
   content: '';
-  background: var(--c-bg);
+  background: var(--vp-c-bg);
   border: 2px solid #8c959f;
   border-radius: 50%;
 }
@@ -196,7 +196,7 @@ function createSeededRandom(seed: string) {
 
 .quiz__option--correct .quiz__result--correct {
   display: block;
-  color: var(--back-to-top-c-accent-hover);
+  color: var(--vp-c-green-text);
 }
 
 .quiz__option--wrong .quiz__result--wrong {
