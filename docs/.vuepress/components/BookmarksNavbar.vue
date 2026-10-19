@@ -5,9 +5,13 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, onMounted, ref } from 'vue'
+import { defineAsyncComponent, nextTick, onMounted, ref } from 'vue'
 
-import BookmarksMenu from './BookmarksMenu.vue'
+// Меню открывается только по действию пользователя, поэтому его код не должен
+// попадать в стартовый пакет каждой страницы.
+const BookmarksMenu = defineAsyncComponent(
+  () => import('./BookmarksMenu.vue'),
+)
 
 // До монтирования компонент ничего не рендерит — SSR и первый клиентский
 // render совпадают. После hydration меню перемещается в шапку темы.

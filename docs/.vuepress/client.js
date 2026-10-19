@@ -1,3 +1,4 @@
+import { defineAsyncComponent } from 'vue'
 import { defineClientConfig } from 'vuepress/client'
 import BookmarksNavbar from './components/BookmarksNavbar.vue'
 
@@ -51,14 +52,29 @@ const ensureTeleportAnchors = () => {
 }
 ensureTeleportAnchors()
 
-const components = import.meta.glob('./components/*.vue', { eager: true })
+// Интерактивные компоненты не нужны для первичной отрисовки каждой страницы.
+// Регистрируем их асинхронно, чтобы Vite вынес их код и стили из стартового
+// пакета. SSR по-прежнему ждёт эти компоненты и отдаёт готовую HTML-разметку.
+const components = {
+  BookmarksHome: defineAsyncComponent(
+    () => import('./components/BookmarksHome.vue'),
+  ),
+  GoPlayground: defineAsyncComponent(
+    () => import('./components/GoPlayground.vue'),
+  ),
+  QuizContainer: defineAsyncComponent(
+    () => import('./components/QuizContainer.vue'),
+  ),
+  SearchBox: defineAsyncComponent(
+    () => import('./components/SearchBox.vue'),
+  ),
+}
 
 export default defineClientConfig({
   rootComponents: [BookmarksNavbar],
   enhance({ app }) {
-    Object.entries(components).forEach(([path, module]) => {
-      const name = path.split('/').pop().replace('.vue', '')
-      app.component(name, module.default)
+    Object.entries(components).forEach(([name, component]) => {
+      app.component(name, component)
     })
   },
 })

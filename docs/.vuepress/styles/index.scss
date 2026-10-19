@@ -76,9 +76,14 @@ summary {
   order: 1;
 }
 
-.vp-navbar-items-wrapper .search-box,
-.vp-navbar-items-wrapper .bookmarks-menu {
+.vp-navbar-items-wrapper .search-box {
   order: 0;
+}
+.vp-navbar-items-wrapper .vp-toggle-color-mode-button {
+  order: 1;
+}
+.vp-navbar-items-wrapper .bookmarks-menu {
+  order: 2;
 }
 
 .vp-navbar > .vp-toggle-sidebar-button + span {
