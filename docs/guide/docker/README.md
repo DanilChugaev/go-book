@@ -33,7 +33,7 @@ PostgreSQL уже запускается в Compose, но Task Manager пока 
 В репозитории создан самостоятельный минимальный пример:
 
 ```text
-examples/task-manager-api/
+examples/32/task-manager-api/
 ├── cmd/api/main.go
 ├── Dockerfile
 ├── .dockerignore
@@ -45,7 +45,7 @@ examples/task-manager-api/
 Это намеренно небольшой API с `GET /healthz`. Он позволяет проверить Docker-контракт до того, как в следующей главе появится настоящий PostgreSQL-репозиторий. Перед командами перейдите в эту директорию:
 
 ```bash
-cd examples/task-manager-api
+cd examples/32/task-manager-api
 ```
 
 ## Проверка Docker
@@ -61,7 +61,7 @@ docker compose version
 
 ## Multi-stage Dockerfile для Go
 
-Файл `examples/task-manager-api/Dockerfile` использует две стадии:
+Файл `examples/32/task-manager-api/Dockerfile` использует две стадии:
 
 ```dockerfile
 # syntax=docker/dockerfile:1
@@ -128,7 +128,7 @@ coverage.out
 
 ## Сборка и запуск одного container
 
-Из `examples/task-manager-api`:
+Из `examples/32/task-manager-api`:
 
 ```bash
 docker build -t task-manager-api:local .
@@ -155,7 +155,7 @@ Content-Type: application/json; charset=utf-8
 
 ## Docker Compose
 
-Task Manager состоит из нескольких сервисов. `examples/task-manager-api/compose.yaml` описывает API, PostgreSQL и volume:
+Task Manager состоит из нескольких сервисов. `examples/32/task-manager-api/compose.yaml` описывает API, PostgreSQL и volume:
 
 ```yaml
 services:

@@ -12,7 +12,7 @@ next: /guide/sql-postgresql/best-practices.md
 Запустите PostgreSQL из Compose, затем подключитесь к нему через DBeaver по `localhost` и значениям `.env`.
 
 ```bash
-cd examples/task-manager-api
+cd examples/32/task-manager-api
 docker compose up -d postgres
 docker compose ps
 ```

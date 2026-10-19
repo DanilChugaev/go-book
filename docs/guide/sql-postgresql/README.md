@@ -22,7 +22,7 @@ Service по-прежнему зависит от интерфейса репо�
 Поднимите окружение из прошлой главы:
 
 ```bash
-cd examples/task-manager-api
+cd examples/32/task-manager-api
 docker compose up -d
 docker compose ps
 ```
@@ -438,7 +438,7 @@ Unit-тесты service остаются быстрыми и использую�
 Поднимите PostgreSQL из Compose и создайте отдельную тестовую БД один раз:
 
 ```bash
-cd examples/task-manager-api
+cd examples/32/task-manager-api
 docker compose up -d postgres
 docker compose exec postgres createdb -U task_manager task_manager_test
 ```

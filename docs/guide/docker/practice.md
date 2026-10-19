@@ -5,14 +5,14 @@ next: /guide/docker/best-practices.md
 
 # Задания: Docker-окружение Task Manager API
 
-Используйте учебный проект из `examples/task-manager-api`. Сначала проверьте его локально через Go, затем соберите image и поднимите API вместе с PostgreSQL. База в этой главе — инфраструктура: не добавляйте `database/sql` до следующей главы.
+Используйте учебный проект из `examples/32/task-manager-api`. Сначала проверьте его локально через Go, затем соберите image и поднимите API вместе с PostgreSQL. База в этой главе — инфраструктура: не добавляйте `database/sql` до следующей главы.
 
 ## Задание 1. Проверьте минимальный API без Docker
 
 Перейдите в каталог примера, запустите API через Go и проверьте `GET /healthz` с `curl`.
 
 ```bash
-cd examples/task-manager-api
+cd examples/32/task-manager-api
 go run ./cmd/api
 ```
 

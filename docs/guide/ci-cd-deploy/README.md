@@ -84,11 +84,11 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Validate Compose configuration
-        working-directory: examples/task-manager-api
+        working-directory: examples/32/task-manager-api
         run: docker compose config
 
       - name: Build image
-        working-directory: examples/task-manager-api
+        working-directory: examples/32/task-manager-api
         run: docker build --tag task-manager-api:ci .
 ```
 
