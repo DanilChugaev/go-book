@@ -4,6 +4,14 @@ html[data-theme=light] {
     }
 }
 
+// Базовый зелёный цвет темы (#3eaf7c) даёт контраст 2.75:1 с белым
+// текстом. Более тёмный оттенок сохраняет визуальный стиль кнопки и
+// соответствует WCAG AA для обычного текста (не менее 4.5:1).
+html[data-theme='light'] {
+  --vp-c-accent-bg: #147a4b;
+  --vp-c-accent-hover: #0f633c;
+}
+
 .vp-home {
     display: flex;
     flex-direction: column;
