@@ -73,4 +73,10 @@ summary {
   margin-inline-start: 0;
   width: 2.2rem;
   height: 2.2rem;
+  order: 1;
+}
+
+.vp-navbar-items-wrapper .search-box,
+.vp-navbar-items-wrapper .bookmarks-menu {
+  order: 0;
 }
