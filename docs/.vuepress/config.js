@@ -1,4 +1,5 @@
 import { defineUserConfig } from 'vuepress'
+import { fileURLToPath } from 'node:url'
 
 import { defaultTheme } from '@vuepress/theme-default'
 import { viteBundler } from '@vuepress/bundler-vite'
@@ -107,5 +108,21 @@ export default defineUserConfig({
     }),
   ],
 
-  bundler: viteBundler(),
+  // Представленные ниже компоненты темы отличаются от исходных версий только атрибутами
+  // загрузки изображений. Явное указание внутренних размеров предотвращает сдвиги макета,
+  // вызванные логотипом, а атрибут fetchpriority позволяет определить главный логотип как элемент LCP.
+  bundler: viteBundler({
+    viteOptions: {
+      resolve: {
+        alias: {
+          '@theme/VPHomeHero.vue': fileURLToPath(
+            new URL('./components/VPHomeHero.vue', import.meta.url),
+          ),
+          '@theme/VPNavbarBrand.vue': fileURLToPath(
+            new URL('./components/VPNavbarBrand.vue', import.meta.url),
+          ),
+        },
+      },
+    },
+  }),
 })
