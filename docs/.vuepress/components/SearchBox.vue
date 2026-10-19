@@ -145,6 +145,12 @@
 
       <div ref="results" class="search-box__results">
         <p v-if="loading" class="search-box__state">Готовим индекс…</p>
+        <p v-else-if="loadError" class="search-box__state">
+          Не удалось загрузить поиск.
+          <button type="button" class="search-box__retry" @click="retryLoadIndex">
+            Повторить
+          </button>
+        </p>
         <p v-else-if="groups.length === 0" class="search-box__state">
           <template v-if="query.trim() !== ''">
             Ничего не найдено по запросу «{{ query.trim() }}»
@@ -229,6 +235,7 @@ const query = ref('')
 const open = ref(false)
 const active = ref(-1)
 const loading = ref(false)
+const loadError = ref(false)
 const index = ref<ISearchIndex | null>(null)
 
 // Мобильный viewport: управляет мобильной панелью, а на десктопе
@@ -268,13 +275,23 @@ const ensureIndex = async (): Promise<void> => {
   if (index.value !== null || loading.value) return
 
   loading.value = true
+  loadError.value = false
   try {
     index.value = await loadIndex()
   } catch (error) {
+    indexPromise = null
+    loadError.value = true
     console.error('Не удалось загрузить индекс поиска', error)
   } finally {
     loading.value = false
   }
+}
+
+const retryLoadIndex = (): void => {
+  // Браузер кэширует неудачную dynamic import как отклонённый модуль.
+  // Перезагрузка создаёт новый module graph и позволяет повторить загрузку
+  // после восстановления сети или обновления service worker.
+  window.location.reload()
 }
 
 interface PageMeta {
@@ -1132,6 +1149,21 @@ onBeforeUnmount(() => {
   color: var(--vp-c-text-mute);
   font-size: 0.875rem;
   text-align: center;
+}
+
+.search-box__retry {
+  padding: 0;
+  color: var(--vp-c-accent);
+  font: inherit;
+  text-decoration: underline;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid var(--vp-c-accent);
+    outline-offset: 2px;
+  }
 }
 
 // Мобильная версия: в шапке только кнопка, панель — под шапкой
