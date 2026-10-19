@@ -131,25 +131,43 @@ func (api *API) Router() *gin.Engine {
 | `POST /tasks` | `201 Created` и новая задача |
 | `POST /tasks/:id/complete` | `200 OK` и выполненная задача |
 
-## Входной JSON и binding
+## Входной JSON и сохранение контракта
 
-Gin умеет связывать JSON-body со структурой через `ShouldBindJSON`:
+`ShouldBindJSON` удобно для простых form и JSON-запросов, но в предыдущей главе API уже зафиксировал более строгий контракт: body не больше 1 MiB, неизвестные поля запрещены, а после одного JSON-объекта не должно быть другого значения. Сохраним эти правила в небольшом helper на стандартном `json.Decoder`:
 
 ```go
 type createTaskRequest struct {
-	Title    string `json:"title" binding:"required"`
-	Priority int    `json:"priority" binding:"required,gte=1,lte=5"`
+	Title    string `json:"title"`
+	Priority int    `json:"priority"`
+}
+
+const maxRequestBodyBytes = 1 << 20 // 1 MiB
+
+func decodeJSON(c *gin.Context, dst any) error {
+	c.Request.Body = http.MaxBytesReader(c.Writer, c.Request.Body, maxRequestBodyBytes)
+
+	decoder := json.NewDecoder(c.Request.Body)
+	decoder.DisallowUnknownFields()
+
+	if err := decoder.Decode(dst); err != nil {
+		return err
+	}
+	if err := decoder.Decode(&struct{}{}); !errors.Is(err, io.EOF) {
+		return errors.New("в body должен быть один JSON-объект")
+	}
+
+	return nil
 }
 ```
 
-Теги `binding` проверяют обязательность и диапазон. Но `required` для числа означает «не ноль». Это подходит для приоритета от 1 до 5; если `0` — допустимое значение, нужна другая модель валидации.
+Helper использует `http.MaxBytesReader`, поэтому превышение лимита завершается ошибкой, а не чтением всего запроса в память. `DisallowUnknownFields` отклоняет опечатки наподобие `priorty`, а второй `Decode` гарантирует, что body содержит ровно один JSON-объект. Для этого фрагмента нужны импорты `encoding/json`, `errors` и `io`.
 
 Handler создания задачи:
 
 ```go
 func (api *API) createTask(c *gin.Context) {
 	var request createTaskRequest
-	if err := c.ShouldBindJSON(&request); err != nil {
+	if err := decodeJSON(c, &request); err != nil {
 		writeError(c, http.StatusBadRequest, "некорректные данные задачи")
 		return
 	}
@@ -157,6 +175,10 @@ func (api *API) createTask(c *gin.Context) {
 	request.Title = strings.TrimSpace(request.Title)
 	if request.Title == "" {
 		writeError(c, http.StatusBadRequest, "название задачи обязательно")
+		return
+	}
+	if request.Priority < 1 || request.Priority > 5 {
+		writeError(c, http.StatusBadRequest, "приоритет должен быть от 1 до 5")
 		return
 	}
 
@@ -175,17 +197,7 @@ func (api *API) createTask(c *gin.Context) {
 }
 ```
 
-Для HTTP-запроса лучше использовать `ShouldBindJSON`, а не `BindJSON`: первый вариант возвращает ошибку и оставляет handler полный контроль над единым JSON-форматом ошибки. Передавать `id` и `completed` по-прежнему нельзя: `createTaskRequest` содержит только разрешённые поля.
-
-::: warning Строгость неизвестных полей
-`ShouldBindJSON` по умолчанию может проигнорировать незнакомое поле. Если контракт API требует той же строгости, что в главе о `net/http`, включите её при настройке router:
-
-```go
-gin.EnableJsonDecoderDisallowUnknownFields()
-```
-
-Эта настройка глобальна для Gin-процесса. Включайте её один раз при запуске приложения и убедитесь тестом, что API действительно отвергает опечатки клиента.
-:::
+Передавать `id` и `completed` по-прежнему нельзя: `createTaskRequest` содержит только разрешённые поля. Валидация title и priority остаётся в handler, а service повторяет бизнес-инварианты для других входов помимо HTTP.
 
 ## Параметры, статусы и доменные ошибки
 
