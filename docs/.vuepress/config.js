@@ -67,7 +67,7 @@ export default defineUserConfig({
           },
         ],
       },
-      themeColor: '#00ADD8',
+      themeColor: '#1b1b1f',
       // Явный favicon не нужен: плагин уже вставляет ссылку на
       // 192-иконку из manifest — дублировать один и тот же файл дважды
       // в <head> нет смысла.
@@ -86,7 +86,7 @@ export default defineUserConfig({
         scope: '/go-book/',
         display: 'standalone',
         background_color: '#FFFFFF',
-        theme_color: '#00ADD8',
+        theme_color: '#1b1b1f',
         categories: ['education', 'books'],
         icons: [
           {
