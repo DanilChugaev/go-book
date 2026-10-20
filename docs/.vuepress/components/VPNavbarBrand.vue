@@ -10,6 +10,8 @@
     >
       {{ navbarBrandTitle }}
     </span>
+
+    <BookVersion />
   </RouteLink>
 </template>
 
@@ -20,6 +22,7 @@ import { ClientOnly, RouteLink, withBase } from 'vuepress/client'
 
 import { useDarkMode } from '@theme/useDarkMode'
 import { useData } from '@theme/useData'
+import BookVersion from './BookVersion.vue'
 
 const { routeLocale, siteLocale, themeLocale } = useData()
 const isDarkMode = useDarkMode()

@@ -5,11 +5,13 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "docs:build": "vuepress build docs",
-    "docs:clean-dev": "vuepress dev docs --clean-cache --port 6060",
-    "docs:dev": "vuepress dev docs --port 6060",
-    "dev": "vuepress dev docs --clean-cache --port 6060",
-    "docs:update-package": "npx vp-update"
+    "book:meta": "node scripts/book-meta.mjs",
+    "docs:build": "npm run book:meta && vuepress build docs",
+    "docs:clean-dev": "npm run book:meta && vuepress dev docs --clean-cache --port 6060",
+    "docs:dev": "npm run book:meta && vuepress dev docs --port 6060",
+    "dev": "npm run book:meta && vuepress dev docs --clean-cache --port 6060",
+    "docs:update-package": "npx vp-update",
+    "test": "node --test"
   },
   "devDependencies": {
     "@vuepress/bundler-vite": "^2.0.0-rc.31",

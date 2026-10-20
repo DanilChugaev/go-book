@@ -11,6 +11,8 @@ node_modules
 */**/dist
 */**/.cache
 */**/.temp
+docs/.vuepress/generated/
+docs/.vuepress/public/book-meta.json
 .env
 .env.*
 !.env.example
