@@ -126,7 +126,7 @@ function createPrintDocument({ metadata, manifest, sections }) {
       .book-toc__section h2 { margin-top: 1.5rem; font-size: 14pt; }
       .book-toc ol { margin: .5rem 0 0; padding-left: 1.4rem; }
       .book-toc li { margin: .2rem 0; }
-      .book-toc a { display: block; text-decoration: none; }
+      .book-toc a { display: block; }
       .book-toc a::after { float: right; margin-left: 1rem; color: #1b1b1f; content: target-counter(attr(href), page); }
       .book-contributors { break-after: page; }
       .book-contributors h1 { font-size: 25pt; }
@@ -135,6 +135,10 @@ function createPrintDocument({ metadata, manifest, sections }) {
       .book-chapter:first-of-type { break-before: auto; }
       .book-chapter__title { margin: 0 0 2rem; color: #147a4b; font-size: 11pt; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
       .book-page + .book-page { margin-top: 2.5rem; }
+      .book-page h1 a, .book-page h2 a, .book-page h3 a, .book-page h4 a {
+        color: #1b1b1f;
+        text-decoration: none;
+      }
       .line-numbers { display: none; }
       pre { padding: 1rem; overflow-wrap: break-word; white-space: pre-wrap; tab-size: 2; background: #f6f8fa; border: 1px solid #d0d7de; border-radius: .35rem; }
       code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .9em; }
