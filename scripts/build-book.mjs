@@ -113,6 +113,30 @@ function createPrintDocument({ metadata, manifest, sections }) {
       }
       h1, h2, h3, h4 { break-after: avoid-page; line-height: 1.2; }
       pre, blockquote, table, .custom-container { break-inside: avoid-page; }
+      .hint-container {
+        --book-note-accent: #0969da;
+        margin: 1rem 0;
+        padding: .8rem 1rem;
+        color: #1b1b1f;
+        background: #ddf4ff;
+        border-inline-start: .3rem solid var(--book-note-accent);
+        border-radius: .25rem;
+      }
+      .hint-container.tip { --book-note-accent: #1a7f37; background: #dafbe1; }
+      .hint-container.warning { --book-note-accent: #9a6700; background: #fff8c5; }
+      .hint-container.danger { --book-note-accent: #cf222e; background: #ffebe9; }
+      .hint-container-title { margin: 0 0 .35rem; color: var(--book-note-accent); font-weight: 700; }
+      .hint-container > :last-child { margin-bottom: 0; }
+      blockquote {
+        margin: 1rem 0;
+        padding: .15rem 1rem;
+        color: #57606a;
+        background: #f6f8fa;
+        border-inline-start: .3rem solid #d0d7de;
+        border-radius: .25rem;
+      }
+      blockquote > :first-child { margin-top: .65rem; }
+      blockquote > :last-child { margin-bottom: .65rem; }
       img { max-width: 100%; height: auto; }
       .vp-navbar, .vp-sidebar, .vp-page-nav, .vp-footer, .vp-back-to-top-button, .search-box, .bookmarks-menu, .go-playground, button { display: none !important; }
       .book-cover { min-height: 255mm; display: flex; flex-direction: column; justify-content: center; break-after: page; }
