@@ -49,10 +49,10 @@ export default defineUserConfig({
       // от директории service worker (/go-book/).
       generateSWConfig: {
         navigateFallback: '404.html',
-        // Полнотекстовый индекс загружается только при первом использовании
-        // поиска или закладок. Его нельзя добавлять в precache: иначе service
-        // worker скачивает более 1 МБ до любого действия пользователя.
-        globIgnores: ['assets/data-*.js'],
+        // Полнотекстовый индекс и большая PDF-версия загружаются только по
+        // действию пользователя. Иначе первая загрузка PWA на мобильной сети
+        // включала бы более 20 МБ, хотя читатель мог открыть только сайт.
+        globIgnores: ['assets/data-*.js', 'go-book.pdf'],
         runtimeCaching: [
           {
             urlPattern: /\/go-book\/assets\/data-[\w-]+\.js$/,

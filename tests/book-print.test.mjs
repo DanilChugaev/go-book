@@ -2,7 +2,11 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import { load } from 'cheerio'
 
-import { namespacePageAnchors, preparePageForPrint } from '../scripts/build-book.mjs'
+import {
+  namespacePageAnchors,
+  preparePageForPrint,
+  validatePrintDocument,
+} from '../scripts/build-book.mjs'
 
 test('namespacePageAnchors keeps anchors unique and rewrites internal book links', () => {
   const $ = load(`<main id="content">
@@ -67,4 +71,17 @@ test('preparePageForPrint does not duplicate an existing source-code block', () 
 
   assert.equal($('.example-source').length, 1)
   assert.equal($('.book-example-source').length, 0)
+})
+
+test('validatePrintDocument rejects a table-of-contents link without a target', () => {
+  const document = `<!doctype html><html><body>
+    <section class="book-cover"></section>
+    <nav class="book-toc"><a href="#missing">Глава</a></nav>
+    <article class="book-page" id="guide"></article>
+  </body></html>`
+
+  assert.throws(
+    () => validatePrintDocument(document, { pages: [{ output: 'guide/' }] }),
+    /битая ссылка/,
+  )
 })

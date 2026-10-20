@@ -57,9 +57,22 @@ export async function generateBookMeta({ timestamp = Date.now() } = {}) {
   return metadata
 }
 
+export async function syncBookMeta() {
+  const metadata = JSON.parse(await readFile(publicMetadataPath, 'utf8'))
+
+  await mkdir(dirname(generatedModulePath), { recursive: true })
+  await writeFile(generatedModulePath, serializeModule(metadata))
+
+  return metadata
+}
+
 async function main() {
-  const metadata = await generateBookMeta()
-  console.log(`Метаданные книги созданы: v${metadata.version}, ${metadata.generatedDate}`)
+  const isReleaseBuild = process.argv.includes('--release')
+  const metadata = isReleaseBuild
+    ? await generateBookMeta()
+    : await syncBookMeta()
+  const action = isReleaseBuild ? 'созданы' : 'синхронизированы'
+  console.log(`Метаданные книги ${action}: v${metadata.version}, ${metadata.generatedDate}`)
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {

@@ -2,7 +2,7 @@
   <div class="go-playground">
     <div class="go-playground__actions">
       <button type="button" class="go-playground__button" @click="copyCode">
-        {{ copyLabel }}
+        Скопировать код
       </button>
 
       <a
@@ -18,30 +18,40 @@
     <p class="go-playground__hint">
       Скопируйте пример, вставьте его в Go Playground и нажмите Run.
     </p>
+    <p class="go-playground__copy-status" role="status" aria-live="polite" aria-atomic="true">
+      {{ copyStatus }}
+    </p>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onBeforeUnmount, ref } from 'vue'
 
 const props = defineProps<{
   code: string
 }>()
 
-const copyLabel = ref('Скопировать код')
+const copyStatus = ref('')
+let resetStatusTimer: ReturnType<typeof window.setTimeout> | undefined
 
 async function copyCode() {
+  if (resetStatusTimer !== undefined) window.clearTimeout(resetStatusTimer)
+
   try {
     await navigator.clipboard.writeText(props.code.trim())
-    copyLabel.value = 'Скопировано'
+    copyStatus.value = 'Код скопирован в буфер обмена.'
   } catch {
-    copyLabel.value = 'Не удалось скопировать'
+    copyStatus.value = 'Не удалось скопировать код.'
   }
 
-  window.setTimeout(() => {
-    copyLabel.value = 'Скопировать код'
+  resetStatusTimer = window.setTimeout(() => {
+    copyStatus.value = ''
   }, 2000)
 }
+
+onBeforeUnmount(() => {
+  if (resetStatusTimer !== undefined) window.clearTimeout(resetStatusTimer)
+})
 </script>
 
 <style scoped>
@@ -92,5 +102,17 @@ async function copyCode() {
   margin: 0.75rem 0 0;
   color: var(--vp-c-text-mute);
   font-size: 0.9rem;
+}
+
+.go-playground__copy-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 </style>

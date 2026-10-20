@@ -1,5 +1,5 @@
 import { createServer } from 'node:http'
-import { readFile, rm, writeFile } from 'node:fs/promises'
+import { copyFile, readFile, rm, writeFile } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
 import { extname, join, normalize, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -220,6 +220,31 @@ function createPrintDocument({ metadata, manifest, sections }) {
     ${sections.join('\n')}
   </body>
 </html>`
+}
+
+export function validatePrintDocument(document, manifest) {
+  const $ = load(document)
+  const sourcePageCount = manifest.pages.length
+
+  if ($('.book-cover').length !== 1) {
+    throw new Error('В печатной версии отсутствует титульная страница')
+  }
+  if ($('.book-toc').length !== 1) {
+    throw new Error('В печатной версии отсутствует содержание')
+  }
+  if ($('.book-page').length !== sourcePageCount) {
+    throw new Error('Количество материалов в печатной версии не совпадает с манифестом')
+  }
+  if ($('.book-toc a').length !== sourcePageCount) {
+    throw new Error('Содержание печатной версии не содержит все материалы')
+  }
+
+  $('.book-toc a[href^="#"]').each((_, link) => {
+    const target = $(link).attr('href')?.slice(1)
+    if (!target || $(`[id="${target}"]`).length === 0) {
+      throw new Error(`В содержании печатной версии битая ссылка: ${target ?? 'без якоря'}`)
+    }
+  })
 }
 
 async function readPage(entry) {
@@ -471,6 +496,7 @@ async function printPdf(url) {
       throw new Error('Paged.js не сформировал страницы книги')
     }
     await page.pdf({ path: outputPdfPath, preferCSSPageSize: true, printBackground: true })
+    return generatedPageCount
   } finally {
     await browser.close()
   }
@@ -486,22 +512,30 @@ export async function buildBook() {
     manifest: completeManifest,
     sections: createBookSections(pages),
   })
+  validatePrintDocument(printDocument, completeManifest)
 
   await writeFile(printHtmlPath, printDocument)
   const { server, url } = await startStaticServer()
   try {
-    await printPdf(url)
+    const pdfPages = await printPdf(url)
+    await writeFile(pdfMetadataPath, `${JSON.stringify({
+      title: metadata.title,
+      version: metadata.version,
+      generatedAt: metadata.generatedAt,
+      sourcePages: pages.length,
+      pdfPages,
+      pdf: 'go-book.pdf',
+    }, null, 2)}\n`)
   } finally {
     await new Promise((resolveServer) => server.close(resolveServer))
   }
   await writeFile(outputManifestPath, `${JSON.stringify(completeManifest, null, 2)}\n`)
-  await writeFile(pdfMetadataPath, `${JSON.stringify({
-    title: metadata.title,
-    version: metadata.version,
-    generatedAt: metadata.generatedAt,
-    sourcePages: pages.length,
-    pdf: 'go-book.pdf',
-  }, null, 2)}\n`)
+  await Promise.all([
+    copyFile(outputPdfPath, resolve(distDirectory, 'go-book.pdf')),
+    copyFile(outputManifestPath, resolve(distDirectory, 'book-manifest.json')),
+    copyFile(pdfMetadataPath, resolve(distDirectory, 'book-pdf-meta.json')),
+    copyFile(resolve(publicDirectory, 'book-meta.json'), resolve(distDirectory, 'book-meta.json')),
+  ])
 
   return { pageCount: pages.length, outputPdfPath, outputManifestPath, pdfMetadataPath }
 }
