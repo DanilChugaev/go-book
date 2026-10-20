@@ -2,6 +2,16 @@
 
 Эта страница собирает материалы для самостоятельного углубления. Основной маршрут учебника остаётся достаточным для первого прохода: не пытайтесь изучить всё из списка одновременно. Выбирайте ресурс под текущую задачу — уточнить правило языка, потренироваться или разобрать production-паттерн.
 
+## Исходный код примеров
+
+Полные исходники к практическим заданиям находятся в каталоге [`examples/`](https://github.com/DanilChugaev/go-book/tree/master/examples) репозитория. На страницах с готовыми примерами есть отдельный блок с точным путём к соответствующему каталогу. Каждый пример запускайте из его собственной папки, чтобы не смешивать Go-модули разных глав.
+
+Сейчас доступны:
+
+- [`examples/01/hello-go`](https://github.com/DanilChugaev/go-book/tree/master/examples/01/hello-go) — первая программа и модуль Go;
+- [`examples/01/task-manager-api`](https://github.com/DanilChugaev/go-book/tree/master/examples/01/task-manager-api) — начальная структура сквозного проекта;
+- [`examples/32/task-manager-api`](https://github.com/DanilChugaev/go-book/tree/master/examples/32/task-manager-api) — Docker-конфигурация Task Manager API.
+
 ## Официальные материалы Go
 
 - [Документация Go](https://go.dev/doc/) — стартовая точка для руководств, статей и инструментов.

@@ -126,3 +126,17 @@ func main() {
 ```text
 module example.com/task-manager-api
 ```
+
+## Полный исходный код
+
+После выполнения заданий сравните результат с исходниками из репозитория. Каждый каталог — самостоятельный Go-модуль: перейдите в него и выполните `go run .`.
+
+<ExampleSource
+  path="examples/01/hello-go"
+  description="решение первого задания: минимальная программа Go"
+/>
+
+<ExampleSource
+  path="examples/01/task-manager-api"
+  description="стартовый модуль сквозного проекта Task Manager API"
+/>

@@ -145,6 +145,15 @@ docker compose exec postgres psql -U task_manager -d task_manager -c 'SELECT * F
 - password не попадает в Git вне безопасного учебного примера;
 - указано, что в production PostgreSQL-порт обычно не публикуют наружу.
 
+## Полный исходный код
+
+После выполнения упражнений сверяйтесь с готовой Docker-конфигурацией сквозного проекта.
+
+<ExampleSource
+  path="examples/32/task-manager-api"
+  description="Dockerfile, Compose-конфигурация и точка входа Task Manager API"
+/>
+
 ## Проверьте себя
 
 Перед SQL-главой убедитесь, что вы можете:

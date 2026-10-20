@@ -174,6 +174,10 @@ function createPrintDocument({ metadata, manifest, sections }) {
       .book-practice-solutions details { display: block; }
       .book-practice-solutions summary { margin-bottom: .75rem; color: #147a4b; font-size: 14pt; font-weight: 700; list-style: none; }
       .book-practice-solutions summary::-webkit-details-marker { display: none; }
+      .example-source { display: flex; gap: .75rem; margin: 1.5rem 0; padding: .85rem 1rem; background: #f6f8fa; border: 1px solid #d0d7de; border-radius: .45rem; break-inside: avoid-page; }
+      .example-source svg { flex: 0 0 auto; width: 1.3rem; height: 1.3rem; margin-top: .1rem; fill: none; stroke: #147a4b; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.8; }
+      .example-source strong { font-size: .92rem; }
+      .example-source p { margin: .2rem 0 0; font-size: .9rem; }
       .book-page h1 a, .book-page h2 a, .book-page h3 a, .book-page h4 a {
         color: #1b1b1f;
         text-decoration: none;

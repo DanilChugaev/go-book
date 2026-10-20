@@ -63,6 +63,9 @@ const components = {
   GoPlayground: defineAsyncComponent(
     () => import('./components/GoPlayground.vue'),
   ),
+  ExampleSource: defineAsyncComponent(
+    () => import('./components/ExampleSource.vue'),
+  ),
   QuizContainer: defineAsyncComponent(
     () => import('./components/QuizContainer.vue'),
   ),

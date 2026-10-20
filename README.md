@@ -83,6 +83,7 @@ npm run docs:build
 │   ├── README.md                    # главная страница сайта
 │   ├── guide/                       # главы учебника и программа
 │   └── .vuepress/                   # VuePress, компоненты и PWA
+├── examples/                         # полные исходники к практическим заданиям
 ├── .github/
 │   ├── workflows/                   # CI и GitHub Pages deploy
 │   └── ISSUE_TEMPLATE/              # шаблоны обратной связи
