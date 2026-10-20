@@ -159,6 +159,21 @@ function createPrintDocument({ metadata, manifest, sections }) {
       .book-chapter:first-of-type { break-before: auto; }
       .book-chapter__title { margin: 0 0 2rem; color: #147a4b; font-size: 11pt; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
       .book-page + .book-page { margin-top: 2.5rem; }
+      .book-quiz__question { break-inside: avoid-page; margin: 0 0 1.5rem; }
+      .book-quiz__question h2 { margin-bottom: .55rem; font-size: 14pt; }
+      .book-quiz__options { margin: 0; padding-left: 1.5rem; }
+      .book-quiz__options li + li { margin-top: .25rem; }
+      .book-quiz__answers { break-before: page; }
+      .book-quiz__answers h2 { margin-bottom: 1rem; }
+      .book-quiz__answer { break-inside: avoid-page; }
+      .book-quiz__answer + .book-quiz__answer { margin-top: .8rem; }
+      .book-practice-task { break-before: page; }
+      .book-practice-task > :first-child { margin-top: 0; }
+      .book-practice-solutions { break-before: page; }
+      .book-practice-solutions > :first-child { margin-top: 0; }
+      .book-practice-solutions details { display: block; }
+      .book-practice-solutions summary { margin-bottom: .75rem; color: #147a4b; font-size: 14pt; font-weight: 700; list-style: none; }
+      .book-practice-solutions summary::-webkit-details-marker { display: none; }
       .book-page h1 a, .book-page h2 a, .book-page h3 a, .book-page h4 a {
         color: #1b1b1f;
         text-decoration: none;
@@ -205,7 +220,9 @@ async function readPage(entry) {
   const sourcePath = existsSync(pagePath) ? pagePath : alternativePagePath
   const html = await readFile(sourcePath, 'utf8')
   const $ = load(html)
-  const content = $('#content').html()
+  const contentRoot = $('#content')
+  preparePageForPrint($, contentRoot, entry)
+  const content = contentRoot.html()
   const title = $('#content h1').first().text().trim()
 
   if (!content || !title) {
@@ -213,6 +230,96 @@ async function readPage(entry) {
   }
 
   return { ...entry, title, content }
+}
+
+function renderNodes($, nodes) {
+  return nodes.map((node) => $.html(node)).join('')
+}
+
+export function prepareQuizForPrint($, quizContainer) {
+  const questions = quizContainer.find('.quiz').toArray().map((quiz, index) => {
+    const question = $(quiz)
+    const title = question.find('.quiz__title').first().html() ?? `Вопрос ${index + 1}`
+    const options = question.find('.quiz__option').toArray().map((option) => {
+      const optionElement = $(option)
+      return {
+        text: optionElement.find('div > span').first().html() ?? optionElement.text().trim(),
+        correct: optionElement.attr('data-correct') === 'true',
+      }
+    })
+
+    return { title, options }
+  })
+
+  if (questions.length === 0) return
+
+  const printableQuestions = questions.map((question) => `
+    <section class="book-quiz__question">
+      <h2>${question.title}</h2>
+      <ol class="book-quiz__options" type="A">
+        ${question.options.map((option) => `<li>${option.text}</li>`).join('')}
+      </ol>
+    </section>`).join('')
+  const answers = questions.map((question, index) => {
+    const correct = question.options.find((option) => option.correct)
+    return `<p class="book-quiz__answer"><strong>${index + 1}.</strong> ${correct?.text ?? 'Ответ не указан'}</p>`
+  }).join('')
+
+  quizContainer.replaceWith(`<section class="book-quiz">
+    <div class="book-quiz__questions">${printableQuestions}</div>
+    <section class="book-quiz__answers"><h2>Ответы к самопроверке</h2>${answers}</section>
+  </section>`)
+}
+
+export function preparePracticeForPrint($, contentRoot) {
+  const nodes = contentRoot.contents().toArray()
+  const transformed = []
+  let index = 0
+
+  while (index < nodes.length) {
+    const node = nodes[index]
+    const element = $(node)
+    const isTaskHeading = node.type === 'tag'
+      && node.name === 'h2'
+      && /^Задание\s+\d+[.:]/u.test(element.text().trim())
+
+    if (!isTaskHeading) {
+      transformed.push($.html(node))
+      index += 1
+      continue
+    }
+
+    const taskNodes = [node]
+    index += 1
+    while (index < nodes.length) {
+      const nextNode = nodes[index]
+      const nextElement = $(nextNode)
+      if (nextNode.type === 'tag' && nextNode.name === 'h2' && /^Задание\s+\d+[.:]/u.test(nextElement.text().trim())) break
+      taskNodes.push(nextNode)
+      index += 1
+    }
+
+    const firstDetails = taskNodes.findIndex((taskNode) => taskNode.type === 'tag' && taskNode.name === 'details')
+    const taskBody = firstDetails === -1 ? taskNodes : taskNodes.slice(0, firstDetails)
+    const solutionBody = firstDetails === -1 ? [] : taskNodes.slice(firstDetails)
+    transformed.push(`<section class="book-practice-task">${renderNodes($, taskBody)}</section>`)
+    if (solutionBody.length > 0) {
+      $(solutionBody.filter((solutionNode) => solutionNode.type === 'tag' && solutionNode.name === 'details')).attr('open', '')
+      transformed.push(`<section class="book-practice-solutions">${renderNodes($, solutionBody)}</section>`)
+    }
+  }
+
+  contentRoot.html(transformed.join(''))
+}
+
+export function preparePageForPrint($, contentRoot, entry) {
+  contentRoot.find('.quiz-container').each((_, quizContainer) => {
+    prepareQuizForPrint($, $(quizContainer))
+  })
+
+  if (entry.source.endsWith('/practice.md')) {
+    preparePracticeForPrint($, contentRoot)
+  }
 }
 
 function createBookSections(pages) {

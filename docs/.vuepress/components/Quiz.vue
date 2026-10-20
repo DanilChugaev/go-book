@@ -10,6 +10,7 @@
       <label
           v-for="option in options"
           :key="option.text"
+          :data-correct="option.correct ? 'true' : undefined"
           :class="[
               'quiz__option',
               {
