@@ -1,6 +1,7 @@
 import { defineAsyncComponent } from 'vue'
 import { defineClientConfig } from 'vuepress/client'
 import BookmarksNavbar from './components/BookmarksNavbar.vue'
+import BookDownloadNavbar from './components/BookDownloadNavbar.vue'
 
 // Обходной путь для бага Vue 3.5.44 (runtime-core, hydrateTeleport).
 //
@@ -71,7 +72,7 @@ const components = {
 }
 
 export default defineClientConfig({
-  rootComponents: [BookmarksNavbar],
+  rootComponents: [BookmarksNavbar, BookDownloadNavbar],
   enhance({ app }) {
     Object.entries(components).forEach(([name, component]) => {
       app.component(name, component)

@@ -22,12 +22,18 @@ import { bookMeta } from '../generated/book-meta'
   white-space: nowrap;
 }
 
-@media screen and (max-width: 719px) {
+@media screen and (max-width: 899px) {
   .book-version {
     margin-inline-start: 0.35rem;
   }
 
   .book-version__date {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 359px) {
+  .book-version {
     display: none;
   }
 }

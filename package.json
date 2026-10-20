@@ -7,18 +7,22 @@
   "scripts": {
     "book:meta": "node scripts/book-meta.mjs",
     "book:build": "npm run docs:build && node scripts/build-book.mjs",
+    "book:verify": "node scripts/verify-book.mjs",
     "docs:build": "npm run book:meta && vuepress build docs",
     "docs:clean-dev": "npm run book:meta && vuepress dev docs --clean-cache --port 6060",
     "docs:dev": "npm run book:meta && vuepress dev docs --port 6060",
     "dev": "npm run book:meta && vuepress dev docs --clean-cache --port 6060",
     "docs:update-package": "npx vp-update",
-    "test": "node --test"
+    "prepare": "husky",
+    "test": "node --test",
+    "verify": "npm test && npm run book:build && npm run book:verify && git diff --check"
   },
   "devDependencies": {
     "@vuepress/bundler-vite": "^2.0.0-rc.31",
     "@vuepress/plugin-pwa": "^2.0.0-rc.137",
     "@vuepress/theme-default": "2.0.0-rc.137",
     "cheerio": "^1.2.0",
+    "husky": "^9.1.7",
     "pagedjs": "^0.4.3",
     "puppeteer-core": "^25.14.0",
     "sass-embedded": "^1.105.1",
