@@ -26,6 +26,7 @@ export function createBookMeta(version, timestamp = Date.now()) {
   return {
     title: 'Учебник Go',
     author: 'Данил Чугаев',
+    authorUrl: 'https://github.com/DanilChugaev',
     version,
     generatedAt: generatedAt.toISOString(),
     generatedDate: generatedAt.toLocaleDateString('ru-RU', {

@@ -10,6 +10,26 @@ const sidebarPath = resolve(
   rootDirectory,
   'docs/.vuepress/configs/sidebar/index.ts',
 )
+const primaryAuthor = {
+  name: 'Данил Чугаев',
+  github: 'DanilChugaev',
+}
+
+function normalizeContributor(name, email) {
+  const normalizedName = name.trim()
+  const isPrimaryAuthor = normalizedName === 'Danil Chugaev'
+    || normalizedName === 'DanilChugaev'
+    || email === 'danilchugaev@mail.ru'
+    || email === 'dmchugaev@gmail.com'
+
+  if (isPrimaryAuthor) return primaryAuthor
+
+  const githubMatch = email.match(/^(?:\d+\+)?([^@]+)@users\.noreply\.github\.com$/)
+  return {
+    name: normalizedName || 'Неизвестный контрибьютор',
+    github: githubMatch?.[1] ?? null,
+  }
+}
 
 export function markdownToOutputPath(markdownPath) {
   const normalized = markdownPath.replace(/^\//, '')
@@ -63,12 +83,23 @@ async function findContributor(source) {
     const { stdout } = await execFile('git', ['log', '-1', '--format=%aN%x1f%aE', '--', source], {
       cwd: rootDirectory,
     })
-    const [name = 'Данил Чугаев', email = ''] = stdout.trim().split('\x1f')
-    const githubMatch = email.match(/^(?:\d+\+)?([^@]+)@users\.noreply\.github\.com$/)
-    return { name, github: githubMatch?.[1] ?? null }
+    const [name = primaryAuthor.name, email = ''] = stdout.trim().split('\x1f')
+    return normalizeContributor(name, email)
   } catch {
-    return { name: 'Данил Чугаев', github: null }
+    return primaryAuthor
   }
+}
+
+async function findExampleSource(source) {
+  if (!source.endsWith('/practice.md')) return null
+
+  const content = await readFile(resolve(rootDirectory, source), 'utf8')
+  const match = content.match(/<ExampleSource\s+path="([^"]+)"\s+description="([^"]+)"\s*\/>/u)
+  if (!match) {
+    throw new Error(`В странице заданий нет ExampleSource: ${source}`)
+  }
+
+  return { path: match[1], description: match[2] }
 }
 
 export async function createBookManifest() {
@@ -81,7 +112,13 @@ export async function createBookManifest() {
     if (entry.source === 'docs/guide/content.md' || seen.has(entry.source)) continue
     seen.add(entry.source)
     const contributor = await findContributor(entry.source)
-    pages.push({ ...entry, contributor: contributor.name, contributorGitHub: contributor.github })
+    const exampleSource = await findExampleSource(entry.source)
+    pages.push({
+      ...entry,
+      contributor: contributor.name,
+      contributorGitHub: contributor.github,
+      exampleSource,
+    })
   }
 
   if (pages.length === 0) {

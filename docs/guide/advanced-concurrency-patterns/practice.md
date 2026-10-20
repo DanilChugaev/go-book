@@ -390,3 +390,12 @@ func TestRunStopsAfterCancel(t *testing.T) {
 - выбрать fail-fast или best-effort contract до написания worker;
 - доказать тестом shutdown без ожидания «на глаз»;
 - прочитать goroutine stack trace и найти отсутствующее событие в протоколе.
+
+## Полный исходный код
+
+Здесь будет размещён полный исходный код к практическим заданиям этой главы.
+
+<ExampleSource
+  path="examples/38/advanced-concurrency-patterns"
+  description="заготовка для полного исходного кода практических заданий главы"
+/>

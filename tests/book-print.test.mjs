@@ -41,3 +41,15 @@ test('preparePageForPrint separates a task from its hints and solution', () => {
   assert.doesNotMatch($('.book-practice-task').first().text(), /Подсказка/)
   assert.equal($('.book-practice-solutions details[open]').length, 2)
 })
+
+test('preparePageForPrint does not duplicate an existing source-code block', () => {
+  const $ = load(`<main id="content">
+    <h1>Задания</h1>
+    <div class="example-source"><strong>Полный исходный код</strong></div>
+  </main>`)
+
+  preparePageForPrint($, $('#content'), { source: 'docs/guide/example/practice.md' })
+
+  assert.equal($('.example-source').length, 1)
+  assert.equal($('.book-example-source').length, 0)
+})

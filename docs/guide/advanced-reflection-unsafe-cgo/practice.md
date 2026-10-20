@@ -317,3 +317,12 @@ func TestCLength(t *testing.T) {
 - объяснить разницу Go heap и C heap и ownership C allocation;
 - изолировать cgo boundary и обосновать native-зависимость в CI/Docker/production;
 - признать отказ от reflection, `unsafe` или cgo корректным инженерным решением.
+
+## Полный исходный код
+
+Здесь будет размещён полный исходный код к практическим заданиям этой главы.
+
+<ExampleSource
+  path="examples/40/advanced-reflection-unsafe-cgo"
+  description="заготовка для полного исходного кода практических заданий главы"
+/>

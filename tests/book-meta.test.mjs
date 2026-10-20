@@ -9,6 +9,7 @@ test('createBookMeta creates stable book metadata from version and build time', 
   assert.deepEqual(metadata, {
     title: 'Учебник Go',
     author: 'Данил Чугаев',
+    authorUrl: 'https://github.com/DanilChugaev',
     version: '1.2.3',
     generatedAt: '2026-10-20T12:30:45.000Z',
     generatedDate: '20.10.2026',

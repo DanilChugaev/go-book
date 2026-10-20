@@ -307,3 +307,12 @@ func TestCreateTaskInvalidJSON(t *testing.T) {
 - отделить HTTP handler от service и хранилища;
 - передать `r.Context()` в операцию;
 - проверить HTTP-контракт через `httptest` без настоящей сети.
+
+## Полный исходный код
+
+Здесь будет размещён полный исходный код к практическим заданиям этой главы.
+
+<ExampleSource
+  path="examples/27/http-server"
+  description="заготовка для полного исходного кода практических заданий главы"
+/>

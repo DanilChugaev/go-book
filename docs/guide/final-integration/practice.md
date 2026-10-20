@@ -135,3 +135,12 @@ docker build -t task-manager-api:release .
 - работать с PostgreSQL через миграции, integration tests и DBeaver;
 - собрать image, пройти CI и задеплоить SHA-версию;
 - выбрать следующее улучшение и спроектировать его до кода.
+
+## Полный исходный код
+
+Здесь будет размещён полный исходный код к практическим заданиям этой главы.
+
+<ExampleSource
+  path="examples/35/final-integration"
+  description="заготовка для полного исходного кода практических заданий главы"
+/>

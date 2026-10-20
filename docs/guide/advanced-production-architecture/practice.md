@@ -142,3 +142,12 @@ In-memory `rate.Limiter` может быть достаточен для single-
 - определить scope и storage rate limiter для числа replicas;
 - отделить authentication от authorization и проверить доступ к чужому ресурсу;
 - показать reviewer тесты, migration/deploy plan, dashboard/alert/runbook для изменённого failure mode.
+
+## Полный исходный код
+
+Здесь будет размещён полный исходный код к практическим заданиям этой главы.
+
+<ExampleSource
+  path="examples/41/advanced-production-architecture"
+  description="заготовка для полного исходного кода практических заданий главы"
+/>

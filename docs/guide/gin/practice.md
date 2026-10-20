@@ -209,3 +209,12 @@ api.Router().ServeHTTP(recorder, request)
 - связать JSON с request DTO и проверить его;
 - построить middleware для request ID, access log и recovery;
 - проверить Gin router и middleware через `httptest`.
+
+## Полный исходный код
+
+Здесь будет размещён полный исходный код к практическим заданиям этой главы.
+
+<ExampleSource
+  path="examples/28/gin"
+  description="заготовка для полного исходного кода практических заданий главы"
+/>

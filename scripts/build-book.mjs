@@ -159,6 +159,7 @@ function createPrintDocument({ metadata, manifest, sections }) {
       .book-chapter:first-of-type { break-before: auto; }
       .book-chapter__title { margin: 0 0 2rem; color: #147a4b; font-size: 11pt; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
       .book-page + .book-page { margin-top: 2.5rem; }
+      .book-page[data-source$="/practice.md"], .book-page[data-source$="/best-practices.md"] { break-before: page; }
       .book-quiz__question { break-inside: avoid-page; margin: 0 0 1.5rem; }
       .book-quiz__question h2 { margin-bottom: .55rem; font-size: 14pt; }
       .book-quiz__options { margin: 0; padding-left: 1.5rem; }
@@ -202,7 +203,7 @@ function createPrintDocument({ metadata, manifest, sections }) {
       <h1>${escapeHtml(metadata.title)}</h1>
       <p class="book-cover__subtitle">Последовательный русскоязычный курс по Go: от первой программы до backend-проекта.</p>
       <div class="book-cover__meta">
-        <p><strong>Автор:</strong> ${escapeHtml(metadata.author)}</p>
+        <p><strong>Автор:</strong> <a href="${escapeHtml(metadata.authorUrl)}">${escapeHtml(metadata.author)}</a></p>
         <p><strong>Версия:</strong> v${escapeHtml(metadata.version)}</p>
         <p><strong>Актуально на:</strong> ${escapeHtml(metadata.generatedDate)}</p>
       </div>
@@ -304,8 +305,9 @@ export function preparePracticeForPrint($, contentRoot) {
     }
 
     const firstDetails = taskNodes.findIndex((taskNode) => taskNode.type === 'tag' && taskNode.name === 'details')
-    const taskBody = firstDetails === -1 ? taskNodes : taskNodes.slice(0, firstDetails)
-    const solutionBody = firstDetails === -1 ? [] : taskNodes.slice(firstDetails)
+    const splitAt = firstDetails === -1 ? taskNodes.length : firstDetails
+    const taskBody = taskNodes.slice(0, splitAt)
+    const solutionBody = taskNodes.slice(splitAt)
     transformed.push(`<section class="book-practice-task">${renderNodes($, taskBody)}</section>`)
     if (solutionBody.length > 0) {
       $(solutionBody.filter((solutionNode) => solutionNode.type === 'tag' && solutionNode.name === 'details')).attr('open', '')
