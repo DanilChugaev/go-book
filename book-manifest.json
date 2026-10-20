@@ -1,0 +1,1845 @@
+{
+  "generatedAt": "2026-10-20T19:33:42.203Z",
+  "source": "docs/.vuepress/configs/sidebar/index.ts",
+  "pages": [
+    {
+      "chapter": "",
+      "source": "docs/guide/README.md",
+      "output": "guide/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Предисловие"
+    },
+    {
+      "chapter": "Глава 1: Введение в Go",
+      "source": "docs/guide/introduction/what-is-go.md",
+      "output": "guide/introduction/what-is-go.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Что такое Go и зачем он нужен?"
+    },
+    {
+      "chapter": "Глава 1: Введение в Go",
+      "source": "docs/guide/introduction/installation.md",
+      "output": "guide/introduction/installation.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Установка и настройка"
+    },
+    {
+      "chapter": "Глава 1: Введение в Go",
+      "source": "docs/guide/introduction/first-program.md",
+      "output": "guide/introduction/first-program.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Первая программа и Go-модуль"
+    },
+    {
+      "chapter": "Глава 1: Введение в Go",
+      "source": "docs/guide/introduction/tests.md",
+      "output": "guide/introduction/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 1: Введение в Go",
+      "source": "docs/guide/introduction/practice.md",
+      "output": "guide/introduction/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/01/hello-go",
+        "description": "решение практических заданий первой главы"
+      },
+      "title": "Задания: первый модуль"
+    },
+    {
+      "chapter": "Глава 1: Введение в Go",
+      "source": "docs/guide/introduction/best-practices.md",
+      "output": "guide/introduction/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: старт с Go"
+    },
+    {
+      "chapter": "Глава 2: Переменные и базовые типы",
+      "source": "docs/guide/variables-and-data-types/variables.md",
+      "output": "guide/variables-and-data-types/variables.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Переменные и константы"
+    },
+    {
+      "chapter": "Глава 2: Переменные и базовые типы",
+      "source": "docs/guide/variables-and-data-types/simple-data-types.md",
+      "output": "guide/variables-and-data-types/simple-data-types.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Базовые типы и преобразования"
+    },
+    {
+      "chapter": "Глава 2: Переменные и базовые типы",
+      "source": "docs/guide/variables-and-data-types/tests.md",
+      "output": "guide/variables-and-data-types/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 2: Переменные и базовые типы",
+      "source": "docs/guide/variables-and-data-types/practice.md",
+      "output": "guide/variables-and-data-types/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/02/variables-and-data-types",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: значения для задачи"
+    },
+    {
+      "chapter": "Глава 2: Переменные и базовые типы",
+      "source": "docs/guide/variables-and-data-types/best-practices.md",
+      "output": "guide/variables-and-data-types/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: переменные и базовые типы"
+    },
+    {
+      "chapter": "Глава 3: Строки и обработка текста",
+      "source": "docs/guide/strings/README.md",
+      "output": "guide/strings/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Строки и обработка текста"
+    },
+    {
+      "chapter": "Глава 3: Строки и обработка текста",
+      "source": "docs/guide/strings/tests.md",
+      "output": "guide/strings/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 3: Строки и обработка текста",
+      "source": "docs/guide/strings/practice.md",
+      "output": "guide/strings/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/03/strings",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: нормализация и поиск названия"
+    },
+    {
+      "chapter": "Глава 3: Строки и обработка текста",
+      "source": "docs/guide/strings/best-practices.md",
+      "output": "guide/strings/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: строки и текст"
+    },
+    {
+      "chapter": "Глава 4: Операторы и выражения",
+      "source": "docs/guide/operators-and-expressions/README.md",
+      "output": "guide/operators-and-expressions/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Операторы и выражения"
+    },
+    {
+      "chapter": "Глава 4: Операторы и выражения",
+      "source": "docs/guide/operators-and-expressions/tests.md",
+      "output": "guide/operators-and-expressions/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 4: Операторы и выражения",
+      "source": "docs/guide/operators-and-expressions/practice.md",
+      "output": "guide/operators-and-expressions/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/04/operators-and-expressions",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: проверки задачи"
+    },
+    {
+      "chapter": "Глава 4: Операторы и выражения",
+      "source": "docs/guide/operators-and-expressions/best-practices.md",
+      "output": "guide/operators-and-expressions/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: операторы и выражения"
+    },
+    {
+      "chapter": "Глава 5: Условия — if и switch",
+      "source": "docs/guide/control-flow/README.md",
+      "output": "guide/control-flow/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Условия: if и switch"
+    },
+    {
+      "chapter": "Глава 5: Условия — if и switch",
+      "source": "docs/guide/control-flow/tests.md",
+      "output": "guide/control-flow/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 5: Условия — if и switch",
+      "source": "docs/guide/control-flow/practice.md",
+      "output": "guide/control-flow/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/05/control-flow",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: валидация задачи"
+    },
+    {
+      "chapter": "Глава 5: Условия — if и switch",
+      "source": "docs/guide/control-flow/best-practices.md",
+      "output": "guide/control-flow/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: условия"
+    },
+    {
+      "chapter": "Глава 6: Циклы — for и range",
+      "source": "docs/guide/loops/README.md",
+      "output": "guide/loops/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Циклы: for и range"
+    },
+    {
+      "chapter": "Глава 6: Циклы — for и range",
+      "source": "docs/guide/loops/tests.md",
+      "output": "guide/loops/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 6: Циклы — for и range",
+      "source": "docs/guide/loops/practice.md",
+      "output": "guide/loops/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/06/loops",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: нумерация и название задачи"
+    },
+    {
+      "chapter": "Глава 6: Циклы — for и range",
+      "source": "docs/guide/loops/best-practices.md",
+      "output": "guide/loops/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: циклы"
+    },
+    {
+      "chapter": "Глава 7: Функции",
+      "source": "docs/guide/functions/README.md",
+      "output": "guide/functions/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Функции"
+    },
+    {
+      "chapter": "Глава 7: Функции",
+      "source": "docs/guide/functions/tests.md",
+      "output": "guide/functions/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 7: Функции",
+      "source": "docs/guide/functions/practice.md",
+      "output": "guide/functions/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/07/functions",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: функции Task Manager API"
+    },
+    {
+      "chapter": "Глава 7: Функции",
+      "source": "docs/guide/functions/best-practices.md",
+      "output": "guide/functions/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: функции"
+    },
+    {
+      "chapter": "Глава 8: Массивы и слайсы",
+      "source": "docs/guide/slices-and-arrays/README.md",
+      "output": "guide/slices-and-arrays/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Массивы и слайсы"
+    },
+    {
+      "chapter": "Глава 8: Массивы и слайсы",
+      "source": "docs/guide/slices-and-arrays/tests.md",
+      "output": "guide/slices-and-arrays/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 8: Массивы и слайсы",
+      "source": "docs/guide/slices-and-arrays/practice.md",
+      "output": "guide/slices-and-arrays/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/08/slices-and-arrays",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: список названий задач"
+    },
+    {
+      "chapter": "Глава 8: Массивы и слайсы",
+      "source": "docs/guide/slices-and-arrays/best-practices.md",
+      "output": "guide/slices-and-arrays/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: массивы и слайсы"
+    },
+    {
+      "chapter": "Глава 9: Map",
+      "source": "docs/guide/maps/README.md",
+      "output": "guide/maps/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Map: ключ и значение"
+    },
+    {
+      "chapter": "Глава 9: Map",
+      "source": "docs/guide/maps/tests.md",
+      "output": "guide/maps/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 9: Map",
+      "source": "docs/guide/maps/practice.md",
+      "output": "guide/maps/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/09/maps",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: задачи по ID"
+    },
+    {
+      "chapter": "Глава 9: Map",
+      "source": "docs/guide/maps/best-practices.md",
+      "output": "guide/maps/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: map"
+    },
+    {
+      "chapter": "Глава 10: Структуры",
+      "source": "docs/guide/structs/README.md",
+      "output": "guide/structs/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Структуры: модель задачи"
+    },
+    {
+      "chapter": "Глава 10: Структуры",
+      "source": "docs/guide/structs/tests.md",
+      "output": "guide/structs/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 10: Структуры",
+      "source": "docs/guide/structs/practice.md",
+      "output": "guide/structs/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/10/structs",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: модель Task"
+    },
+    {
+      "chapter": "Глава 10: Структуры",
+      "source": "docs/guide/structs/best-practices.md",
+      "output": "guide/structs/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: структуры"
+    },
+    {
+      "chapter": "Глава 11: Методы",
+      "source": "docs/guide/methods/README.md",
+      "output": "guide/methods/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Методы"
+    },
+    {
+      "chapter": "Глава 11: Методы",
+      "source": "docs/guide/methods/tests.md",
+      "output": "guide/methods/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 11: Методы",
+      "source": "docs/guide/methods/practice.md",
+      "output": "guide/methods/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/11/methods",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: поведение Task"
+    },
+    {
+      "chapter": "Глава 11: Методы",
+      "source": "docs/guide/methods/best-practices.md",
+      "output": "guide/methods/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: методы"
+    },
+    {
+      "chapter": "Глава 12: Указатели",
+      "source": "docs/guide/pointers/README.md",
+      "output": "guide/pointers/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Указатели"
+    },
+    {
+      "chapter": "Глава 12: Указатели",
+      "source": "docs/guide/pointers/tests.md",
+      "output": "guide/pointers/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 12: Указатели",
+      "source": "docs/guide/pointers/practice.md",
+      "output": "guide/pointers/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/12/pointers",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: изменение Task"
+    },
+    {
+      "chapter": "Глава 12: Указатели",
+      "source": "docs/guide/pointers/best-practices.md",
+      "output": "guide/pointers/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: указатели"
+    },
+    {
+      "chapter": "Глава 13: Интерфейсы",
+      "source": "docs/guide/interfaces/README.md",
+      "output": "guide/interfaces/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Интерфейсы"
+    },
+    {
+      "chapter": "Глава 13: Интерфейсы",
+      "source": "docs/guide/interfaces/tests.md",
+      "output": "guide/interfaces/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 13: Интерфейсы",
+      "source": "docs/guide/interfaces/practice.md",
+      "output": "guide/interfaces/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/13/interfaces",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: TaskFormatter"
+    },
+    {
+      "chapter": "Глава 13: Интерфейсы",
+      "source": "docs/guide/interfaces/best-practices.md",
+      "output": "guide/interfaces/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: интерфейсы"
+    },
+    {
+      "chapter": "Глава 14: Обработка ошибок",
+      "source": "docs/guide/errors/README.md",
+      "output": "guide/errors/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Обработка ошибок"
+    },
+    {
+      "chapter": "Глава 14: Обработка ошибок",
+      "source": "docs/guide/errors/tests.md",
+      "output": "guide/errors/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 14: Обработка ошибок",
+      "source": "docs/guide/errors/practice.md",
+      "output": "guide/errors/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/14/errors",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: ошибки при переименовании задачи"
+    },
+    {
+      "chapter": "Глава 14: Обработка ошибок",
+      "source": "docs/guide/errors/best-practices.md",
+      "output": "guide/errors/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: ошибки"
+    },
+    {
+      "chapter": "Глава 15: defer, panic и recover",
+      "source": "docs/guide/defer-panic-recover/README.md",
+      "output": "guide/defer-panic-recover/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "defer, panic и recover"
+    },
+    {
+      "chapter": "Глава 15: defer, panic и recover",
+      "source": "docs/guide/defer-panic-recover/tests.md",
+      "output": "guide/defer-panic-recover/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 15: defer, panic и recover",
+      "source": "docs/guide/defer-panic-recover/practice.md",
+      "output": "guide/defer-panic-recover/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/15/defer-panic-recover",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: безопасная работа с файлами"
+    },
+    {
+      "chapter": "Глава 15: defer, panic и recover",
+      "source": "docs/guide/defer-panic-recover/best-practices.md",
+      "output": "guide/defer-panic-recover/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: defer, panic и recover"
+    },
+    {
+      "chapter": "Глава 16: Пакеты и модули",
+      "source": "docs/guide/packages-and-modules/README.md",
+      "output": "guide/packages-and-modules/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Пакеты и модули"
+    },
+    {
+      "chapter": "Глава 16: Пакеты и модули",
+      "source": "docs/guide/packages-and-modules/tests.md",
+      "output": "guide/packages-and-modules/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 16: Пакеты и модули",
+      "source": "docs/guide/packages-and-modules/practice.md",
+      "output": "guide/packages-and-modules/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/16/packages-and-modules",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: пакет internal/task"
+    },
+    {
+      "chapter": "Глава 16: Пакеты и модули",
+      "source": "docs/guide/packages-and-modules/best-practices.md",
+      "output": "guide/packages-and-modules/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: пакеты и модули"
+    },
+    {
+      "chapter": "Глава 17: Тестирование",
+      "source": "docs/guide/testing/README.md",
+      "output": "guide/testing/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Тестирование"
+    },
+    {
+      "chapter": "Глава 17: Тестирование",
+      "source": "docs/guide/testing/tests.md",
+      "output": "guide/testing/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 17: Тестирование",
+      "source": "docs/guide/testing/practice.md",
+      "output": "guide/testing/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/17/testing",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: тесты Task и Store"
+    },
+    {
+      "chapter": "Глава 17: Тестирование",
+      "source": "docs/guide/testing/best-practices.md",
+      "output": "guide/testing/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: тестирование"
+    },
+    {
+      "chapter": "Глава 18: Файлы и ввод-вывод",
+      "source": "docs/guide/file-io/README.md",
+      "output": "guide/file-io/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Файлы и ввод-вывод"
+    },
+    {
+      "chapter": "Глава 18: Файлы и ввод-вывод",
+      "source": "docs/guide/file-io/tests.md",
+      "output": "guide/file-io/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 18: Файлы и ввод-вывод",
+      "source": "docs/guide/file-io/practice.md",
+      "output": "guide/file-io/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/18/file-io",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: текстовый экспорт задач"
+    },
+    {
+      "chapter": "Глава 18: Файлы и ввод-вывод",
+      "source": "docs/guide/file-io/best-practices.md",
+      "output": "guide/file-io/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: файлы и ввод-вывод"
+    },
+    {
+      "chapter": "Глава 19: JSON и сериализация",
+      "source": "docs/guide/json/README.md",
+      "output": "guide/json/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "JSON и сериализация"
+    },
+    {
+      "chapter": "Глава 19: JSON и сериализация",
+      "source": "docs/guide/json/tests.md",
+      "output": "guide/json/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 19: JSON и сериализация",
+      "source": "docs/guide/json/practice.md",
+      "output": "guide/json/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/19/json",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: сохранение задач в JSON"
+    },
+    {
+      "chapter": "Глава 19: JSON и сериализация",
+      "source": "docs/guide/json/best-practices.md",
+      "output": "guide/json/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: JSON"
+    },
+    {
+      "chapter": "Глава 20: Время и дедлайны",
+      "source": "docs/guide/time/README.md",
+      "output": "guide/time/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Время и дедлайны"
+    },
+    {
+      "chapter": "Глава 20: Время и дедлайны",
+      "source": "docs/guide/time/tests.md",
+      "output": "guide/time/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 20: Время и дедлайны",
+      "source": "docs/guide/time/practice.md",
+      "output": "guide/time/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/20/time",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: дедлайн задачи"
+    },
+    {
+      "chapter": "Глава 20: Время и дедлайны",
+      "source": "docs/guide/time/best-practices.md",
+      "output": "guide/time/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: время и дедлайны"
+    },
+    {
+      "chapter": "Глава 21: Goroutine",
+      "source": "docs/guide/goroutines/README.md",
+      "output": "guide/goroutines/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Goroutine"
+    },
+    {
+      "chapter": "Глава 21: Goroutine",
+      "source": "docs/guide/goroutines/tests.md",
+      "output": "guide/goroutines/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 21: Goroutine",
+      "source": "docs/guide/goroutines/practice.md",
+      "output": "guide/goroutines/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/21/goroutines",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: параллельный экспорт"
+    },
+    {
+      "chapter": "Глава 21: Goroutine",
+      "source": "docs/guide/goroutines/best-practices.md",
+      "output": "guide/goroutines/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: goroutine"
+    },
+    {
+      "chapter": "Глава 22: Каналы",
+      "source": "docs/guide/channels/README.md",
+      "output": "guide/channels/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Каналы"
+    },
+    {
+      "chapter": "Глава 22: Каналы",
+      "source": "docs/guide/channels/tests.md",
+      "output": "guide/channels/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 22: Каналы",
+      "source": "docs/guide/channels/practice.md",
+      "output": "guide/channels/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/22/channels",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: результаты экспортов через канал"
+    },
+    {
+      "chapter": "Глава 22: Каналы",
+      "source": "docs/guide/channels/best-practices.md",
+      "output": "guide/channels/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: каналы"
+    },
+    {
+      "chapter": "Глава 23: Select и таймауты",
+      "source": "docs/guide/select-and-timeouts/README.md",
+      "output": "guide/select-and-timeouts/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Select и таймауты"
+    },
+    {
+      "chapter": "Глава 23: Select и таймауты",
+      "source": "docs/guide/select-and-timeouts/tests.md",
+      "output": "guide/select-and-timeouts/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 23: Select и таймауты",
+      "source": "docs/guide/select-and-timeouts/practice.md",
+      "output": "guide/select-and-timeouts/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/23/select-and-timeouts",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: таймаут экспортов"
+    },
+    {
+      "chapter": "Глава 23: Select и таймауты",
+      "source": "docs/guide/select-and-timeouts/best-practices.md",
+      "output": "guide/select-and-timeouts/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: select и таймауты"
+    },
+    {
+      "chapter": "Глава 24: Mutex и синхронизация",
+      "source": "docs/guide/mutex-and-synchronization/README.md",
+      "output": "guide/mutex-and-synchronization/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Mutex и синхронизация"
+    },
+    {
+      "chapter": "Глава 24: Mutex и синхронизация",
+      "source": "docs/guide/mutex-and-synchronization/tests.md",
+      "output": "guide/mutex-and-synchronization/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 24: Mutex и синхронизация",
+      "source": "docs/guide/mutex-and-synchronization/practice.md",
+      "output": "guide/mutex-and-synchronization/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/24/mutex-and-synchronization",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: безопасный TaskStore"
+    },
+    {
+      "chapter": "Глава 24: Mutex и синхронизация",
+      "source": "docs/guide/mutex-and-synchronization/best-practices.md",
+      "output": "guide/mutex-and-synchronization/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: mutex и синхронизация"
+    },
+    {
+      "chapter": "Глава 25: Context",
+      "source": "docs/guide/context/README.md",
+      "output": "guide/context/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Context: отмена и дедлайны"
+    },
+    {
+      "chapter": "Глава 25: Context",
+      "source": "docs/guide/context/tests.md",
+      "output": "guide/context/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 25: Context",
+      "source": "docs/guide/context/practice.md",
+      "output": "guide/context/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/25/context",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: отменяемый экспорт"
+    },
+    {
+      "chapter": "Глава 25: Context",
+      "source": "docs/guide/context/best-practices.md",
+      "output": "guide/context/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: context"
+    },
+    {
+      "chapter": "Глава 26: Логирование и отладка",
+      "source": "docs/guide/logging-and-debugging/README.md",
+      "output": "guide/logging-and-debugging/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Логирование и отладка"
+    },
+    {
+      "chapter": "Глава 26: Логирование и отладка",
+      "source": "docs/guide/logging-and-debugging/tests.md",
+      "output": "guide/logging-and-debugging/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 26: Логирование и отладка",
+      "source": "docs/guide/logging-and-debugging/practice.md",
+      "output": "guide/logging-and-debugging/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/26/logging-and-debugging",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: наблюдаемый TaskStore"
+    },
+    {
+      "chapter": "Глава 26: Логирование и отладка",
+      "source": "docs/guide/logging-and-debugging/best-practices.md",
+      "output": "guide/logging-and-debugging/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: логирование и отладка"
+    },
+    {
+      "chapter": "Глава 27: HTTP-сервер и JSON API",
+      "source": "docs/guide/http-server/README.md",
+      "output": "guide/http-server/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "HTTP-сервер и JSON API"
+    },
+    {
+      "chapter": "Глава 27: HTTP-сервер и JSON API",
+      "source": "docs/guide/http-server/tests.md",
+      "output": "guide/http-server/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 27: HTTP-сервер и JSON API",
+      "source": "docs/guide/http-server/practice.md",
+      "output": "guide/http-server/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/27/http-server",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: первый Task Manager API"
+    },
+    {
+      "chapter": "Глава 27: HTTP-сервер и JSON API",
+      "source": "docs/guide/http-server/best-practices.md",
+      "output": "guide/http-server/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: HTTP API на net/http"
+    },
+    {
+      "chapter": "Глава 28: HTTP API на Gin",
+      "source": "docs/guide/gin/README.md",
+      "output": "guide/gin/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "HTTP API на Gin"
+    },
+    {
+      "chapter": "Глава 28: HTTP API на Gin",
+      "source": "docs/guide/gin/tests.md",
+      "output": "guide/gin/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 28: HTTP API на Gin",
+      "source": "docs/guide/gin/practice.md",
+      "output": "guide/gin/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/28/gin",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: миграция Task Manager API на Gin"
+    },
+    {
+      "chapter": "Глава 28: HTTP API на Gin",
+      "source": "docs/guide/gin/best-practices.md",
+      "output": "guide/gin/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: Gin"
+    },
+    {
+      "chapter": "Глава 29: HTTP-клиент",
+      "source": "docs/guide/http-client/README.md",
+      "output": "guide/http-client/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "HTTP-клиент: внешние API"
+    },
+    {
+      "chapter": "Глава 29: HTTP-клиент",
+      "source": "docs/guide/http-client/tests.md",
+      "output": "guide/http-client/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 29: HTTP-клиент",
+      "source": "docs/guide/http-client/practice.md",
+      "output": "guide/http-client/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/29/http-client",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: клиент подсказок приоритета"
+    },
+    {
+      "chapter": "Глава 29: HTTP-клиент",
+      "source": "docs/guide/http-client/best-practices.md",
+      "output": "guide/http-client/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: HTTP-клиент"
+    },
+    {
+      "chapter": "Глава 30: HTTP-клиент на Resty",
+      "source": "docs/guide/resty/README.md",
+      "output": "guide/resty/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "HTTP-клиент на Resty"
+    },
+    {
+      "chapter": "Глава 30: HTTP-клиент на Resty",
+      "source": "docs/guide/resty/tests.md",
+      "output": "guide/resty/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 30: HTTP-клиент на Resty",
+      "source": "docs/guide/resty/practice.md",
+      "output": "guide/resty/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/30/resty",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: перенос клиента подсказок на Resty"
+    },
+    {
+      "chapter": "Глава 30: HTTP-клиент на Resty",
+      "source": "docs/guide/resty/best-practices.md",
+      "output": "guide/resty/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: Resty"
+    },
+    {
+      "chapter": "Глава 31: Конфигурация и жизненный цикл",
+      "source": "docs/guide/configuration-and-lifecycle/README.md",
+      "output": "guide/configuration-and-lifecycle/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Конфигурация и жизненный цикл приложения"
+    },
+    {
+      "chapter": "Глава 31: Конфигурация и жизненный цикл",
+      "source": "docs/guide/configuration-and-lifecycle/tests.md",
+      "output": "guide/configuration-and-lifecycle/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 31: Конфигурация и жизненный цикл",
+      "source": "docs/guide/configuration-and-lifecycle/practice.md",
+      "output": "guide/configuration-and-lifecycle/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/31/configuration-and-lifecycle",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: управляемый запуск Task Manager API"
+    },
+    {
+      "chapter": "Глава 31: Конфигурация и жизненный цикл",
+      "source": "docs/guide/configuration-and-lifecycle/best-practices.md",
+      "output": "guide/configuration-and-lifecycle/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: конфигурация и жизненный цикл"
+    },
+    {
+      "chapter": "Глава 32: Docker и локальное окружение",
+      "source": "docs/guide/docker/README.md",
+      "output": "guide/docker/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Docker и локальное окружение"
+    },
+    {
+      "chapter": "Глава 32: Docker и локальное окружение",
+      "source": "docs/guide/docker/tests.md",
+      "output": "guide/docker/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 32: Docker и локальное окружение",
+      "source": "docs/guide/docker/practice.md",
+      "output": "guide/docker/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/32/task-manager-api",
+        "description": "Dockerfile, Compose-конфигурация и точка входа Task Manager API"
+      },
+      "title": "Задания: Docker-окружение Task Manager API"
+    },
+    {
+      "chapter": "Глава 32: Docker и локальное окружение",
+      "source": "docs/guide/docker/best-practices.md",
+      "output": "guide/docker/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: Docker и локальное окружение"
+    },
+    {
+      "chapter": "Глава 33: SQL и PostgreSQL",
+      "source": "docs/guide/sql-postgresql/README.md",
+      "output": "guide/sql-postgresql/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "SQL и PostgreSQL"
+    },
+    {
+      "chapter": "Глава 33: SQL и PostgreSQL",
+      "source": "docs/guide/sql-postgresql/tests.md",
+      "output": "guide/sql-postgresql/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 33: SQL и PostgreSQL",
+      "source": "docs/guide/sql-postgresql/practice.md",
+      "output": "guide/sql-postgresql/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/33/sql-postgresql",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: PostgreSQL-репозиторий Task Manager"
+    },
+    {
+      "chapter": "Глава 33: SQL и PostgreSQL",
+      "source": "docs/guide/sql-postgresql/best-practices.md",
+      "output": "guide/sql-postgresql/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: SQL и PostgreSQL"
+    },
+    {
+      "chapter": "Глава 34: CI/CD и деплой",
+      "source": "docs/guide/ci-cd-deploy/README.md",
+      "output": "guide/ci-cd-deploy/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "CI/CD и деплой"
+    },
+    {
+      "chapter": "Глава 34: CI/CD и деплой",
+      "source": "docs/guide/ci-cd-deploy/tests.md",
+      "output": "guide/ci-cd-deploy/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 34: CI/CD и деплой",
+      "source": "docs/guide/ci-cd-deploy/practice.md",
+      "output": "guide/ci-cd-deploy/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/34/ci-cd-deploy",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: доставка Task Manager API"
+    },
+    {
+      "chapter": "Глава 34: CI/CD и деплой",
+      "source": "docs/guide/ci-cd-deploy/best-practices.md",
+      "output": "guide/ci-cd-deploy/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: CI/CD и деплой"
+    },
+    {
+      "chapter": "Глава 35: Итоговая интеграция",
+      "source": "docs/guide/final-integration/README.md",
+      "output": "guide/final-integration/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Итоговая интеграция"
+    },
+    {
+      "chapter": "Глава 35: Итоговая интеграция",
+      "source": "docs/guide/final-integration/tests.md",
+      "output": "guide/final-integration/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка"
+    },
+    {
+      "chapter": "Глава 35: Итоговая интеграция",
+      "source": "docs/guide/final-integration/practice.md",
+      "output": "guide/final-integration/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/35/final-integration",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: выпуск Task Manager API"
+    },
+    {
+      "chapter": "Глава 35: Итоговая интеграция",
+      "source": "docs/guide/final-integration/best-practices.md",
+      "output": "guide/final-integration/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: итоговый проект"
+    },
+    {
+      "chapter": "Продвинутая глава A: Ошибки и ресурсы",
+      "source": "docs/guide/advanced-errors-resources/README.md",
+      "output": "guide/advanced-errors-resources/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Продвинутый Go A: ошибки и управление ресурсами"
+    },
+    {
+      "chapter": "Продвинутая глава A: Ошибки и ресурсы",
+      "source": "docs/guide/advanced-errors-resources/defer-resources.md",
+      "output": "guide/advanced-errors-resources/defer-resources.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "defer и жизненный цикл ресурсов"
+    },
+    {
+      "chapter": "Продвинутая глава A: Ошибки и ресурсы",
+      "source": "docs/guide/advanced-errors-resources/panic-recover.md",
+      "output": "guide/advanced-errors-resources/panic-recover.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "panic и recover в библиотечном коде"
+    },
+    {
+      "chapter": "Продвинутая глава A: Ошибки и ресурсы",
+      "source": "docs/guide/advanced-errors-resources/http-api-errors.md",
+      "output": "guide/advanced-errors-resources/http-api-errors.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Ошибки HTTP API: контракт, логи и panic"
+    },
+    {
+      "chapter": "Продвинутая глава A: Ошибки и ресурсы",
+      "source": "docs/guide/advanced-errors-resources/tests.md",
+      "output": "guide/advanced-errors-resources/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка: ошибки и управление ресурсами"
+    },
+    {
+      "chapter": "Продвинутая глава A: Ошибки и ресурсы",
+      "source": "docs/guide/advanced-errors-resources/practice.md",
+      "output": "guide/advanced-errors-resources/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/36/advanced-errors-resources",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: ошибки и управление ресурсами"
+    },
+    {
+      "chapter": "Продвинутая глава A: Ошибки и ресурсы",
+      "source": "docs/guide/advanced-errors-resources/best-practices.md",
+      "output": "guide/advanced-errors-resources/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: ошибки и ресурсы"
+    },
+    {
+      "chapter": "Продвинутая глава B: Типы и generics",
+      "source": "docs/guide/advanced-types-generics/README.md",
+      "output": "guide/advanced-types-generics/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Продвинутый Go B: типы и generics"
+    },
+    {
+      "chapter": "Продвинутая глава B: Типы и generics",
+      "source": "docs/guide/advanced-types-generics/type-parameters.md",
+      "output": "guide/advanced-types-generics/type-parameters.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Параметры типов и generic-функции"
+    },
+    {
+      "chapter": "Продвинутая глава B: Типы и generics",
+      "source": "docs/guide/advanced-types-generics/constraints-type-sets.md",
+      "output": "guide/advanced-types-generics/constraints-type-sets.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Constraints, type sets и оператор ~"
+    },
+    {
+      "chapter": "Продвинутая глава B: Типы и generics",
+      "source": "docs/guide/advanced-types-generics/generic-types-design.md",
+      "output": "guide/advanced-types-generics/generic-types-design.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Generic-типы и выбор абстракции"
+    },
+    {
+      "chapter": "Продвинутая глава B: Типы и generics",
+      "source": "docs/guide/advanced-types-generics/tests.md",
+      "output": "guide/advanced-types-generics/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка: типы и generics"
+    },
+    {
+      "chapter": "Продвинутая глава B: Типы и generics",
+      "source": "docs/guide/advanced-types-generics/practice.md",
+      "output": "guide/advanced-types-generics/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/37/advanced-types-generics",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: типы и generics"
+    },
+    {
+      "chapter": "Продвинутая глава B: Типы и generics",
+      "source": "docs/guide/advanced-types-generics/best-practices.md",
+      "output": "guide/advanced-types-generics/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: типы и generics"
+    },
+    {
+      "chapter": "Продвинутая глава C: Конкурентные паттерны",
+      "source": "docs/guide/advanced-concurrency-patterns/README.md",
+      "output": "guide/advanced-concurrency-patterns/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Продвинутый Go C: конкурентные паттерны"
+    },
+    {
+      "chapter": "Продвинутая глава C: Конкурентные паттерны",
+      "source": "docs/guide/advanced-concurrency-patterns/fan-out-pipeline.md",
+      "output": "guide/advanced-concurrency-patterns/fan-out-pipeline.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Fan-out, fan-in и pipeline"
+    },
+    {
+      "chapter": "Продвинутая глава C: Конкурентные паттерны",
+      "source": "docs/guide/advanced-concurrency-patterns/errgroup-lifecycle.md",
+      "output": "guide/advanced-concurrency-patterns/errgroup-lifecycle.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "errgroup, отмена и graceful shutdown"
+    },
+    {
+      "chapter": "Продвинутая глава C: Конкурентные паттерны",
+      "source": "docs/guide/advanced-concurrency-patterns/goroutine-leaks.md",
+      "output": "guide/advanced-concurrency-patterns/goroutine-leaks.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Утечки goroutine и диагностика"
+    },
+    {
+      "chapter": "Продвинутая глава C: Конкурентные паттерны",
+      "source": "docs/guide/advanced-concurrency-patterns/tests.md",
+      "output": "guide/advanced-concurrency-patterns/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка: конкурентные паттерны"
+    },
+    {
+      "chapter": "Продвинутая глава C: Конкурентные паттерны",
+      "source": "docs/guide/advanced-concurrency-patterns/practice.md",
+      "output": "guide/advanced-concurrency-patterns/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/38/advanced-concurrency-patterns",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: конкурентные паттерны"
+    },
+    {
+      "chapter": "Продвинутая глава C: Конкурентные паттерны",
+      "source": "docs/guide/advanced-concurrency-patterns/best-practices.md",
+      "output": "guide/advanced-concurrency-patterns/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: конкурентные паттерны"
+    },
+    {
+      "chapter": "Продвинутая глава D: Производительность",
+      "source": "docs/guide/advanced-performance/README.md",
+      "output": "guide/advanced-performance/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Продвинутый Go D: производительность и диагностика"
+    },
+    {
+      "chapter": "Продвинутая глава D: Производительность",
+      "source": "docs/guide/advanced-performance/benchmarks.md",
+      "output": "guide/advanced-performance/benchmarks.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Benchmarks и benchstat"
+    },
+    {
+      "chapter": "Продвинутая глава D: Производительность",
+      "source": "docs/guide/advanced-performance/pprof.md",
+      "output": "guide/advanced-performance/pprof.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "CPU, память и pprof"
+    },
+    {
+      "chapter": "Продвинутая глава D: Производительность",
+      "source": "docs/guide/advanced-performance/allocations-optimization.md",
+      "output": "guide/advanced-performance/allocations-optimization.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Аллокации, escape analysis и точечные оптимизации"
+    },
+    {
+      "chapter": "Продвинутая глава D: Производительность",
+      "source": "docs/guide/advanced-performance/tests.md",
+      "output": "guide/advanced-performance/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка: производительность и диагностика"
+    },
+    {
+      "chapter": "Продвинутая глава D: Производительность",
+      "source": "docs/guide/advanced-performance/practice.md",
+      "output": "guide/advanced-performance/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/39/advanced-performance",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: производительность и диагностика"
+    },
+    {
+      "chapter": "Продвинутая глава D: Производительность",
+      "source": "docs/guide/advanced-performance/best-practices.md",
+      "output": "guide/advanced-performance/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: производительность и диагностика"
+    },
+    {
+      "chapter": "Продвинутая глава E: Reflection, unsafe и cgo",
+      "source": "docs/guide/advanced-reflection-unsafe-cgo/README.md",
+      "output": "guide/advanced-reflection-unsafe-cgo/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Продвинутый Go E: reflection, unsafe и cgo"
+    },
+    {
+      "chapter": "Продвинутая глава E: Reflection, unsafe и cgo",
+      "source": "docs/guide/advanced-reflection-unsafe-cgo/reflection.md",
+      "output": "guide/advanced-reflection-unsafe-cgo/reflection.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Reflection: reflect.Type и reflect.Value"
+    },
+    {
+      "chapter": "Продвинутая глава E: Reflection, unsafe и cgo",
+      "source": "docs/guide/advanced-reflection-unsafe-cgo/unsafe.md",
+      "output": "guide/advanced-reflection-unsafe-cgo/unsafe.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "unsafe: память и границы гарантий"
+    },
+    {
+      "chapter": "Продвинутая глава E: Reflection, unsafe и cgo",
+      "source": "docs/guide/advanced-reflection-unsafe-cgo/cgo.md",
+      "output": "guide/advanced-reflection-unsafe-cgo/cgo.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "cgo: вызов C-кода из Go"
+    },
+    {
+      "chapter": "Продвинутая глава E: Reflection, unsafe и cgo",
+      "source": "docs/guide/advanced-reflection-unsafe-cgo/tests.md",
+      "output": "guide/advanced-reflection-unsafe-cgo/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка: reflection, unsafe и cgo"
+    },
+    {
+      "chapter": "Продвинутая глава E: Reflection, unsafe и cgo",
+      "source": "docs/guide/advanced-reflection-unsafe-cgo/practice.md",
+      "output": "guide/advanced-reflection-unsafe-cgo/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/40/advanced-reflection-unsafe-cgo",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: reflection, unsafe и cgo"
+    },
+    {
+      "chapter": "Продвинутая глава E: Reflection, unsafe и cgo",
+      "source": "docs/guide/advanced-reflection-unsafe-cgo/best-practices.md",
+      "output": "guide/advanced-reflection-unsafe-cgo/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: reflection, unsafe и cgo"
+    },
+    {
+      "chapter": "Продвинутая глава F: Production-архитектура",
+      "source": "docs/guide/advanced-production-architecture/README.md",
+      "output": "guide/advanced-production-architecture/",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Продвинутый Go F: архитектура production-сервиса"
+    },
+    {
+      "chapter": "Продвинутая глава F: Production-архитектура",
+      "source": "docs/guide/advanced-production-architecture/config-health.md",
+      "output": "guide/advanced-production-architecture/config-health.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Конфигурация, секреты и health-checks"
+    },
+    {
+      "chapter": "Продвинутая глава F: Production-архитектура",
+      "source": "docs/guide/advanced-production-architecture/observability.md",
+      "output": "guide/advanced-production-architecture/observability.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Observability: логи, метрики и tracing"
+    },
+    {
+      "chapter": "Продвинутая глава F: Production-архитектура",
+      "source": "docs/guide/advanced-production-architecture/reliability.md",
+      "output": "guide/advanced-production-architecture/reliability.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Timeouts, retries, idempotency и rate limiting"
+    },
+    {
+      "chapter": "Продвинутая глава F: Production-архитектура",
+      "source": "docs/guide/advanced-production-architecture/security-review.md",
+      "output": "guide/advanced-production-architecture/security-review.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Безопасность API и code review"
+    },
+    {
+      "chapter": "Продвинутая глава F: Production-архитектура",
+      "source": "docs/guide/advanced-production-architecture/tests.md",
+      "output": "guide/advanced-production-architecture/tests.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Самопроверка: архитектура production-сервиса"
+    },
+    {
+      "chapter": "Продвинутая глава F: Production-архитектура",
+      "source": "docs/guide/advanced-production-architecture/practice.md",
+      "output": "guide/advanced-production-architecture/practice.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": {
+        "path": "examples/41/advanced-production-architecture",
+        "description": "заготовка для полного исходного кода практических заданий главы"
+      },
+      "title": "Задания: архитектура production-сервиса"
+    },
+    {
+      "chapter": "Продвинутая глава F: Production-архитектура",
+      "source": "docs/guide/advanced-production-architecture/best-practices.md",
+      "output": "guide/advanced-production-architecture/best-practices.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Рекомендации по коду: архитектура production-сервиса"
+    },
+    {
+      "chapter": "Справочник",
+      "source": "docs/guide/directory/base-directory.md",
+      "output": "guide/directory/base-directory.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Базовые понятия"
+    },
+    {
+      "chapter": "Справочник",
+      "source": "docs/guide/directory/advanced-directory.md",
+      "output": "guide/directory/advanced-directory.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Продвинутые понятия"
+    },
+    {
+      "chapter": "Дополнительные ресурсы",
+      "source": "docs/guide/resources.md",
+      "output": "guide/resources.html",
+      "contributor": "Данил Чугаев",
+      "contributorGitHub": "DanilChugaev",
+      "exampleSource": null,
+      "title": "Дополнительные ресурсы"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "Данил Чугаев",
+      "github": "DanilChugaev"
+    }
+  ]
+}
