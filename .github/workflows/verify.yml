@@ -26,5 +26,8 @@ jobs:
       - name: Run tests
         run: npm test
 
+      - name: Build documentation
+        run: npm run docs:build
+
       - name: Check whitespace errors
         run: git diff --check
