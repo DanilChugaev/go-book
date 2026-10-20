@@ -60,12 +60,14 @@ export function parseSidebar(source) {
 
 async function findContributor(source) {
   try {
-    const { stdout } = await execFile('git', ['log', '-1', '--format=%an', '--', source], {
+    const { stdout } = await execFile('git', ['log', '-1', '--format=%aN%x1f%aE', '--', source], {
       cwd: rootDirectory,
     })
-    return stdout.trim() || 'Данил Чугаев'
+    const [name = 'Данил Чугаев', email = ''] = stdout.trim().split('\x1f')
+    const githubMatch = email.match(/^(?:\d+\+)?([^@]+)@users\.noreply\.github\.com$/)
+    return { name, github: githubMatch?.[1] ?? null }
   } catch {
-    return 'Данил Чугаев'
+    return { name: 'Данил Чугаев', github: null }
   }
 }
 
@@ -78,7 +80,8 @@ export async function createBookManifest() {
   for (const entry of sidebarEntries) {
     if (entry.source === 'docs/guide/content.md' || seen.has(entry.source)) continue
     seen.add(entry.source)
-    pages.push({ ...entry, contributor: await findContributor(entry.source) })
+    const contributor = await findContributor(entry.source)
+    pages.push({ ...entry, contributor: contributor.name, contributorGitHub: contributor.github })
   }
 
   if (pages.length === 0) {
@@ -89,6 +92,10 @@ export async function createBookManifest() {
     generatedAt: new Date().toISOString(),
     source: 'docs/.vuepress/configs/sidebar/index.ts',
     pages,
+    contributors: [...new Map(pages.map((page) => [page.contributor, {
+      name: page.contributor,
+      github: page.contributorGitHub,
+    }])).values()],
   }
 }
 

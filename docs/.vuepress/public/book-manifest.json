@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-20T10:43:15.426Z",
+  "generatedAt": "2026-10-20T11:39:32.103Z",
   "source": "docs/.vuepress/configs/sidebar/index.ts",
   "pages": [
     {
@@ -7,6 +7,7 @@
       "source": "docs/guide/README.md",
       "output": "guide/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Предисловие"
     },
     {
@@ -14,6 +15,7 @@
       "source": "docs/guide/introduction/what-is-go.md",
       "output": "guide/introduction/what-is-go.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Что такое Go и зачем он нужен?"
     },
     {
@@ -21,6 +23,7 @@
       "source": "docs/guide/introduction/installation.md",
       "output": "guide/introduction/installation.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Установка и настройка"
     },
     {
@@ -28,6 +31,7 @@
       "source": "docs/guide/introduction/first-program.md",
       "output": "guide/introduction/first-program.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Первая программа и Go-модуль"
     },
     {
@@ -35,6 +39,7 @@
       "source": "docs/guide/introduction/tests.md",
       "output": "guide/introduction/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -42,6 +47,7 @@
       "source": "docs/guide/introduction/practice.md",
       "output": "guide/introduction/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: первый модуль"
     },
     {
@@ -49,6 +55,7 @@
       "source": "docs/guide/introduction/best-practices.md",
       "output": "guide/introduction/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: старт с Go"
     },
     {
@@ -56,6 +63,7 @@
       "source": "docs/guide/variables-and-data-types/variables.md",
       "output": "guide/variables-and-data-types/variables.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Переменные и константы"
     },
     {
@@ -63,6 +71,7 @@
       "source": "docs/guide/variables-and-data-types/simple-data-types.md",
       "output": "guide/variables-and-data-types/simple-data-types.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Базовые типы и преобразования"
     },
     {
@@ -70,6 +79,7 @@
       "source": "docs/guide/variables-and-data-types/tests.md",
       "output": "guide/variables-and-data-types/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -77,6 +87,7 @@
       "source": "docs/guide/variables-and-data-types/practice.md",
       "output": "guide/variables-and-data-types/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: значения для задачи"
     },
     {
@@ -84,6 +95,7 @@
       "source": "docs/guide/variables-and-data-types/best-practices.md",
       "output": "guide/variables-and-data-types/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: переменные и базовые типы"
     },
     {
@@ -91,6 +103,7 @@
       "source": "docs/guide/strings/README.md",
       "output": "guide/strings/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Строки и обработка текста"
     },
     {
@@ -98,6 +111,7 @@
       "source": "docs/guide/strings/tests.md",
       "output": "guide/strings/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -105,6 +119,7 @@
       "source": "docs/guide/strings/practice.md",
       "output": "guide/strings/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: нормализация и поиск названия"
     },
     {
@@ -112,6 +127,7 @@
       "source": "docs/guide/strings/best-practices.md",
       "output": "guide/strings/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: строки и текст"
     },
     {
@@ -119,6 +135,7 @@
       "source": "docs/guide/operators-and-expressions/README.md",
       "output": "guide/operators-and-expressions/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Операторы и выражения"
     },
     {
@@ -126,6 +143,7 @@
       "source": "docs/guide/operators-and-expressions/tests.md",
       "output": "guide/operators-and-expressions/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -133,6 +151,7 @@
       "source": "docs/guide/operators-and-expressions/practice.md",
       "output": "guide/operators-and-expressions/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: проверки задачи"
     },
     {
@@ -140,6 +159,7 @@
       "source": "docs/guide/operators-and-expressions/best-practices.md",
       "output": "guide/operators-and-expressions/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: операторы и выражения"
     },
     {
@@ -147,6 +167,7 @@
       "source": "docs/guide/control-flow/README.md",
       "output": "guide/control-flow/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Условия: if и switch"
     },
     {
@@ -154,6 +175,7 @@
       "source": "docs/guide/control-flow/tests.md",
       "output": "guide/control-flow/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -161,6 +183,7 @@
       "source": "docs/guide/control-flow/practice.md",
       "output": "guide/control-flow/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: валидация задачи"
     },
     {
@@ -168,6 +191,7 @@
       "source": "docs/guide/control-flow/best-practices.md",
       "output": "guide/control-flow/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: условия"
     },
     {
@@ -175,6 +199,7 @@
       "source": "docs/guide/loops/README.md",
       "output": "guide/loops/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Циклы: for и range"
     },
     {
@@ -182,6 +207,7 @@
       "source": "docs/guide/loops/tests.md",
       "output": "guide/loops/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -189,6 +215,7 @@
       "source": "docs/guide/loops/practice.md",
       "output": "guide/loops/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: нумерация и название задачи"
     },
     {
@@ -196,6 +223,7 @@
       "source": "docs/guide/loops/best-practices.md",
       "output": "guide/loops/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: циклы"
     },
     {
@@ -203,6 +231,7 @@
       "source": "docs/guide/functions/README.md",
       "output": "guide/functions/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Функции"
     },
     {
@@ -210,6 +239,7 @@
       "source": "docs/guide/functions/tests.md",
       "output": "guide/functions/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -217,6 +247,7 @@
       "source": "docs/guide/functions/practice.md",
       "output": "guide/functions/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: функции Task Manager API"
     },
     {
@@ -224,6 +255,7 @@
       "source": "docs/guide/functions/best-practices.md",
       "output": "guide/functions/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: функции"
     },
     {
@@ -231,6 +263,7 @@
       "source": "docs/guide/slices-and-arrays/README.md",
       "output": "guide/slices-and-arrays/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Массивы и слайсы"
     },
     {
@@ -238,6 +271,7 @@
       "source": "docs/guide/slices-and-arrays/tests.md",
       "output": "guide/slices-and-arrays/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -245,6 +279,7 @@
       "source": "docs/guide/slices-and-arrays/practice.md",
       "output": "guide/slices-and-arrays/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: список названий задач"
     },
     {
@@ -252,6 +287,7 @@
       "source": "docs/guide/slices-and-arrays/best-practices.md",
       "output": "guide/slices-and-arrays/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: массивы и слайсы"
     },
     {
@@ -259,6 +295,7 @@
       "source": "docs/guide/maps/README.md",
       "output": "guide/maps/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Map: ключ и значение"
     },
     {
@@ -266,6 +303,7 @@
       "source": "docs/guide/maps/tests.md",
       "output": "guide/maps/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -273,6 +311,7 @@
       "source": "docs/guide/maps/practice.md",
       "output": "guide/maps/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: задачи по ID"
     },
     {
@@ -280,6 +319,7 @@
       "source": "docs/guide/maps/best-practices.md",
       "output": "guide/maps/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: map"
     },
     {
@@ -287,6 +327,7 @@
       "source": "docs/guide/structs/README.md",
       "output": "guide/structs/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Структуры: модель задачи"
     },
     {
@@ -294,6 +335,7 @@
       "source": "docs/guide/structs/tests.md",
       "output": "guide/structs/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -301,6 +343,7 @@
       "source": "docs/guide/structs/practice.md",
       "output": "guide/structs/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: модель Task"
     },
     {
@@ -308,6 +351,7 @@
       "source": "docs/guide/structs/best-practices.md",
       "output": "guide/structs/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: структуры"
     },
     {
@@ -315,6 +359,7 @@
       "source": "docs/guide/methods/README.md",
       "output": "guide/methods/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Методы"
     },
     {
@@ -322,6 +367,7 @@
       "source": "docs/guide/methods/tests.md",
       "output": "guide/methods/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -329,6 +375,7 @@
       "source": "docs/guide/methods/practice.md",
       "output": "guide/methods/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: поведение Task"
     },
     {
@@ -336,6 +383,7 @@
       "source": "docs/guide/methods/best-practices.md",
       "output": "guide/methods/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: методы"
     },
     {
@@ -343,6 +391,7 @@
       "source": "docs/guide/pointers/README.md",
       "output": "guide/pointers/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Указатели"
     },
     {
@@ -350,6 +399,7 @@
       "source": "docs/guide/pointers/tests.md",
       "output": "guide/pointers/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -357,6 +407,7 @@
       "source": "docs/guide/pointers/practice.md",
       "output": "guide/pointers/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: изменение Task"
     },
     {
@@ -364,6 +415,7 @@
       "source": "docs/guide/pointers/best-practices.md",
       "output": "guide/pointers/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: указатели"
     },
     {
@@ -371,6 +423,7 @@
       "source": "docs/guide/interfaces/README.md",
       "output": "guide/interfaces/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Интерфейсы"
     },
     {
@@ -378,6 +431,7 @@
       "source": "docs/guide/interfaces/tests.md",
       "output": "guide/interfaces/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -385,6 +439,7 @@
       "source": "docs/guide/interfaces/practice.md",
       "output": "guide/interfaces/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: TaskFormatter"
     },
     {
@@ -392,6 +447,7 @@
       "source": "docs/guide/interfaces/best-practices.md",
       "output": "guide/interfaces/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: интерфейсы"
     },
     {
@@ -399,6 +455,7 @@
       "source": "docs/guide/errors/README.md",
       "output": "guide/errors/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Обработка ошибок"
     },
     {
@@ -406,6 +463,7 @@
       "source": "docs/guide/errors/tests.md",
       "output": "guide/errors/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -413,6 +471,7 @@
       "source": "docs/guide/errors/practice.md",
       "output": "guide/errors/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: ошибки при переименовании задачи"
     },
     {
@@ -420,6 +479,7 @@
       "source": "docs/guide/errors/best-practices.md",
       "output": "guide/errors/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: ошибки"
     },
     {
@@ -427,6 +487,7 @@
       "source": "docs/guide/defer-panic-recover/README.md",
       "output": "guide/defer-panic-recover/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "defer, panic и recover"
     },
     {
@@ -434,6 +495,7 @@
       "source": "docs/guide/defer-panic-recover/tests.md",
       "output": "guide/defer-panic-recover/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -441,6 +503,7 @@
       "source": "docs/guide/defer-panic-recover/practice.md",
       "output": "guide/defer-panic-recover/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: безопасная работа с файлами"
     },
     {
@@ -448,6 +511,7 @@
       "source": "docs/guide/defer-panic-recover/best-practices.md",
       "output": "guide/defer-panic-recover/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: defer, panic и recover"
     },
     {
@@ -455,6 +519,7 @@
       "source": "docs/guide/packages-and-modules/README.md",
       "output": "guide/packages-and-modules/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Пакеты и модули"
     },
     {
@@ -462,6 +527,7 @@
       "source": "docs/guide/packages-and-modules/tests.md",
       "output": "guide/packages-and-modules/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -469,6 +535,7 @@
       "source": "docs/guide/packages-and-modules/practice.md",
       "output": "guide/packages-and-modules/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: пакет internal/task"
     },
     {
@@ -476,6 +543,7 @@
       "source": "docs/guide/packages-and-modules/best-practices.md",
       "output": "guide/packages-and-modules/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: пакеты и модули"
     },
     {
@@ -483,6 +551,7 @@
       "source": "docs/guide/testing/README.md",
       "output": "guide/testing/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Тестирование"
     },
     {
@@ -490,6 +559,7 @@
       "source": "docs/guide/testing/tests.md",
       "output": "guide/testing/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -497,6 +567,7 @@
       "source": "docs/guide/testing/practice.md",
       "output": "guide/testing/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: тесты Task и Store"
     },
     {
@@ -504,6 +575,7 @@
       "source": "docs/guide/testing/best-practices.md",
       "output": "guide/testing/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: тестирование"
     },
     {
@@ -511,6 +583,7 @@
       "source": "docs/guide/file-io/README.md",
       "output": "guide/file-io/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Файлы и ввод-вывод"
     },
     {
@@ -518,6 +591,7 @@
       "source": "docs/guide/file-io/tests.md",
       "output": "guide/file-io/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -525,6 +599,7 @@
       "source": "docs/guide/file-io/practice.md",
       "output": "guide/file-io/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: текстовый экспорт задач"
     },
     {
@@ -532,6 +607,7 @@
       "source": "docs/guide/file-io/best-practices.md",
       "output": "guide/file-io/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: файлы и ввод-вывод"
     },
     {
@@ -539,6 +615,7 @@
       "source": "docs/guide/json/README.md",
       "output": "guide/json/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "JSON и сериализация"
     },
     {
@@ -546,6 +623,7 @@
       "source": "docs/guide/json/tests.md",
       "output": "guide/json/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -553,6 +631,7 @@
       "source": "docs/guide/json/practice.md",
       "output": "guide/json/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: сохранение задач в JSON"
     },
     {
@@ -560,6 +639,7 @@
       "source": "docs/guide/json/best-practices.md",
       "output": "guide/json/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: JSON"
     },
     {
@@ -567,6 +647,7 @@
       "source": "docs/guide/time/README.md",
       "output": "guide/time/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Время и дедлайны"
     },
     {
@@ -574,6 +655,7 @@
       "source": "docs/guide/time/tests.md",
       "output": "guide/time/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -581,6 +663,7 @@
       "source": "docs/guide/time/practice.md",
       "output": "guide/time/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: дедлайн задачи"
     },
     {
@@ -588,6 +671,7 @@
       "source": "docs/guide/time/best-practices.md",
       "output": "guide/time/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: время и дедлайны"
     },
     {
@@ -595,6 +679,7 @@
       "source": "docs/guide/goroutines/README.md",
       "output": "guide/goroutines/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Goroutine"
     },
     {
@@ -602,6 +687,7 @@
       "source": "docs/guide/goroutines/tests.md",
       "output": "guide/goroutines/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -609,6 +695,7 @@
       "source": "docs/guide/goroutines/practice.md",
       "output": "guide/goroutines/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: параллельный экспорт"
     },
     {
@@ -616,6 +703,7 @@
       "source": "docs/guide/goroutines/best-practices.md",
       "output": "guide/goroutines/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: goroutine"
     },
     {
@@ -623,6 +711,7 @@
       "source": "docs/guide/channels/README.md",
       "output": "guide/channels/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Каналы"
     },
     {
@@ -630,6 +719,7 @@
       "source": "docs/guide/channels/tests.md",
       "output": "guide/channels/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -637,6 +727,7 @@
       "source": "docs/guide/channels/practice.md",
       "output": "guide/channels/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: результаты экспортов через канал"
     },
     {
@@ -644,6 +735,7 @@
       "source": "docs/guide/channels/best-practices.md",
       "output": "guide/channels/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: каналы"
     },
     {
@@ -651,6 +743,7 @@
       "source": "docs/guide/select-and-timeouts/README.md",
       "output": "guide/select-and-timeouts/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Select и таймауты"
     },
     {
@@ -658,6 +751,7 @@
       "source": "docs/guide/select-and-timeouts/tests.md",
       "output": "guide/select-and-timeouts/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -665,6 +759,7 @@
       "source": "docs/guide/select-and-timeouts/practice.md",
       "output": "guide/select-and-timeouts/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: таймаут экспортов"
     },
     {
@@ -672,6 +767,7 @@
       "source": "docs/guide/select-and-timeouts/best-practices.md",
       "output": "guide/select-and-timeouts/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: select и таймауты"
     },
     {
@@ -679,6 +775,7 @@
       "source": "docs/guide/mutex-and-synchronization/README.md",
       "output": "guide/mutex-and-synchronization/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Mutex и синхронизация"
     },
     {
@@ -686,6 +783,7 @@
       "source": "docs/guide/mutex-and-synchronization/tests.md",
       "output": "guide/mutex-and-synchronization/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -693,6 +791,7 @@
       "source": "docs/guide/mutex-and-synchronization/practice.md",
       "output": "guide/mutex-and-synchronization/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: безопасный TaskStore"
     },
     {
@@ -700,6 +799,7 @@
       "source": "docs/guide/mutex-and-synchronization/best-practices.md",
       "output": "guide/mutex-and-synchronization/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: mutex и синхронизация"
     },
     {
@@ -707,6 +807,7 @@
       "source": "docs/guide/context/README.md",
       "output": "guide/context/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Context: отмена и дедлайны"
     },
     {
@@ -714,6 +815,7 @@
       "source": "docs/guide/context/tests.md",
       "output": "guide/context/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -721,6 +823,7 @@
       "source": "docs/guide/context/practice.md",
       "output": "guide/context/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: отменяемый экспорт"
     },
     {
@@ -728,6 +831,7 @@
       "source": "docs/guide/context/best-practices.md",
       "output": "guide/context/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: context"
     },
     {
@@ -735,6 +839,7 @@
       "source": "docs/guide/logging-and-debugging/README.md",
       "output": "guide/logging-and-debugging/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Логирование и отладка"
     },
     {
@@ -742,6 +847,7 @@
       "source": "docs/guide/logging-and-debugging/tests.md",
       "output": "guide/logging-and-debugging/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -749,6 +855,7 @@
       "source": "docs/guide/logging-and-debugging/practice.md",
       "output": "guide/logging-and-debugging/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: наблюдаемый TaskStore"
     },
     {
@@ -756,6 +863,7 @@
       "source": "docs/guide/logging-and-debugging/best-practices.md",
       "output": "guide/logging-and-debugging/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: логирование и отладка"
     },
     {
@@ -763,6 +871,7 @@
       "source": "docs/guide/http-server/README.md",
       "output": "guide/http-server/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "HTTP-сервер и JSON API"
     },
     {
@@ -770,6 +879,7 @@
       "source": "docs/guide/http-server/tests.md",
       "output": "guide/http-server/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -777,6 +887,7 @@
       "source": "docs/guide/http-server/practice.md",
       "output": "guide/http-server/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: первый Task Manager API"
     },
     {
@@ -784,6 +895,7 @@
       "source": "docs/guide/http-server/best-practices.md",
       "output": "guide/http-server/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: HTTP API на net/http"
     },
     {
@@ -791,6 +903,7 @@
       "source": "docs/guide/gin/README.md",
       "output": "guide/gin/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "HTTP API на Gin"
     },
     {
@@ -798,6 +911,7 @@
       "source": "docs/guide/gin/tests.md",
       "output": "guide/gin/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -805,6 +919,7 @@
       "source": "docs/guide/gin/practice.md",
       "output": "guide/gin/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: миграция Task Manager API на Gin"
     },
     {
@@ -812,6 +927,7 @@
       "source": "docs/guide/gin/best-practices.md",
       "output": "guide/gin/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: Gin"
     },
     {
@@ -819,6 +935,7 @@
       "source": "docs/guide/http-client/README.md",
       "output": "guide/http-client/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "HTTP-клиент: внешние API"
     },
     {
@@ -826,6 +943,7 @@
       "source": "docs/guide/http-client/tests.md",
       "output": "guide/http-client/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -833,6 +951,7 @@
       "source": "docs/guide/http-client/practice.md",
       "output": "guide/http-client/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: клиент подсказок приоритета"
     },
     {
@@ -840,6 +959,7 @@
       "source": "docs/guide/http-client/best-practices.md",
       "output": "guide/http-client/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: HTTP-клиент"
     },
     {
@@ -847,6 +967,7 @@
       "source": "docs/guide/resty/README.md",
       "output": "guide/resty/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "HTTP-клиент на Resty"
     },
     {
@@ -854,6 +975,7 @@
       "source": "docs/guide/resty/tests.md",
       "output": "guide/resty/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -861,6 +983,7 @@
       "source": "docs/guide/resty/practice.md",
       "output": "guide/resty/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: перенос клиента подсказок на Resty"
     },
     {
@@ -868,6 +991,7 @@
       "source": "docs/guide/resty/best-practices.md",
       "output": "guide/resty/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: Resty"
     },
     {
@@ -875,6 +999,7 @@
       "source": "docs/guide/configuration-and-lifecycle/README.md",
       "output": "guide/configuration-and-lifecycle/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Конфигурация и жизненный цикл приложения"
     },
     {
@@ -882,6 +1007,7 @@
       "source": "docs/guide/configuration-and-lifecycle/tests.md",
       "output": "guide/configuration-and-lifecycle/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -889,6 +1015,7 @@
       "source": "docs/guide/configuration-and-lifecycle/practice.md",
       "output": "guide/configuration-and-lifecycle/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: управляемый запуск Task Manager API"
     },
     {
@@ -896,6 +1023,7 @@
       "source": "docs/guide/configuration-and-lifecycle/best-practices.md",
       "output": "guide/configuration-and-lifecycle/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: конфигурация и жизненный цикл"
     },
     {
@@ -903,6 +1031,7 @@
       "source": "docs/guide/docker/README.md",
       "output": "guide/docker/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Docker и локальное окружение"
     },
     {
@@ -910,6 +1039,7 @@
       "source": "docs/guide/docker/tests.md",
       "output": "guide/docker/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -917,6 +1047,7 @@
       "source": "docs/guide/docker/practice.md",
       "output": "guide/docker/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: Docker-окружение Task Manager API"
     },
     {
@@ -924,6 +1055,7 @@
       "source": "docs/guide/docker/best-practices.md",
       "output": "guide/docker/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: Docker и локальное окружение"
     },
     {
@@ -931,6 +1063,7 @@
       "source": "docs/guide/sql-postgresql/README.md",
       "output": "guide/sql-postgresql/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "SQL и PostgreSQL"
     },
     {
@@ -938,6 +1071,7 @@
       "source": "docs/guide/sql-postgresql/tests.md",
       "output": "guide/sql-postgresql/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -945,6 +1079,7 @@
       "source": "docs/guide/sql-postgresql/practice.md",
       "output": "guide/sql-postgresql/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: PostgreSQL-репозиторий Task Manager"
     },
     {
@@ -952,6 +1087,7 @@
       "source": "docs/guide/sql-postgresql/best-practices.md",
       "output": "guide/sql-postgresql/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: SQL и PostgreSQL"
     },
     {
@@ -959,6 +1095,7 @@
       "source": "docs/guide/ci-cd-deploy/README.md",
       "output": "guide/ci-cd-deploy/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "CI/CD и деплой"
     },
     {
@@ -966,6 +1103,7 @@
       "source": "docs/guide/ci-cd-deploy/tests.md",
       "output": "guide/ci-cd-deploy/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -973,6 +1111,7 @@
       "source": "docs/guide/ci-cd-deploy/practice.md",
       "output": "guide/ci-cd-deploy/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: доставка Task Manager API"
     },
     {
@@ -980,6 +1119,7 @@
       "source": "docs/guide/ci-cd-deploy/best-practices.md",
       "output": "guide/ci-cd-deploy/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: CI/CD и деплой"
     },
     {
@@ -987,6 +1127,7 @@
       "source": "docs/guide/final-integration/README.md",
       "output": "guide/final-integration/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Итоговая интеграция"
     },
     {
@@ -994,6 +1135,7 @@
       "source": "docs/guide/final-integration/tests.md",
       "output": "guide/final-integration/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка"
     },
     {
@@ -1001,6 +1143,7 @@
       "source": "docs/guide/final-integration/practice.md",
       "output": "guide/final-integration/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: выпуск Task Manager API"
     },
     {
@@ -1008,6 +1151,7 @@
       "source": "docs/guide/final-integration/best-practices.md",
       "output": "guide/final-integration/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: итоговый проект"
     },
     {
@@ -1015,6 +1159,7 @@
       "source": "docs/guide/advanced-errors-resources/README.md",
       "output": "guide/advanced-errors-resources/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Продвинутый Go A: ошибки и управление ресурсами"
     },
     {
@@ -1022,6 +1167,7 @@
       "source": "docs/guide/advanced-errors-resources/defer-resources.md",
       "output": "guide/advanced-errors-resources/defer-resources.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "defer и жизненный цикл ресурсов"
     },
     {
@@ -1029,6 +1175,7 @@
       "source": "docs/guide/advanced-errors-resources/panic-recover.md",
       "output": "guide/advanced-errors-resources/panic-recover.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "panic и recover в библиотечном коде"
     },
     {
@@ -1036,6 +1183,7 @@
       "source": "docs/guide/advanced-errors-resources/http-api-errors.md",
       "output": "guide/advanced-errors-resources/http-api-errors.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Ошибки HTTP API: контракт, логи и panic"
     },
     {
@@ -1043,6 +1191,7 @@
       "source": "docs/guide/advanced-errors-resources/tests.md",
       "output": "guide/advanced-errors-resources/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка: ошибки и управление ресурсами"
     },
     {
@@ -1050,6 +1199,7 @@
       "source": "docs/guide/advanced-errors-resources/practice.md",
       "output": "guide/advanced-errors-resources/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: ошибки и управление ресурсами"
     },
     {
@@ -1057,6 +1207,7 @@
       "source": "docs/guide/advanced-errors-resources/best-practices.md",
       "output": "guide/advanced-errors-resources/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: ошибки и ресурсы"
     },
     {
@@ -1064,6 +1215,7 @@
       "source": "docs/guide/advanced-types-generics/README.md",
       "output": "guide/advanced-types-generics/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Продвинутый Go B: типы и generics"
     },
     {
@@ -1071,6 +1223,7 @@
       "source": "docs/guide/advanced-types-generics/type-parameters.md",
       "output": "guide/advanced-types-generics/type-parameters.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Параметры типов и generic-функции"
     },
     {
@@ -1078,6 +1231,7 @@
       "source": "docs/guide/advanced-types-generics/constraints-type-sets.md",
       "output": "guide/advanced-types-generics/constraints-type-sets.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Constraints, type sets и оператор ~"
     },
     {
@@ -1085,6 +1239,7 @@
       "source": "docs/guide/advanced-types-generics/generic-types-design.md",
       "output": "guide/advanced-types-generics/generic-types-design.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Generic-типы и выбор абстракции"
     },
     {
@@ -1092,6 +1247,7 @@
       "source": "docs/guide/advanced-types-generics/tests.md",
       "output": "guide/advanced-types-generics/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка: типы и generics"
     },
     {
@@ -1099,6 +1255,7 @@
       "source": "docs/guide/advanced-types-generics/practice.md",
       "output": "guide/advanced-types-generics/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: типы и generics"
     },
     {
@@ -1106,6 +1263,7 @@
       "source": "docs/guide/advanced-types-generics/best-practices.md",
       "output": "guide/advanced-types-generics/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: типы и generics"
     },
     {
@@ -1113,6 +1271,7 @@
       "source": "docs/guide/advanced-concurrency-patterns/README.md",
       "output": "guide/advanced-concurrency-patterns/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Продвинутый Go C: конкурентные паттерны"
     },
     {
@@ -1120,6 +1279,7 @@
       "source": "docs/guide/advanced-concurrency-patterns/fan-out-pipeline.md",
       "output": "guide/advanced-concurrency-patterns/fan-out-pipeline.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Fan-out, fan-in и pipeline"
     },
     {
@@ -1127,6 +1287,7 @@
       "source": "docs/guide/advanced-concurrency-patterns/errgroup-lifecycle.md",
       "output": "guide/advanced-concurrency-patterns/errgroup-lifecycle.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "errgroup, отмена и graceful shutdown"
     },
     {
@@ -1134,6 +1295,7 @@
       "source": "docs/guide/advanced-concurrency-patterns/goroutine-leaks.md",
       "output": "guide/advanced-concurrency-patterns/goroutine-leaks.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Утечки goroutine и диагностика"
     },
     {
@@ -1141,6 +1303,7 @@
       "source": "docs/guide/advanced-concurrency-patterns/tests.md",
       "output": "guide/advanced-concurrency-patterns/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка: конкурентные паттерны"
     },
     {
@@ -1148,6 +1311,7 @@
       "source": "docs/guide/advanced-concurrency-patterns/practice.md",
       "output": "guide/advanced-concurrency-patterns/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: конкурентные паттерны"
     },
     {
@@ -1155,6 +1319,7 @@
       "source": "docs/guide/advanced-concurrency-patterns/best-practices.md",
       "output": "guide/advanced-concurrency-patterns/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: конкурентные паттерны"
     },
     {
@@ -1162,6 +1327,7 @@
       "source": "docs/guide/advanced-performance/README.md",
       "output": "guide/advanced-performance/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Продвинутый Go D: производительность и диагностика"
     },
     {
@@ -1169,6 +1335,7 @@
       "source": "docs/guide/advanced-performance/benchmarks.md",
       "output": "guide/advanced-performance/benchmarks.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Benchmarks и benchstat"
     },
     {
@@ -1176,6 +1343,7 @@
       "source": "docs/guide/advanced-performance/pprof.md",
       "output": "guide/advanced-performance/pprof.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "CPU, память и pprof"
     },
     {
@@ -1183,6 +1351,7 @@
       "source": "docs/guide/advanced-performance/allocations-optimization.md",
       "output": "guide/advanced-performance/allocations-optimization.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Аллокации, escape analysis и точечные оптимизации"
     },
     {
@@ -1190,6 +1359,7 @@
       "source": "docs/guide/advanced-performance/tests.md",
       "output": "guide/advanced-performance/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка: производительность и диагностика"
     },
     {
@@ -1197,6 +1367,7 @@
       "source": "docs/guide/advanced-performance/practice.md",
       "output": "guide/advanced-performance/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: производительность и диагностика"
     },
     {
@@ -1204,6 +1375,7 @@
       "source": "docs/guide/advanced-performance/best-practices.md",
       "output": "guide/advanced-performance/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: производительность и диагностика"
     },
     {
@@ -1211,6 +1383,7 @@
       "source": "docs/guide/advanced-reflection-unsafe-cgo/README.md",
       "output": "guide/advanced-reflection-unsafe-cgo/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Продвинутый Go E: reflection, unsafe и cgo"
     },
     {
@@ -1218,6 +1391,7 @@
       "source": "docs/guide/advanced-reflection-unsafe-cgo/reflection.md",
       "output": "guide/advanced-reflection-unsafe-cgo/reflection.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Reflection: reflect.Type и reflect.Value"
     },
     {
@@ -1225,6 +1399,7 @@
       "source": "docs/guide/advanced-reflection-unsafe-cgo/unsafe.md",
       "output": "guide/advanced-reflection-unsafe-cgo/unsafe.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "unsafe: память и границы гарантий"
     },
     {
@@ -1232,6 +1407,7 @@
       "source": "docs/guide/advanced-reflection-unsafe-cgo/cgo.md",
       "output": "guide/advanced-reflection-unsafe-cgo/cgo.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "cgo: вызов C-кода из Go"
     },
     {
@@ -1239,6 +1415,7 @@
       "source": "docs/guide/advanced-reflection-unsafe-cgo/tests.md",
       "output": "guide/advanced-reflection-unsafe-cgo/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка: reflection, unsafe и cgo"
     },
     {
@@ -1246,6 +1423,7 @@
       "source": "docs/guide/advanced-reflection-unsafe-cgo/practice.md",
       "output": "guide/advanced-reflection-unsafe-cgo/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: reflection, unsafe и cgo"
     },
     {
@@ -1253,6 +1431,7 @@
       "source": "docs/guide/advanced-reflection-unsafe-cgo/best-practices.md",
       "output": "guide/advanced-reflection-unsafe-cgo/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: reflection, unsafe и cgo"
     },
     {
@@ -1260,6 +1439,7 @@
       "source": "docs/guide/advanced-production-architecture/README.md",
       "output": "guide/advanced-production-architecture/",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Продвинутый Go F: архитектура production-сервиса"
     },
     {
@@ -1267,6 +1447,7 @@
       "source": "docs/guide/advanced-production-architecture/config-health.md",
       "output": "guide/advanced-production-architecture/config-health.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Конфигурация, секреты и health-checks"
     },
     {
@@ -1274,6 +1455,7 @@
       "source": "docs/guide/advanced-production-architecture/observability.md",
       "output": "guide/advanced-production-architecture/observability.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Observability: логи, метрики и tracing"
     },
     {
@@ -1281,6 +1463,7 @@
       "source": "docs/guide/advanced-production-architecture/reliability.md",
       "output": "guide/advanced-production-architecture/reliability.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Timeouts, retries, idempotency и rate limiting"
     },
     {
@@ -1288,6 +1471,7 @@
       "source": "docs/guide/advanced-production-architecture/security-review.md",
       "output": "guide/advanced-production-architecture/security-review.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Безопасность API и code review"
     },
     {
@@ -1295,6 +1479,7 @@
       "source": "docs/guide/advanced-production-architecture/tests.md",
       "output": "guide/advanced-production-architecture/tests.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Самопроверка: архитектура production-сервиса"
     },
     {
@@ -1302,6 +1487,7 @@
       "source": "docs/guide/advanced-production-architecture/practice.md",
       "output": "guide/advanced-production-architecture/practice.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Задания: архитектура production-сервиса"
     },
     {
@@ -1309,6 +1495,7 @@
       "source": "docs/guide/advanced-production-architecture/best-practices.md",
       "output": "guide/advanced-production-architecture/best-practices.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Рекомендации по коду: архитектура production-сервиса"
     },
     {
@@ -1316,6 +1503,7 @@
       "source": "docs/guide/directory/base-directory.md",
       "output": "guide/directory/base-directory.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Базовые понятия"
     },
     {
@@ -1323,6 +1511,7 @@
       "source": "docs/guide/directory/advanced-directory.md",
       "output": "guide/directory/advanced-directory.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Продвинутые понятия"
     },
     {
@@ -1330,7 +1519,14 @@
       "source": "docs/guide/resources.md",
       "output": "guide/resources.html",
       "contributor": "Danil Chugaev",
+      "contributorGitHub": null,
       "title": "Дополнительные ресурсы"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "Danil Chugaev",
+      "github": null
     }
   ]
 }

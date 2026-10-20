@@ -32,6 +32,28 @@ summary {
     cursor: pointer;
 }
 
+[vp-content] a:not(.header-anchor),
+.vp-home a:not(.vp-hero-action-button) {
+  color: var(--vp-c-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.16em;
+}
+
+[vp-content] a[href^='http://']::after,
+[vp-content] a[href^='https://']::after,
+.vp-home a[href^='http://']::after,
+.vp-home a[href^='https://']::after {
+  display: inline-block;
+  width: 0.78em;
+  height: 0.78em;
+  margin: 0 0.15em 0.08em 0.28em;
+  vertical-align: middle;
+  content: '';
+  background-color: currentColor;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M14 3h7v7m0-7L10 14M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
 .vp-page .vp-page-nav .auto-link {
   padding: 0.25rem 0.75rem 0.5rem;
 }
