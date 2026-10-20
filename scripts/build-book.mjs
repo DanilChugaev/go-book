@@ -112,7 +112,10 @@ function createPrintDocument({ metadata, manifest, sections }) {
         mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M14 3h7v7m0-7L10 14M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5'/%3E%3C/svg%3E") center / contain no-repeat;
       }
       h1, h2, h3, h4 { break-after: avoid-page; line-height: 1.2; }
-      pre, blockquote, table, .custom-container { break-inside: avoid-page; }
+      pre, blockquote, table, .custom-container, [class^="language-"], [class*=" language-"] {
+        break-inside: avoid-page;
+        page-break-inside: avoid;
+      }
       .hint-container {
         --book-note-accent: #0969da;
         margin: 1rem 0;
@@ -226,6 +229,7 @@ async function readPage(entry) {
   const html = await readFile(sourcePath, 'utf8')
   const $ = load(html)
   const contentRoot = $('#content')
+  namespacePageAnchors($, contentRoot, entry)
   preparePageForPrint($, contentRoot, entry)
   const content = contentRoot.html()
   const title = $('#content h1').first().text().trim()
@@ -235,6 +239,45 @@ async function readPage(entry) {
   }
 
   return { ...entry, title, content }
+}
+
+function toBookAnchorFromHref(href) {
+  const basePath = '/go-book/'
+  if (!href.startsWith(basePath)) return null
+
+  const [path, fragment] = href.slice(basePath.length).split('#', 2)
+  if (!path.startsWith('guide/')) return null
+
+  const normalizedPath = path.endsWith('/') ? path.slice(0, -1) : path
+  return `#${normalizedPath || 'guide'}${fragment ? `--${fragment}` : ''}`
+}
+
+export function namespacePageAnchors($, contentRoot, entry) {
+  const pageId = entry.output.replace(/\/$/, '') || 'guide'
+  const idMap = new Map()
+
+  contentRoot.find('[id]').each((_, element) => {
+    const originalId = $(element).attr('id')
+    if (!originalId) return
+    const namespacedId = `${pageId}--${originalId}`
+    idMap.set(originalId, namespacedId)
+    $(element).attr('id', namespacedId)
+  })
+
+  contentRoot.find('a[href]').each((_, element) => {
+    const link = $(element)
+    const href = link.attr('href')
+    if (!href) return
+
+    if (href.startsWith('#')) {
+      const anchor = idMap.get(href.slice(1))
+      if (anchor) link.attr('href', `#${anchor}`)
+      return
+    }
+
+    const bookAnchor = toBookAnchorFromHref(href)
+    if (bookAnchor) link.attr('href', bookAnchor)
+  })
 }
 
 function renderNodes($, nodes) {

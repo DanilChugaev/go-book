@@ -2,7 +2,22 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import { load } from 'cheerio'
 
-import { preparePageForPrint } from '../scripts/build-book.mjs'
+import { namespacePageAnchors, preparePageForPrint } from '../scripts/build-book.mjs'
+
+test('namespacePageAnchors keeps anchors unique and rewrites internal book links', () => {
+  const $ = load(`<main id="content">
+    <h1 id="самопроверка"><a href="#самопроверка">Самопроверка</a></h1>
+    <a href="/go-book/guide/functions/tests.html">Перейти к самопроверке функций</a>
+    <a href="https://go.dev/doc/">Внешняя ссылка</a>
+  </main>`)
+
+  namespacePageAnchors($, $('#content'), { output: 'guide/strings/tests.html' })
+
+  assert.equal($('#content h1').attr('id'), 'guide/strings/tests.html--самопроверка')
+  assert.equal($('#content h1 a').attr('href'), '#guide/strings/tests.html--самопроверка')
+  assert.equal($('#content a').eq(1).attr('href'), '#guide/functions/tests.html')
+  assert.equal($('#content a').eq(2).attr('href'), 'https://go.dev/doc/')
+})
 
 test('preparePageForPrint puts quiz answers on a separate print section', () => {
   const $ = load(`<main id="content">
