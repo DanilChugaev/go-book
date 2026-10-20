@@ -26,6 +26,14 @@ const chromeCandidates = [
   '/usr/bin/chromium-browser',
 ].filter(Boolean)
 
+const chromiumLaunchArgs = [
+  '--no-first-run',
+  '--no-default-browser-check',
+  // GitHub-hosted runners запускают Chrome в окружении, где sandbox может
+  // быть недоступен. Локальный запуск сохраняет sandbox по умолчанию.
+  ...(process.env.CI ? ['--no-sandbox', '--disable-setuid-sandbox'] : []),
+]
+
 export function findChrome() {
   return chromeCandidates.find((candidate) => existsSync(candidate))
 }
@@ -480,7 +488,7 @@ async function printPdf(url) {
   const browser = await puppeteer.launch({
     executablePath: chrome,
     headless: true,
-    args: ['--no-first-run', '--no-default-browser-check'],
+    args: chromiumLaunchArgs,
   })
 
   try {

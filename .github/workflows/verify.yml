@@ -27,6 +27,9 @@ jobs:
         id: chrome
         uses: browser-actions/setup-chrome@v1
 
+      - name: Check Chrome for PDF generation
+        run: ${{ steps.chrome.outputs.chrome-path }} --version
+
       - name: Build and verify release artifacts
         run: npm run verify
         env:
