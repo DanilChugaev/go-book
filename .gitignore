@@ -12,7 +12,7 @@ node_modules
 */**/.cache
 */**/.temp
 docs/.vuepress/generated/
-docs/.vuepress/public/book-meta.json
+docs/.vuepress/dist/book-print.html
 .env
 .env.*
 !.env.example
