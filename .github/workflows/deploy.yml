@@ -23,7 +23,7 @@ jobs:
 
       - name: Set up Chrome for PDF generation
         id: chrome
-        uses: browser-actions/setup-chrome@v1
+        uses: browser-actions/setup-chrome@v2
 
       - name: Check Chrome for PDF generation
         run: ${{ steps.chrome.outputs.chrome-path }} --version
