@@ -22,16 +22,31 @@ html[data-theme='light'] {
   --vp-c-accent-hover: #0f633c;
 }
 
+// Главная страница: hero по центру экрана, закладки и футер — под ним.
+//
+// box-sizing: border-box + min-height: 100vh: блок ровно заполняет вьюпорт,
+// а padding-top темы (var(--navbar-height)) сужает его до зоны под шапкой.
+// Магических чисел нет: высота шапки живёт в одном месте (--navbar-height),
+// и при её изменении зона центрирования перестраивается сама — как и в
+// SearchBox/BookmarksMenu.
+//
+// min-height (а не height): когда контента больше, чем экран (низкое окно),
+// блок растёт, и переполнение уходит вниз — страница просто скроллится.
 .vp-home {
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: calc(100vh - 60px);
+    min-height: 100vh;
 }
 
-.vp-hero .vp-hero-image {
-  margin-top: 0;
+// Центрирование через авто-маргины вместо justify-content: center:
+// тот при переполнении режет контент симметрично с обеих сторон, и верх
+// hero-image уходил под фиксированную шапку (обрывался). С авто-маргинами
+// при нехватке места hero начинается сразу под шапкой и уходит вниз,
+// а при избытке места остаётся по центру.
+.vp-hero {
+    margin: auto 0;
 }
 
 .vp-footer {
