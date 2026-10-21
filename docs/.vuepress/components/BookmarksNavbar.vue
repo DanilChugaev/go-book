@@ -22,7 +22,7 @@ onMounted(() => {
 
   // Кнопка темы создаётся темой раньше пользовательских компонентов.
   // Переставляем элементы в DOM, чтобы порядок Tab совпадал с визуальным:
-  // поиск → закладки → смена темы → PDF.
+    // поиск → закладки → смена темы → загрузка книги.
   void nextTick(() => {
     const wrapper = document.querySelector('.vp-navbar-items-wrapper')
     const search = wrapper?.querySelector('.search-box')

@@ -60,7 +60,17 @@ async function main() {
     throw new Error('В публикуемой директории лежит не та версия PDF')
   }
 
-  console.log(`PDF проверен: ${pdfMeta.pdfPages} страниц, ${manifest.pages.length} материалов, ${pdfStats.size} байт`)
+  const epubMetadataPath = resolve(publicDirectory, 'book-epub-meta.json')
+  const epubPath = resolve(publicDirectory, 'go-book.epub')
+  const [epubMetadata, epubStats] = await Promise.all([
+    readFile(epubMetadataPath, 'utf8').then(JSON.parse),
+    stat(epubPath),
+  ])
+  if (epubStats.size < 100_000 || epubMetadata.version !== bookMeta.version) {
+    throw new Error('EPUB не соответствует текущей версии книги')
+  }
+
+  console.log(`PDF и EPUB проверены: ${pdfMeta.pdfPages} страниц PDF, ${manifest.pages.length} материалов`)
 }
 
 await main()

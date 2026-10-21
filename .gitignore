@@ -13,6 +13,10 @@ node_modules
 */**/.temp
 docs/.vuepress/generated/
 docs/.vuepress/dist/book-print.html
+.book-build/
+docs/.vuepress/public/KPF/
+docs/.vuepress/public/Logs/
+docs/.vuepress/public/Summary_Log.csv
 .env
 .env.*
 !.env.example

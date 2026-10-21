@@ -27,6 +27,11 @@ export function createBookMeta(version, timestamp = Date.now()) {
     title: 'Учебник Go',
     author: 'Данил Чугаев',
     authorUrl: 'https://github.com/DanilChugaev',
+    identifier: 'urn:uuid:754eebd5-7ad2-4bb0-a080-f1565bf5d042',
+    language: 'ru',
+    publisher: 'Данил Чугаев',
+    description: 'Последовательный русскоязычный курс по Go: от первой программы до backend-проекта.',
+    subjects: ['Go', 'программирование', 'backend-разработка'],
     version,
     generatedAt: generatedAt.toISOString(),
     generatedDate: generatedAt.toLocaleDateString('ru-RU', {

@@ -52,7 +52,7 @@ export default defineUserConfig({
         // Полнотекстовый индекс и большая PDF-версия загружаются только по
         // действию пользователя. Иначе первая загрузка PWA на мобильной сети
         // включала бы более 20 МБ, хотя читатель мог открыть только сайт.
-        globIgnores: ['assets/data-*.js', 'go-book.pdf'],
+        globIgnores: ['assets/data-*.js', 'go-book.pdf', 'go-book.epub', 'go-book.kpf'],
         runtimeCaching: [
           {
             urlPattern: /\/go-book\/assets\/data-[\w-]+\.js$/,

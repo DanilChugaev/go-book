@@ -1,6 +1,3 @@
 #!/usr/bin/env sh
 npm run verify
-git add docs/.vuepress/public/go-book.pdf \
-  docs/.vuepress/public/book-meta.json \
-  docs/.vuepress/public/book-manifest.json \
-  docs/.vuepress/public/book-pdf-meta.json
+git add .
