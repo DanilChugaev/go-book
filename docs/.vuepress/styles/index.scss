@@ -1,3 +1,13 @@
+// Цели нажатия иконочных кнопок шапки: 44×44 px (WCAG 2.5.8).
+// Единые токены: все кнопки одинакового размера, а промежутки между
+// ними равны — менять нужно одно место, а не пять компонентов.
+:root {
+  --navbar-icon-size: 2.75rem;
+  --navbar-icon-gap: 0.5rem;
+  --navbar-height: 4.2rem;
+  --side-margin: 1rem;
+}
+
 html[data-theme=light] {
     .vp-site-logo, .vp-hero-image {
         filter: invert(0.5);
@@ -92,7 +102,16 @@ summary {
 
 @media (max-width: 959px) {
   .vp-page [vp-content] {
-    padding: 1.6rem;
+    padding: var(--side-margin);
+  }
+
+  .vp-navbar-items-wrapper {
+    inset-inline-end: var(--side-margin);
+  }
+
+  .vp-site-logo {
+    margin-inline-start: 0.6rem;
+    margin-inline-end: 0.6rem;
   }
 }
 
@@ -100,10 +119,15 @@ summary {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-inline-start: 0;
-  width: 2.2rem;
-  height: 2.2rem;
+  margin: 0;
+  width: var(--navbar-icon-size);
+  min-width: var(--navbar-icon-size);
+  height: var(--navbar-icon-size);
   order: 1;
+  border: 1px solid var(--vp-c-border);
+  border-radius: 0.35rem; background: var(--vp-c-bg);
+
+  &:hover { background-color: var(--vp-c-bg-alt); }
 }
 
 .vp-navbar-items-wrapper .search-box {
@@ -119,15 +143,67 @@ summary {
   order: 3;
 }
 
+// Брендовый блок (логотип) выравниваем по центру по вертикали: на мобильных
+// логотип уменьшается, и без центрирования прилипал бы к верху строки.
 .vp-navbar > .vp-toggle-sidebar-button + span {
   display: inline-flex;
+  align-items: center;
 }
 
 .vp-navbar-items-wrapper {
-  gap: 0.4rem;
+  gap: var(--navbar-icon-gap);
+
+  // Если правая группа не помещается (узкое окно), переполнение идёт
+  // влево — на бренд, а не за правый край экрана. Параллельно поле
+  // поиска сжимается (SearchBox.vue).
+  align-items: center;
+  justify-content: flex-end;
 }
 
-@media screen and (max-width: 819px) {
+// Бургер из темы мал для пальца (иконка 1.25rem + padding 0.6rem =
+// 26.5px): приводим к тем же 44×44, что и все кнопки шапки.
+@media screen and (max-width: 719px) {
+  .vp-toggle-sidebar-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    top: calc((var(--navbar-height) - var(--navbar-icon-size)) / 2);
+    width: var(--navbar-icon-size);
+    height: var(--navbar-icon-size);
+    border: 1px solid var(--vp-c-border);
+    border-radius: 0.35rem;
+    background: var(--vp-c-bg);
+    box-sizing: border-box;
+
+    &:hover {
+      background-color: var(--vp-c-bg-alt);
+    }
+  }
+}
+@media screen and (max-width: 399px) {
+  .vp-site-logo {
+    width: 4rem;
+    margin-inline-start: 0.1rem;
+    margin-inline-end: 0.1rem;
+  }
+}
+
+
+// Самые узкие телефоны: поджимаем правую группу, чтобы она не давила
+// на (уменьшенный) логотип. 4×44 + 3×5 + 2×16 = 223px.
+@media screen and (max-width: 359px) {
+  .vp-navbar-items-wrapper {
+    gap: 5px;
+    inset-inline-end: 1rem;
+    padding-inline-start: 1rem;
+  }
+  .vp-site-logo {
+    width: 2.5rem;
+  }
+}
+
+@media screen and (max-width: 849px) {
   .vp-hide-mobile {
     display: none;
   }

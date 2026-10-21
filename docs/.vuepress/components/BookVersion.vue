@@ -22,7 +22,7 @@ import { bookMeta } from '../generated/book-meta'
   white-space: nowrap;
 }
 
-@media screen and (max-width: 899px) {
+@media screen and (max-width: 919px) {
   .book-version {
     margin-inline-start: 0.35rem;
   }
@@ -32,7 +32,9 @@ import { bookMeta } from '../generated/book-meta'
   }
 }
 
-@media screen and (max-width: 359px) {
+// Скрываем уже на ≤419px (а не ≤359px): освобождаем место, чтобы
+// четыре кнопки 44×44 в шапке не давили на уменьшенный логотип.
+@media screen and (max-width: 449px) {
   .book-version {
     display: none;
   }

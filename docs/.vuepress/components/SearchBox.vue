@@ -888,7 +888,11 @@ const updateExpandMetrics = (): void => {
       ? brand.getBoundingClientRect().right
       : navbar.getBoundingClientRect().left
 
-  box.style.setProperty('--sb-expand-left', `${Math.round(logoRight + 75 + 24)}px`)
+  // Поле не должно начинаться ближе 12rem к правому краю экрана:
+  // в узких окнах большой left выталкивает фиксированный элемент
+  // за правый край (в LTR при нехватке места CSS игнорирует right).
+  const maxLeft = window.innerWidth - 24 - 192
+  box.style.setProperty('--sb-expand-left', `${Math.round(Math.min(logoRight + 24, maxLeft))}px`)
 }
 
 onMounted(() => {
@@ -926,11 +930,27 @@ onBeforeUnmount(() => {
 <style lang="scss">
 // Стили без scoped: подсветка <mark> рендерится через v-html,
 // а префикс search-box__ исключает конфликты с другими компонентами.
+// Flex-элемент по умолчанию не сжимается меньше своего контента
+// (min-width: auto), поэтому разрешаем поисковой коробке сжиматься:
+// это единственный элемент шапки, который уменьшается в узких окнах.
 .search-box {
   position: relative;
   display: flex;
   align-items: center;
+  min-width: 0;
   height: 100%;
+  max-height: var(--navbar-icon-size);
+}
+
+// На десктопе, когда места не хватает, сжимается именно поле поиска
+// (до минимума 7rem). Явный flex-basis важен: у поля задан
+// container-type, поэтому его контент не учитывается при размере
+// flex-слота, и без явной базы слот схлопнулся бы в ноль.
+@media screen and (min-width: 720px) {
+  .search-box {
+    flex-basis: 15rem;
+    min-width: 5rem;
+  }
 }
 
 // Открытая панель «расширяет» поле: от правого края логотипа
@@ -938,7 +958,7 @@ onBeforeUnmount(() => {
 // навигационные ссылки и кнопку смены темы.
 .search-box--expanded {
   position: fixed;
-  top: 0;
+  top: var(--navbar-padding-v);
   left: var(--sb-expand-left);
   right: var(--navbar-padding-h, 1.5rem);
   z-index: 1; // над содержимым шапки (ссылками и кнопками)
@@ -959,15 +979,14 @@ onBeforeUnmount(() => {
   display: none;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: var(--navbar-icon-size);
+  height: var(--navbar-icon-size);
   padding: 0;
-  border: none;
-  border-radius: 0.5rem;
-  background: transparent;
+  border: 1px solid var(--vp-c-border);
+  border-radius: 0.35rem;
+  background: var(--vp-c-bg);
   color: var(--vp-c-text);
   cursor: pointer;
-  margin-right: -0.625rem;
 
   &:hover {
     background-color: var(--vp-c-bg-alt);
@@ -979,10 +998,15 @@ onBeforeUnmount(() => {
   height: 1.25rem;
 }
 
+// Ширина живёт на поле, а инпут — 100% от поля: так flex-раскладка
+// шапки может сжимать его в узких окнах. container-type нужен для
+// container-запроса ниже: подсказка ⌘K скрывается, когда поле узкое.
 .search-box__field {
   position: relative;
   display: flex;
   align-items: center;
+  width: 100%;
+  min-width: 0;
   height: 100%;
 }
 
@@ -996,7 +1020,8 @@ onBeforeUnmount(() => {
 }
 
 .search-box__input {
-  width: 15rem;
+  width: 100%;
+  min-width: 0;
   height: 100%;
   padding: 0 4.25rem 0 2rem;
   border: 1px solid var(--vp-c-border);
@@ -1006,6 +1031,7 @@ onBeforeUnmount(() => {
   font-size: 0.9rem;
   outline: none;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
 
   &::placeholder {
     color: var(--vp-c-text-mute);
@@ -1028,6 +1054,15 @@ onBeforeUnmount(() => {
   font-size: 0.7rem;
   line-height: 1.3;
   pointer-events: none;
+}
+
+// Подсказка декоративная: когда поле сжимается в узком окне, она
+// давит на плейсхолдер, поэтому скрывается. Контейнер —
+// .search-box__field (container-type: inline-size).
+@container (max-width: 12rem) {
+  .search-box__kbd {
+    display: none;
+  }
 }
 
 // «×» очистки запроса: показывается, когда в поле есть текст,
@@ -1244,7 +1279,7 @@ onBeforeUnmount(() => {
 
   .search-box__panel-input {
     flex: 1;
-    height: 2.5rem;
+    height: var(--navbar-icon-size);
     padding: 0 0.75rem;
     border: 1px solid var(--vp-c-border);
     border-radius: 0.5rem;
@@ -1266,8 +1301,8 @@ onBeforeUnmount(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: var(--navbar-icon-size);
+    height: var(--navbar-icon-size);
     padding: 0;
     border: none;
     border-radius: 0.5rem;
@@ -1288,9 +1323,14 @@ onBeforeUnmount(() => {
 
   // «×» в мобильном баре по размеру совпадает с кнопкой закрытия
   .search-box__panel-bar .search-box__clear {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: var(--navbar-icon-size);
+    height: var(--navbar-icon-size);
     border-radius: 0.5rem;
+
+    svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
   }
 
   .search-box__results {

@@ -135,7 +135,7 @@ onBeforeUnmount(() => {
 <style lang="scss">
 .book-download-navbar { position: relative; }
 .book-download-navbar__toggle {
-  display: inline-flex; align-items: center; gap: .4rem; min-height: 2.2rem; padding: .35rem .65rem;
+  display: inline-flex; align-items: center; gap: .4rem; min-height: var(--navbar-icon-size); padding: .35rem .65rem;
   color: var(--vp-c-accent); font: inherit; font-size: .82rem; font-weight: 600; line-height: 1;
   background: var(--vp-c-bg); border: 1px solid var(--vp-c-border); border-radius: .35rem; cursor: pointer;
   &:hover, &[aria-expanded='true'] { color: var(--vp-c-accent-text); background: var(--vp-c-accent-bg); border-color: var(--vp-c-accent-bg); }
@@ -148,7 +148,7 @@ onBeforeUnmount(() => {
   border: 1px solid var(--vp-c-border); border-radius: .5rem; background: var(--vp-c-bg-elv); box-shadow: 0 .75rem 2rem rgba(0, 0, 0, .16);
 }
 .book-download-navbar__format {
-  display: flex; flex-direction: column; gap: .2rem; padding: .7rem .85rem; color: var(--vp-c-text); text-decoration: none;
+  display: flex; flex-direction: column; gap: .2rem; padding: .85rem; color: var(--vp-c-text); text-decoration: none;
   &:hover, &:focus-visible { background: var(--vp-c-bg-alt); outline: none; }
   strong { color: var(--vp-c-accent); font-size: .88rem; }
   span { color: var(--vp-c-text-mute); font-size: .78rem; }
@@ -160,7 +160,7 @@ onBeforeUnmount(() => {
 }
 .book-download-navbar__format + .book-download-navbar__format { border-top: 1px solid var(--vp-c-border); }
 @media screen and (max-width: 719px) {
-  .book-download-navbar__toggle { width: 2.2rem; padding: 0; justify-content: center; }
+  .book-download-navbar__toggle { width: var(--navbar-icon-size); padding: 0; justify-content: center; }
   .book-download-navbar__toggle span, .book-download-navbar__arrow { position: absolute; width: 1px !important; height: 1px !important; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 }
 </style>
