@@ -545,6 +545,12 @@ async function printPdf(url) {
     headless: true,
     args: chromiumLaunchArgs,
   })
+  // В puppeteer-core ≥25 у Browser нет isConnected(), поэтому
+  // отслеживаем разрыв соединения событием 'disconnected'.
+  let browserDisconnected = false
+  browser.on('disconnected', () => {
+    browserDisconnected = true
+  })
 
   try {
     const page = await browser.newPage()
@@ -560,11 +566,19 @@ async function printPdf(url) {
     }
     console.log(`[pdf] Печать ${generatedPageCount} страниц в PDF...`)
     try {
-      await page.pdf({ path: outputPdfPath, preferCSSPageSize: true, printBackground: true })
+      // Таймаут page.pdf() по умолчанию равен таймауту страницы (30 секунд),
+      // а на медленных CI-раннерах печать книги из 1000+ страниц в это время
+      // не укладывается. Даем тот же бюджет, что и пагинации.
+      await page.pdf({
+        path: outputPdfPath,
+        preferCSSPageSize: true,
+        printBackground: true,
+        timeout: 600_000,
+      })
     } catch (error) {
       throw new Error(
         `Не удалось распечатать PDF (${error.message}). ` +
-          `Соединение с браузером: ${browser.isConnected() ? 'живо' : 'РАЗОРВАНО (Chrome, вероятно, упал)'}; ` +
+          `Соединение с браузером: ${browserDisconnected ? 'разорвано (Chrome, вероятно, упал)' : 'живо (Chrome не отключался)'}; ` +
           `CI: ${process.env.CI ? 'да' : 'нет'}.`,
       )
     }
