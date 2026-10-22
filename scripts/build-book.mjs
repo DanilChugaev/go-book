@@ -478,6 +478,57 @@ async function startStaticServer() {
   return { server, url: `http://127.0.0.1:${port}/go-book/book-print.html` }
 }
 
+// Пагинация Paged.js — CPU-тяжёлая (1000+ страниц), и скорость 2-ядерных
+// CI-раннеров плавает: на «быстрых» она укладывается в ~1–2 минуты, на
+// «медленных» — дольше. Старый фиксированный waitForFunction с таймаутом
+// 120 секунд умирал на медленных раннерах, из-за чего падала вся сборка.
+// Поэтому ждём с большим бюджетом, поллим состояние страницы и пишем
+// прогресс в лог — а при таймауте отдаём диагностику, а не голый timeout.
+const pagedTimeoutMs = Number(process.env.PAGED_TIMEOUT_MS) || 600_000
+const pagedPollMs = 2_000
+const pagedProgressMs = 15_000
+
+const sleep = (ms) => new Promise((resolveSleep) => setTimeout(resolveSleep, ms))
+
+export async function waitForPaged(page, {
+  timeoutMs = pagedTimeoutMs,
+  pollMs = pagedPollMs,
+  progressMs = pagedProgressMs,
+  log = console.log,
+} = {}) {
+  const pageErrors = []
+  page.on('pageerror', (error) => pageErrors.push(String(error)))
+  page.on('console', (message) => {
+    if (message.type() === 'error') pageErrors.push(message.text())
+  })
+
+  const deadline = Date.now() + timeoutMs
+  let lastProgressAt = 0
+
+  for (;;) {
+    const state = await page.evaluate(() => ({
+      paged: document.documentElement.dataset.paged,
+      pages: document.querySelectorAll('.pagedjs_page').length,
+    }))
+    if (state.paged === 'ready') return state.pages
+
+    const now = Date.now()
+    if (now >= deadline) {
+      const lastErrors = [...pageErrors].slice(-5).map((error) => `  ${error}`).join('\n')
+      throw new Error(
+        `Paged.js не достиг состояния «ready» за ${Math.round(timeoutMs / 1000)} секунд ` +
+          `(state: ${state.paged ?? 'none'}, сформировано страниц: ${state.pages}).` +
+          (lastErrors ? `\nПоследние ошибки страницы:\n${lastErrors}` : ''),
+      )
+    }
+    if (now - lastProgressAt >= progressMs) {
+      lastProgressAt = now
+      log(`Paged.js пагинирует книгу: ${state.pages} страниц, ждём «ready»...`)
+    }
+    await sleep(pollMs)
+  }
+}
+
 async function printPdf(url) {
   const chrome = findChrome()
   if (!chrome) {
@@ -493,13 +544,10 @@ async function printPdf(url) {
 
   try {
     const page = await browser.newPage()
-    await page.goto(url, { waitUntil: 'networkidle0' })
-    await page.waitForFunction(() => window.PagedPolyfill !== undefined)
+    await page.goto(url, { waitUntil: 'networkidle0', timeout: 60_000 })
+    await page.waitForFunction(() => window.PagedPolyfill !== undefined, { timeout: 30_000 })
     await page.evaluate(() => window.PagedPolyfill.preview())
-    await page.waitForFunction(() => document.documentElement.dataset.paged === 'ready', {
-      timeout: 120000,
-    })
-    const generatedPageCount = await page.$$eval('.pagedjs_page', (pages) => pages.length)
+    const generatedPageCount = await waitForPaged(page)
     if (generatedPageCount < 2) {
       throw new Error('Paged.js не сформировал страницы книги')
     }

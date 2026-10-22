@@ -6,7 +6,60 @@ import {
   namespacePageAnchors,
   preparePageForPrint,
   validatePrintDocument,
+  waitForPaged,
 } from '../scripts/build-book.mjs'
+
+function createPagedPage(states) {
+  const handlers = {}
+  let call = 0
+  return {
+    on(event, handler) {
+      handlers[event] = handler
+    },
+    evaluate: async () => states[Math.min(call++, states.length - 1)],
+    fire(event, value) {
+      handlers[event]?.(value)
+    },
+  }
+}
+
+test('waitForPaged polls progress and resolves with page count once Paged.js is ready', async () => {
+  const page = createPagedPage([
+    { paged: 'rendering', pages: 3 },
+    { paged: 'rendering', pages: 40 },
+    { paged: 'ready', pages: 1085 },
+  ])
+  const logs = []
+
+  const pages = await waitForPaged(page, {
+    timeoutMs: 60_000,
+    pollMs: 1,
+    progressMs: -1,
+    log: (line) => logs.push(line),
+  })
+
+  assert.equal(pages, 1085)
+  assert.equal(logs.length, 2)
+  assert.match(logs[0], /пагинирует книгу: 3 страниц/)
+  assert.match(logs[1], /пагинирует книгу: 40 страниц/)
+})
+
+test('waitForPaged throws a diagnostic when Paged.js does not become ready', async () => {
+  const page = createPagedPage([{ paged: 'rendering', pages: 12 }])
+  const pending = waitForPaged(page, { timeoutMs: 30, pollMs: 5, log: () => {} })
+  page.fire('pageerror', new Error('Paged.js: polyfill exploded'))
+
+  await assert.rejects(
+    pending,
+    (error) => {
+      assert.match(error.message, /Paged.js не достиг состояния «ready»/)
+      assert.match(error.message, /state: rendering/)
+      assert.match(error.message, /сформировано страниц: 12/)
+      assert.match(error.message, /polyfill exploded/)
+      return true
+    },
+  )
+})
 
 test('namespacePageAnchors keeps anchors unique and rewrites internal book links', () => {
   const $ = load(`<main id="content">
