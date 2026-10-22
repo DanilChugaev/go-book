@@ -157,6 +157,7 @@ summary { font-weight: 700; }
 `
 
 export async function buildEpub() {
+  console.log('[epub] Сборка EPUB...')
   const [metadata, manifest] = await Promise.all([
     JSON.parse(await readFile(resolve(publicDirectory, 'book-meta.json'), 'utf8')),
     JSON.parse(await readFile(resolve(publicDirectory, 'book-manifest.json'), 'utf8')),

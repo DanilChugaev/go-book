@@ -31,6 +31,12 @@ jobs:
         run: ${{ steps.chrome.outputs.chrome-path }} --version
 
       - name: Build and verify release artifacts
-        run: npm run verify
+        run: |
+          set -o pipefail
+          npm run verify 2>&1 | tee /tmp/verify.log
         env:
           CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
+
+      - name: Show last lines of failed build
+        if: failure()
+        run: tail -n 60 /tmp/verify.log >> "${GITHUB_STEP_SUMMARY}"

@@ -14,6 +14,7 @@ async function readJson(name) {
 }
 
 async function main() {
+  console.log('[verify:book] Проверка PDF...')
   const [bookMeta, pdfMeta, manifest, pdfStats, pdf, printDocument, deployedPdf] = await Promise.all([
     readJson('book-meta.json'),
     readJson('book-pdf-meta.json'),

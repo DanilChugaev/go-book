@@ -15,6 +15,7 @@ async function readJson(name) {
 }
 
 async function main() {
+  console.log('[verify:epub] Проверка EPUB...')
   const [metadata, manifest, epubMetadata, epub, deployedEpub, epubStats] = await Promise.all([
     readJson('book-meta.json'),
     readJson('book-manifest.json'),

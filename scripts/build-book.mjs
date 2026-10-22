@@ -29,6 +29,10 @@ const chromeCandidates = [
 const chromiumLaunchArgs = [
   '--no-first-run',
   '--no-default-browser-check',
+  // CI-раннеры дают Chrome маленький /dev/shm; без этого флага браузер
+  // стабильно «Target crashed» на длинных PDF-документах.
+  '--disable-dev-shm-usage',
+  '--disable-gpu',
   // GitHub-hosted runners запускают Chrome в окружении, где sandbox может
   // быть недоступен. Локальный запуск сохраняет sandbox по умолчанию.
   ...(process.env.CI ? ['--no-sandbox', '--disable-setuid-sandbox'] : []),
@@ -544,14 +548,26 @@ async function printPdf(url) {
 
   try {
     const page = await browser.newPage()
-    await page.goto(url, { waitUntil: 'networkidle0', timeout: 60_000 })
+    // domcontentloaded, а не networkidle0: на медленных раннерах idle-порог
+    // не достигается, хотя документ для печати уже готов.
+    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60_000 })
     await page.waitForFunction(() => window.PagedPolyfill !== undefined, { timeout: 30_000 })
     await page.evaluate(() => window.PagedPolyfill.preview())
+    console.log(`[pdf] Paged.js запущен, ждём «ready» (бюджет ${Math.round(pagedTimeoutMs / 1000)} с)...`)
     const generatedPageCount = await waitForPaged(page)
     if (generatedPageCount < 2) {
       throw new Error('Paged.js не сформировал страницы книги')
     }
-    await page.pdf({ path: outputPdfPath, preferCSSPageSize: true, printBackground: true })
+    console.log(`[pdf] Печать ${generatedPageCount} страниц в PDF...`)
+    try {
+      await page.pdf({ path: outputPdfPath, preferCSSPageSize: true, printBackground: true })
+    } catch (error) {
+      throw new Error(
+        `Не удалось распечатать PDF (${error.message}). ` +
+          `Соединение с браузером: ${browser.isConnected() ? 'живо' : 'РАЗОРВАНО (Chrome, вероятно, упал)'}; ` +
+          `CI: ${process.env.CI ? 'да' : 'нет'}.`,
+      )
+    }
     return generatedPageCount
   } finally {
     await browser.close()
@@ -559,6 +575,7 @@ async function printPdf(url) {
 }
 
 export async function buildBook() {
+  console.log('[pdf] Сборка книги: манифест и документ печати...')
   const metadata = JSON.parse(await readFile(resolve(publicDirectory, 'book-meta.json'), 'utf8'))
   const manifest = await createBookManifest()
   const pages = await Promise.all(manifest.pages.map(readPage))
