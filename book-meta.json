@@ -2,7 +2,16 @@
   "title": "Учебник Go",
   "author": "Данил Чугаев",
   "authorUrl": "https://github.com/DanilChugaev",
-  "version": "0.1.0",
-  "generatedAt": "2026-10-20T19:37:12.359Z",
-  "generatedDate": "20.10.2026"
+  "identifier": "urn:uuid:754eebd5-7ad2-4bb0-a080-f1565bf5d042",
+  "language": "ru",
+  "publisher": "Данил Чугаев",
+  "description": "Последовательный русскоязычный курс по Go: от первой программы до backend-проекта.",
+  "subjects": [
+    "Go",
+    "программирование",
+    "backend-разработка"
+  ],
+  "version": "0.2.2",
+  "generatedAt": "2026-10-22T10:56:41.099Z",
+  "generatedDate": "22.10.2026"
 }
