@@ -6,8 +6,7 @@
       v-if="navbarBrandTitle"
       class="vp-site-name"
       :class="{ 'vp-hide-mobile': navbarBrandLogo }"
-      :aria-hidden="navBarLogoAltMatchesTitle"
-    >
+      :aria-hidden="navBarLogoAltMatchesTitle">
       {{ navbarBrandTitle }}
     </span>
 
@@ -16,48 +15,48 @@
 </template>
 
 <script setup lang="ts">
-import type { FunctionalComponent } from 'vue'
-import { computed, h } from 'vue'
-import { ClientOnly, RouteLink, withBase } from 'vuepress/client'
+import type { FunctionalComponent } from 'vue';
+import { computed, h } from 'vue';
+import { ClientOnly, RouteLink, withBase } from 'vuepress/client';
 
-import { useDarkMode } from '@theme/useDarkMode'
-import { useData } from '@theme/useData'
-import BookVersion from './BookVersion.vue'
+import { useDarkMode } from '@theme/useDarkMode';
+import { useData } from '@theme/useData';
+import BookVersion from './BookVersion.vue';
 
-const { routeLocale, siteLocale, themeLocale } = useData()
-const isDarkMode = useDarkMode()
+const { routeLocale, siteLocale, themeLocale } = useData();
+const isDarkMode = useDarkMode();
 
 const navbarBrandLink = computed(
   () => themeLocale.value.home || routeLocale.value,
-)
-const navbarBrandTitle = computed(() => siteLocale.value.title)
+);
+const navbarBrandTitle = computed(() => siteLocale.value.title);
 const navbarBrandLogo = computed(() => {
   if (isDarkMode.value && themeLocale.value.logoDark !== undefined)
-    return themeLocale.value.logoDark
+    return themeLocale.value.logoDark;
 
-  return themeLocale.value.logo
-})
+  return themeLocale.value.logo;
+});
 const navbarBrandLogoAlt = computed(
   () => themeLocale.value.logoAlt ?? navbarBrandTitle.value,
-)
+);
 const navBarLogoAltMatchesTitle = computed(
   () =>
     navbarBrandTitle.value.toLocaleUpperCase().trim() ===
     navbarBrandLogoAlt.value.toLocaleUpperCase().trim(),
-)
+);
 const NavbarBrandLogo: FunctionalComponent = () => {
-  if (!navbarBrandLogo.value) return null
+  if (!navbarBrandLogo.value) return null;
   const img = h('img', {
     class: 'vp-site-logo',
     src: withBase(navbarBrandLogo.value),
     alt: navbarBrandLogoAlt.value,
     width: 94,
     height: 36,
-  })
-  if (themeLocale.value.logoDark === undefined) return img
+  });
+  if (themeLocale.value.logoDark === undefined) return img;
 
-  return h(ClientOnly, () => img)
-}
+  return h(ClientOnly, () => img);
+};
 </script>
 
 <style lang="scss">

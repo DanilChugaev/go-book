@@ -1,12 +1,14 @@
 <template>
-  <span class="book-version" :title="`Версия ${bookMeta.version}, актуально на ${bookMeta.generatedDate}`">
+  <span
+    class="book-version"
+    :title="`Версия ${bookMeta.version}, актуально на ${bookMeta.generatedDate}`">
     <span class="book-version__number">v{{ bookMeta.version }}</span>
     <span class="book-version__date"> · {{ bookMeta.generatedDate }}</span>
   </span>
 </template>
 
 <script setup lang="ts">
-import { bookMeta } from '../generated/book-meta'
+import { bookMeta } from '../generated/book-meta';
 </script>
 
 <style scoped lang="scss">

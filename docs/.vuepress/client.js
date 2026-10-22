@@ -1,7 +1,7 @@
-import { defineAsyncComponent } from 'vue'
-import { defineClientConfig } from 'vuepress/client'
-import BookmarksNavbar from './components/BookmarksNavbar.vue'
-import BookDownloadNavbar from './components/BookDownloadNavbar.vue'
+import { defineAsyncComponent } from 'vue';
+import { defineClientConfig } from 'vuepress/client';
+import BookmarksNavbar from './components/BookmarksNavbar.vue';
+import BookDownloadNavbar from './components/BookDownloadNavbar.vue';
 
 // Обходной путь для бага Vue 3.5.44 (runtime-core, hydrateTeleport).
 //
@@ -29,29 +29,29 @@ import BookDownloadNavbar from './components/BookDownloadNavbar.vue'
 // выполняется только в production-сборке.
 const ensureTeleportAnchors = () => {
   // client.js импортируется и в SSR-бандле: на сервере document нет.
-  if (import.meta.env.DEV || typeof document === 'undefined') return
-  const body = document.body
-  const app = document.getElementById('app')
-  if (!app || body.__vpTeleportAnchors) return
+  if (import.meta.env.DEV || typeof document === 'undefined') return;
+  const body = document.body;
+  const app = document.getElementById('app');
+  if (!app || body.__vpTeleportAnchors) return;
 
   app.insertAdjacentHTML(
     'afterend',
     '<!--teleport start anchor--><!--teleport anchor-->',
-  )
+  );
 
-  const moduleScript = document.querySelector('body > script[type="module"]')
+  const moduleScript = document.querySelector('body > script[type="module"]');
   if (moduleScript) {
-    moduleScript.insertAdjacentHTML('beforebegin', '<!---->')
+    moduleScript.insertAdjacentHTML('beforebegin', '<!---->');
   } else {
-    body.insertAdjacentHTML('beforeend', '<!---->')
+    body.insertAdjacentHTML('beforeend', '<!---->');
   }
 
   // `nextSibling` app — это только что вставленный
   // «teleport start anchor».
-  body._lpa = app.nextSibling
-  body.__vpTeleportAnchors = true
-}
-ensureTeleportAnchors()
+  body._lpa = app.nextSibling;
+  body.__vpTeleportAnchors = true;
+};
+ensureTeleportAnchors();
 
 // Интерактивные компоненты не нужны для первичной отрисовки каждой страницы.
 // Регистрируем их асинхронно, чтобы Vite вынес их код и стили из стартового
@@ -69,16 +69,14 @@ const components = {
   QuizContainer: defineAsyncComponent(
     () => import('./components/QuizContainer.vue'),
   ),
-  SearchBox: defineAsyncComponent(
-    () => import('./components/SearchBox.vue'),
-  ),
-}
+  SearchBox: defineAsyncComponent(() => import('./components/SearchBox.vue')),
+};
 
 export default defineClientConfig({
   rootComponents: [BookmarksNavbar, BookDownloadNavbar],
   enhance({ app }) {
     Object.entries(components).forEach(([name, component]) => {
-      app.component(name, component)
-    })
+      app.component(name, component);
+    });
   },
-})
+});

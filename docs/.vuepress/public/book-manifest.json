@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-22T10:54:17.568Z",
+  "generatedAt": "2026-10-22T20:21:33.948Z",
   "source": "docs/.vuepress/configs/sidebar/index.ts",
   "pages": [
     {
@@ -1825,15 +1825,6 @@
       "contributorGitHub": "DanilChugaev",
       "exampleSource": null,
       "title": "Продвинутые понятия"
-    },
-    {
-      "chapter": "Дополнительные ресурсы",
-      "source": "docs/guide/resources.md",
-      "output": "guide/resources.html",
-      "contributor": "Данил Чугаев",
-      "contributorGitHub": "DanilChugaev",
-      "exampleSource": null,
-      "title": "Дополнительные ресурсы"
     }
   ],
   "contributors": [

@@ -2,16 +2,14 @@
   <div
     ref="root"
     class="search-box"
-    :class="{ 'search-box--expanded': open && !mobile }"
-  >
+    :class="{ 'search-box--expanded': open && !mobile }">
     <!-- Мобильный режим: кнопка в шапке -->
     <button
       class="search-box__toggle"
       type="button"
       title="Поиск по учебнику"
       aria-label="Поиск по учебнику"
-      @click="openMobile"
-    >
+      @click="openMobile">
       <svg
         class="search-box__icon"
         xmlns="http://www.w3.org/2000/svg"
@@ -20,8 +18,7 @@
         stroke="currentColor"
         stroke-width="2"
         stroke-linecap="round"
-        aria-hidden="true"
-      >
+        aria-hidden="true">
         <circle cx="11" cy="11" r="7" />
         <line x1="20" y1="20" x2="16.5" y2="16.5" />
       </svg>
@@ -37,8 +34,7 @@
         stroke="currentColor"
         stroke-width="2"
         stroke-linecap="round"
-        aria-hidden="true"
-      >
+        aria-hidden="true">
         <circle cx="11" cy="11" r="7" />
         <line x1="20" y1="20" x2="16.5" y2="16.5" />
       </svg>
@@ -56,16 +52,14 @@
         v-model="query"
         autocomplete="off"
         @focus="openPanel"
-        @keydown="onKeydown"
-      >
+        @keydown="onKeydown" />
       <span v-show="query === ''" class="search-box__kbd">{{ kbdLabel }}</span>
       <button
         v-show="query !== ''"
         class="search-box__clear"
         type="button"
         aria-label="Очистить запрос"
-        @click="clearQuery('desktop')"
-      >
+        @click="clearQuery('desktop')">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -73,8 +67,7 @@
           stroke="currentColor"
           stroke-width="2"
           stroke-linecap="round"
-          aria-hidden="true"
-        >
+          aria-hidden="true">
           <line x1="6" y1="6" x2="18" y2="18" />
           <line x1="18" y1="6" x2="6" y2="18" />
         </svg>
@@ -88,8 +81,7 @@
       <div
         v-if="open && !mobile"
         class="search-box__backdrop"
-        aria-hidden="true"
-      ></div>
+        aria-hidden="true"></div>
     </Teleport>
 
     <!-- Панель результатов: выпадающая на десктопе,
@@ -109,15 +101,13 @@
           :placeholder="placeholder"
           v-model="query"
           autocomplete="off"
-          @keydown="onKeydown"
-        >
+          @keydown="onKeydown" />
         <button
           v-show="query !== ''"
           class="search-box__clear"
           type="button"
           aria-label="Очистить запрос"
-          @click="clearQuery('mobile')"
-        >
+          @click="clearQuery('mobile')">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -125,8 +115,7 @@
             stroke="currentColor"
             stroke-width="2"
             stroke-linecap="round"
-            aria-hidden="true"
-          >
+            aria-hidden="true">
             <line x1="6" y1="6" x2="18" y2="18" />
             <line x1="18" y1="6" x2="6" y2="18" />
           </svg>
@@ -135,8 +124,7 @@
           class="search-box__close"
           type="button"
           aria-label="Закрыть поиск"
-          @click="close"
-        >
+          @click="close">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -144,8 +132,7 @@
             stroke="currentColor"
             stroke-width="2"
             stroke-linecap="round"
-            aria-hidden="true"
-          >
+            aria-hidden="true">
             <line x1="6" y1="6" x2="18" y2="18" />
             <line x1="18" y1="6" x2="6" y2="18" />
           </svg>
@@ -157,19 +144,24 @@
         ref="results"
         class="search-box__results"
         role="listbox"
-        aria-label="Результаты поиска"
-      >
+        aria-label="Результаты поиска">
         <p v-if="loading" class="search-box__state">Готовим индекс…</p>
+
         <p v-else-if="loadError" class="search-box__state">
           Не удалось загрузить поиск.
-          <button type="button" class="search-box__retry" @click="retryLoadIndex">
+          <button
+            type="button"
+            class="search-box__retry"
+            @click="retryLoadIndex">
             Повторить
           </button>
         </p>
+
         <p v-else-if="groups.length === 0" class="search-box__state">
           <template v-if="query.trim() !== ''">
             Ничего не найдено по запросу «{{ query.trim() }}»
           </template>
+
           <template v-else>Пока нет данных для поиска</template>
         </p>
 
@@ -186,8 +178,7 @@
               :href="group.path"
               :title="group.title"
               @click.prevent="navigate(group.path)"
-              @mouseenter="active = group.order"
-            >
+              @mouseenter="active = group.order">
               {{ group.title }}
             </a>
             <a
@@ -200,14 +191,14 @@
               :class="{ 'search-box__page--active': active === page.order }"
               :href="page.path"
               @click.prevent="navigate(page.path)"
-              @mouseenter="active = page.order"
-            >
-              <span class="search-box__page-title" v-html="page.titleHtml"></span>
+              @mouseenter="active = page.order">
+              <span
+                class="search-box__page-title"
+                v-html="page.titleHtml"></span>
               <span
                 v-if="page.snippetHtml !== ''"
                 class="search-box__page-snippet"
-                v-html="page.snippetHtml"
-              ></span>
+                v-html="page.snippetHtml"></span>
             </a>
           </template>
         </template>
@@ -217,10 +208,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { useRouter } from 'vue-router'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
 
-import type { ISearchIndex, ISearchPage } from '../configs/search/types.js'
+import type { ISearchIndex, ISearchPage } from '../configs/search/types.js';
 
 /**
  * Поле поиска по учебнику в шапке сайта.
@@ -244,38 +235,38 @@ import type { ISearchIndex, ISearchPage } from '../configs/search/types.js'
  * - мобильная версия и тёмная тема.
  */
 
-const MAX_PAGE_ROWS = 30
-const SNIPPET_RADIUS = 90
+const MAX_PAGE_ROWS = 30;
+const SNIPPET_RADIUS = 90;
 
-const root = ref<HTMLElement | null>(null)
-const input = ref<HTMLInputElement | null>(null)
-const mobileInput = ref<HTMLInputElement | null>(null)
-const results = ref<HTMLElement | null>(null)
+const root = ref<HTMLElement | null>(null);
+const input = ref<HTMLInputElement | null>(null);
+const mobileInput = ref<HTMLInputElement | null>(null);
+const results = ref<HTMLElement | null>(null);
 
-const query = ref('')
-const open = ref(false)
-const active = ref(-1)
-const loading = ref(false)
-const loadError = ref(false)
-const index = ref<ISearchIndex | null>(null)
+const query = ref('');
+const open = ref(false);
+const active = ref(-1);
+const loading = ref(false);
+const loadError = ref(false);
+const index = ref<ISearchIndex | null>(null);
 
 // Мобильный viewport: управляет мобильной панелью, а на десктопе
 // отключает «расширение» поискового поля
-const mobile = ref(false)
-let mediaQuery: MediaQueryList | null = null
+const mobile = ref(false);
+let mediaQuery: MediaQueryList | null = null;
 
 const onMediaChange = (event: MediaQueryListEvent): void => {
-  mobile.value = event.matches
-}
+  mobile.value = event.matches;
+};
 
-const placeholder = 'Поиск по учебнику…'
+const placeholder = 'Поиск по учебнику…';
 
 // Сервер не знает платформу браузера. Если определить её при SSR, сервер
 // отрендерит «Ctrl K», а macOS-клиент — «⌘ K», что нарушит hydration.
-const isMac = ref(false)
-const kbdLabel = computed(() => (isMac.value ? '⌘ K' : 'Ctrl K'))
+const isMac = ref(false);
+const kbdLabel = computed(() => (isMac.value ? '⌘ K' : 'Ctrl K'));
 
-let indexPromise: Promise<ISearchIndex> | null = null
+let indexPromise: Promise<ISearchIndex> | null = null;
 
 const loadIndex = (): Promise<ISearchIndex> => {
   if (!indexPromise) {
@@ -285,39 +276,37 @@ const loadIndex = (): Promise<ISearchIndex> => {
       /* webpackChunkName: "search-data" */
       // @ts-ignore -- см. комментарий выше
       '../.temp/search/data.js'
-    ).then(
-      (module: { searchIndex: ISearchIndex }) => module.searchIndex
-    )
+    ).then((module: { searchIndex: ISearchIndex }) => module.searchIndex);
   }
-  return indexPromise
-}
+  return indexPromise;
+};
 
 const ensureIndex = async (): Promise<void> => {
-  if (index.value !== null || loading.value) return
+  if (index.value !== null || loading.value) return;
 
-  loading.value = true
-  loadError.value = false
+  loading.value = true;
+  loadError.value = false;
   try {
-    index.value = await loadIndex()
+    index.value = await loadIndex();
   } catch (error) {
-    indexPromise = null
-    loadError.value = true
-    console.error('Не удалось загрузить индекс поиска', error)
+    indexPromise = null;
+    loadError.value = true;
+    console.error('Не удалось загрузить индекс поиска', error);
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-}
+};
 
 const retryLoadIndex = (): void => {
   // Браузер кэширует неудачную dynamic import как отклонённый модуль.
   // Перезагрузка создаёт новый module graph и позволяет повторить загрузку
   // после восстановления сети или обновления service worker.
-  window.location.reload()
-}
+  window.location.reload();
+};
 
 interface PageMeta {
-  normTitle: string
-  normText: string
+  normTitle: string;
+  normText: string;
 }
 
 /**
@@ -327,55 +316,51 @@ interface PageMeta {
  * нахожимыми оба написания слова.
  */
 const toNorm = (value: string): string => {
-  let result = ''
+  let result = '';
   for (const char of value) {
     if (char === 'ё' || char === 'Ё') {
-      result += 'е'
+      result += 'е';
     } else {
-      const lower = char.toLowerCase()
-      result += lower.length === 1 ? lower : char
+      const lower = char.toLowerCase();
+      result += lower.length === 1 ? lower : char;
     }
   }
-  return result
-}
+  return result;
+};
 
-const normCache = new Map<string, PageMeta>()
+const normCache = new Map<string, PageMeta>();
 
 const getPageMeta = (page: ISearchPage): PageMeta => {
-  let meta = normCache.get(page.path)
+  let meta = normCache.get(page.path);
   if (!meta) {
     meta = {
       normTitle: toNorm(page.title),
       normText: toNorm(page.text),
-    }
-    normCache.set(page.path, meta)
+    };
+    normCache.set(page.path, meta);
   }
-  return meta
-}
+  return meta;
+};
 
 const normalizeQuery = (value: string): string =>
-  value
-    .toLowerCase()
-    .replace(/ё/g, 'е')
-    .replace(/\s+/g, ' ')
-    .trim()
+  value.toLowerCase().replace(/ё/g, 'е').replace(/\s+/g, ' ').trim();
 
 const queryTokens = computed<string[]>(() => {
-  const normalized = normalizeQuery(query.value)
-  if (normalized === '') return []
-  return [...new Set(normalized.split(' '))]
-})
+  const normalized = normalizeQuery(query.value);
+  if (normalized === '') return [];
+  return [...new Set(normalized.split(' '))];
+});
 
 const chapterMatches = (title: string, tokens: string[]): boolean => {
-  const norm = toNorm(title)
-  return tokens.every((token) => norm.includes(token))
-}
+  const norm = toNorm(title);
+  return tokens.every(token => norm.includes(token));
+};
 
 interface PageMatch {
-  page: ISearchPage
-  titleHit: boolean
-  textHit: boolean
-  score: number
+  page: ISearchPage;
+  titleHit: boolean;
+  textHit: boolean;
+  score: number;
 }
 
 /**
@@ -386,66 +371,63 @@ interface PageMatch {
  */
 const searchPages = (
   searchIndex: ISearchIndex,
-  tokens: string[]
+  tokens: string[],
 ): PageMatch[] => {
-  const matches: PageMatch[] = []
+  const matches: PageMatch[] = [];
 
   for (const page of searchIndex.pages) {
-    const meta = getPageMeta(page)
+    const meta = getPageMeta(page);
 
-    let allTitle = true
-    let titleScore = 0
+    let allTitle = true;
+    let titleScore = 0;
     for (const token of tokens) {
       if (meta.normTitle.includes(token)) {
-        titleScore += 100
+        titleScore += 100;
       } else {
-        allTitle = false
+        allTitle = false;
       }
     }
 
-    let allText = true
-    let textScore = 0
+    let allText = true;
+    let textScore = 0;
     for (const token of tokens) {
-      let count = 0
-      let pos = meta.normText.indexOf(token)
+      let count = 0;
+      let pos = meta.normText.indexOf(token);
       while (pos !== -1) {
-        count += 1
-        if (count > 30) break
-        pos = meta.normText.indexOf(token, pos + 1)
+        count += 1;
+        if (count > 30) break;
+        pos = meta.normText.indexOf(token, pos + 1);
       }
       if (count === 0) {
-        allText = false
+        allText = false;
       } else {
-        textScore += count * 5
+        textScore += count * 5;
       }
     }
 
-    if (!allTitle && !allText) continue
+    if (!allTitle && !allText) continue;
 
-    let score = 0
-    if (allTitle) score += 1000 + titleScore
-    if (allText) score += 100 + textScore
+    let score = 0;
+    if (allTitle) score += 1000 + titleScore;
+    if (allText) score += 100 + textScore;
 
     matches.push({
       page,
       titleHit: allTitle,
       textHit: allText,
       score,
-    })
+    });
   }
 
-  return matches.sort((a, b) => b.score - a.score)
-}
+  return matches.sort((a, b) => b.score - a.score);
+};
 
 const escapeHtml = (value: string): string =>
-  value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
+  value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 interface Range {
-  start: number
-  end: number
+  start: number;
+  end: number;
 }
 
 /**
@@ -453,41 +435,37 @@ interface Range {
  * вычисляются по нормализованному тексту (один-в-один с исходным) и
  * переносятся на исходный, поэтому регистр в подсветке сохраняется.
  */
-const highlight = (
-  text: string,
-  norm: string,
-  tokens: string[]
-): string => {
-  const ranges: Range[] = []
+const highlight = (text: string, norm: string, tokens: string[]): string => {
+  const ranges: Range[] = [];
   for (const token of tokens) {
-    let pos = norm.indexOf(token)
+    let pos = norm.indexOf(token);
     while (pos !== -1) {
-      ranges.push({ start: pos, end: pos + token.length })
-      pos = norm.indexOf(token, pos + 1)
+      ranges.push({ start: pos, end: pos + token.length });
+      pos = norm.indexOf(token, pos + 1);
     }
   }
 
-  ranges.sort((a, b) => a.start - b.start || b.end - a.end)
-  const merged: Range[] = []
+  ranges.sort((a, b) => a.start - b.start || b.end - a.end);
+  const merged: Range[] = [];
   for (const range of ranges) {
-    const last = merged[merged.length - 1]
+    const last = merged[merged.length - 1];
     if (last !== undefined && range.start <= last.end) {
-      last.end = Math.max(last.end, range.end)
+      last.end = Math.max(last.end, range.end);
     } else {
-      merged.push({ ...range })
+      merged.push({ ...range });
     }
   }
 
-  let html = ''
-  let cursor = 0
+  let html = '';
+  let cursor = 0;
   for (const range of merged) {
-    html += escapeHtml(text.slice(cursor, range.start))
-    html += `<mark>${escapeHtml(text.slice(range.start, range.end))}</mark>`
-    cursor = range.end
+    html += escapeHtml(text.slice(cursor, range.start));
+    html += `<mark>${escapeHtml(text.slice(range.start, range.end))}</mark>`;
+    cursor = range.end;
   }
-  html += escapeHtml(text.slice(cursor))
-  return html
-}
+  html += escapeHtml(text.slice(cursor));
+  return html;
+};
 
 /**
  * Фрагмент текста вокруг лучшего совпадения: окно выбирается так,
@@ -496,74 +474,71 @@ const highlight = (
 const buildSnippet = (
   meta: PageMeta,
   text: string,
-  tokens: string[]
+  tokens: string[],
 ): string => {
-  const hits: number[] = []
+  const hits: number[] = [];
   for (const token of tokens) {
-    let pos = meta.normText.indexOf(token)
-    let count = 0
+    let pos = meta.normText.indexOf(token);
+    let count = 0;
     while (pos !== -1 && count < 40) {
-      hits.push(pos)
-      count += 1
-      pos = meta.normText.indexOf(token, pos + 1)
+      hits.push(pos);
+      count += 1;
+      pos = meta.normText.indexOf(token, pos + 1);
     }
   }
 
-  if (hits.length === 0) return ''
+  if (hits.length === 0) return '';
 
-  let bestStart = 0
-  let bestEnd = 0
-  let bestScore = -1
+  let bestStart = 0;
+  let bestEnd = 0;
+  let bestScore = -1;
   for (const hit of hits) {
-    const start = Math.max(0, hit - SNIPPET_RADIUS)
-    const end = Math.min(meta.normText.length, hit + SNIPPET_RADIUS + 1)
-    const window = meta.normText.slice(start, end)
-    const score = tokens.filter((token) => window.includes(token)).length
+    const start = Math.max(0, hit - SNIPPET_RADIUS);
+    const end = Math.min(meta.normText.length, hit + SNIPPET_RADIUS + 1);
+    const window = meta.normText.slice(start, end);
+    const score = tokens.filter(token => window.includes(token)).length;
     if (score > bestScore) {
-      bestScore = score
-      bestStart = start
-      bestEnd = end
+      bestScore = score;
+      bestStart = start;
+      bestEnd = end;
     }
   }
 
   // Расширяем до границ слов
   while (bestStart > 0 && !/\s/.test(meta.normText[bestStart - 1])) {
-    bestStart -= 1
+    bestStart -= 1;
   }
-  while (
-    bestEnd < meta.normText.length &&
-    !/\s/.test(meta.normText[bestEnd])
-  ) {
-    bestEnd += 1
+  while (bestEnd < meta.normText.length && !/\s/.test(meta.normText[bestEnd])) {
+    bestEnd += 1;
   }
 
-  const prefix = bestStart > 0 ? '… ' : ''
-  const suffix = bestEnd < meta.normText.length ? ' …' : ''
-  const segmentNorm = meta.normText.slice(bestStart, bestEnd)
-  const segment = text.slice(bestStart, bestEnd)
+  const prefix = bestStart > 0 ? '… ' : '';
+  const suffix = bestEnd < meta.normText.length ? ' …' : '';
+  const segmentNorm = meta.normText.slice(bestStart, bestEnd);
+  const segment = text.slice(bestStart, bestEnd);
 
   return (
     escapeHtml(prefix) +
     highlight(segment, segmentNorm, tokens) +
     escapeHtml(suffix)
-  )
-}
+  );
+};
 
 interface RenderedPage {
-  path: string
-  titleHtml: string
-  snippetHtml: string
-  order: number
+  path: string;
+  titleHtml: string;
+  snippetHtml: string;
+  order: number;
 }
 
 interface RenderedGroup {
-  title: string
-  path: string
-  pages: RenderedPage[]
-  order: number
+  title: string;
+  path: string;
+  pages: RenderedPage[];
+  order: number;
 }
 
-const GENERAL_GROUP = 'Общие страницы'
+const GENERAL_GROUP = 'Общие страницы';
 
 /**
  * Результаты, сгруппированные по главам.
@@ -574,76 +549,79 @@ const GENERAL_GROUP = 'Общие страницы'
  * совпавшими по названию или тексту.
  */
 const groups = computed<RenderedGroup[]>(() => {
-  if (index.value === null) return []
+  if (index.value === null) return [];
 
-  const tokens = queryTokens.value
+  const tokens = queryTokens.value;
 
   if (tokens.length === 0) {
-    const browse: RenderedGroup[] = index.value.chapters.map((chapter) => ({
+    const browse: RenderedGroup[] = index.value.chapters.map(chapter => ({
       title: chapter.title,
       path: chapter.path,
       pages: [],
       order: -1,
-    }))
+    }));
 
-    const generalPages = index.value.pages.filter((page) => !page.chapter)
+    const generalPages = index.value.pages.filter(page => !page.chapter);
     if (generalPages.length > 0) {
       browse.push({
         title: GENERAL_GROUP,
         path: generalPages[0].path,
         order: -1,
-        pages: generalPages.map((page) => ({
+        pages: generalPages.map(page => ({
           path: page.path,
           titleHtml: escapeHtml(page.title),
           snippetHtml: '',
           order: -1,
         })),
-      })
+      });
     }
 
-    return limitRows(browse)
+    return limitRows(browse);
   }
 
   // Сначала выбираем наиболее релевантные страницы из всей выдачи, и
   // только затем группируем их по главам. Если применить лимит после
   // группировки, ранние главы из сайдбара могут занять весь budget и
   // скрыть более точное совпадение из следующей главы.
-  const matches = searchPages(index.value, tokens).slice(0, MAX_PAGE_ROWS)
+  const matches = searchPages(index.value, tokens).slice(0, MAX_PAGE_ROWS);
   const chaptersByTitle = new Map(
-    index.value.chapters.map((chapter) => [chapter.title, chapter])
-  )
-  const matchedChapters = index.value.chapters.filter((chapter) =>
-    chapterMatches(chapter.title, tokens)
-  )
+    index.value.chapters.map(chapter => [chapter.title, chapter]),
+  );
+  const matchedChapters = index.value.chapters.filter(chapter =>
+    chapterMatches(chapter.title, tokens),
+  );
 
-  const groupMap = new Map<string, RenderedGroup>()
-  const getGroup = (chapter: { title: string; path: string }): RenderedGroup => {
-    let group = groupMap.get(chapter.title)
+  const groupMap = new Map<string, RenderedGroup>();
+  const getGroup = (chapter: {
+    title: string;
+    path: string;
+  }): RenderedGroup => {
+    let group = groupMap.get(chapter.title);
     if (!group) {
       group = {
         title: chapter.title,
         path: chapter.path,
         pages: [],
         order: -1,
-      }
-      groupMap.set(chapter.title, group)
+      };
+      groupMap.set(chapter.title, group);
     }
-    return group
-  }
+    return group;
+  };
 
   for (const chapter of matchedChapters) {
-    getGroup(chapter)
+    getGroup(chapter);
   }
 
   for (const match of matches) {
     const chapter = match.page.chapter
       ? chaptersByTitle.get(match.page.chapter)
-      : undefined
+      : undefined;
     const group = chapter
       ? getGroup(chapter)
-      : getGroup({ title: GENERAL_GROUP, path: match.page.path })
+      : getGroup({ title: GENERAL_GROUP, path: match.page.path });
 
-    const meta = getPageMeta(match.page)
+    const meta = getPageMeta(match.page);
     group.pages.push({
       path: match.page.path,
       titleHtml: highlight(match.page.title, meta.normTitle, tokens),
@@ -651,31 +629,31 @@ const groups = computed<RenderedGroup[]>(() => {
         ? buildSnippet(meta, match.page.text, tokens)
         : '',
       order: -1,
-    })
+    });
   }
 
-  const ordered: RenderedGroup[] = []
-  const seen = new Set<string>()
+  const ordered: RenderedGroup[] = [];
+  const seen = new Set<string>();
   for (const chapter of matchedChapters) {
-    const group = groupMap.get(chapter.title)
+    const group = groupMap.get(chapter.title);
     if (group) {
-      ordered.push(group)
-      seen.add(chapter.title)
+      ordered.push(group);
+      seen.add(chapter.title);
     }
   }
   for (const chapter of index.value.chapters) {
-    if (seen.has(chapter.title)) continue
-    const group = groupMap.get(chapter.title)
+    if (seen.has(chapter.title)) continue;
+    const group = groupMap.get(chapter.title);
     if (group && group.pages.length > 0) {
-      ordered.push(group)
-      seen.add(chapter.title)
+      ordered.push(group);
+      seen.add(chapter.title);
     }
   }
-  const general = groupMap.get(GENERAL_GROUP)
-  if (general && general.pages.length > 0) ordered.push(general)
+  const general = groupMap.get(GENERAL_GROUP);
+  if (general && general.pages.length > 0) ordered.push(general);
 
-  return limitRows(ordered)
-})
+  return limitRows(ordered);
+});
 
 /**
  * Назначает последовательные номера для навигации с клавиатуры и
@@ -688,151 +666,151 @@ const groups = computed<RenderedGroup[]>(() => {
  * дать сотни совпадений.
  */
 const limitRows = (groupsList: RenderedGroup[]): RenderedGroup[] => {
-  let pageBudget = MAX_PAGE_ROWS
-  let counter = 0
+  let pageBudget = MAX_PAGE_ROWS;
+  let counter = 0;
 
-  return groupsList.map((group) => {
-    const pages: RenderedPage[] = []
+  return groupsList.map(group => {
+    const pages: RenderedPage[] = [];
     for (const page of group.pages) {
-      if (pageBudget <= 0) break
-      pageBudget -= 1
-      pages.push(page)
+      if (pageBudget <= 0) break;
+      pageBudget -= 1;
+      pages.push(page);
     }
 
     const renderedGroup: RenderedGroup = {
       ...group,
       pages,
       order: counter++,
-    }
+    };
     for (const page of renderedGroup.pages) {
-      page.order = counter++
+      page.order = counter++;
     }
-    return renderedGroup
-  })
-}
+    return renderedGroup;
+  });
+};
 
 const rows = computed<{ path: string }[]>(() => {
-  const list: { path: string }[] = []
+  const list: { path: string }[] = [];
   for (const group of groups.value) {
-    list.push({ path: group.path })
-    for (const page of group.pages) list.push({ path: page.path })
+    list.push({ path: group.path });
+    for (const page of group.pages) list.push({ path: page.path });
   }
-  return list
-})
+  return list;
+});
 
 const activeDescendant = computed(() =>
   active.value >= 0 && rows.value[active.value] !== undefined
     ? resultId(active.value)
     : undefined,
-)
+);
 
 function resultId(order: number): string {
-  return `search-result-${order}`
+  return `search-result-${order}`;
 }
 
-watch(query, (value) => {
-  active.value = -1
-  if (value.trim() !== '') void ensureIndex()
-})
+watch(query, value => {
+  active.value = -1;
+  if (value.trim() !== '') void ensureIndex();
+});
 
 // Блокирует прокрутку страницы, пока панель открыта (иначе
 // «затемнение» фона прерывалось бы листанием)
 const lockBodyScroll = (locked: boolean): void => {
-  if (typeof document === 'undefined') return
-  document.body.style.overflow = locked ? 'hidden' : ''
-}
+  if (typeof document === 'undefined') return;
+  document.body.style.overflow = locked ? 'hidden' : '';
+};
 
-watch(open, (value) => {
-  lockBodyScroll(value)
+watch(open, value => {
+  lockBodyScroll(value);
 
-  if (!value) return
+  if (!value) return;
 
-  active.value = -1
-  void ensureIndex()
+  active.value = -1;
+  void ensureIndex();
   if (mobile.value) {
-    requestAnimationFrame(() => mobileInput.value?.focus())
+    requestAnimationFrame(() => mobileInput.value?.focus());
   }
-})
+});
 
 const openPanel = (): void => {
-  if (!open.value) open.value = true
-}
+  if (!open.value) open.value = true;
+};
 
 const openMobile = (): void => {
   if (open.value) {
-    close()
+    close();
   } else {
-    open.value = true
+    open.value = true;
   }
-}
+};
 
 const close = (): void => {
-  open.value = false
-  query.value = ''
-  active.value = -1
-  input.value?.blur()
-  mobileInput.value?.blur()
-}
+  open.value = false;
+  query.value = '';
+  active.value = -1;
+  input.value?.blur();
+  mobileInput.value?.blur();
+};
 
 // Крестик в поле: стирает введённый запрос, чтобы можно было
 // сразу продолжить ввод — фокус остаётся в том же поле.
 const clearQuery = (field: 'desktop' | 'mobile'): void => {
-  query.value = ''
-  active.value = -1
-  const target = field === 'mobile' ? mobileInput.value : input.value
-  target?.focus()
-}
+  query.value = '';
+  active.value = -1;
+  const target = field === 'mobile' ? mobileInput.value : input.value;
+  target?.focus();
+};
 
-const router = useRouter()
+const router = useRouter();
 
 const navigate = (path: string): void => {
-  const current = router.currentRoute.value.path
-  close()
-  if (current !== path) void router.push(path)
-}
+  const current = router.currentRoute.value.path;
+  close();
+  if (current !== path) void router.push(path);
+};
 
 // Панель закрывается при переходе на другую страницу
 router.afterEach(() => {
-  close()
-})
+  close();
+});
 
 const scrollActive = (): void => {
   const element = results.value?.querySelector(
-    '.search-box__page--active, .search-box__chapter--active'
-  )
-  element?.scrollIntoView({ block: 'nearest' })
-}
+    '.search-box__page--active, .search-box__chapter--active',
+  );
+  element?.scrollIntoView({ block: 'nearest' });
+};
 
 const onKeydown = (event: KeyboardEvent): void => {
   if (event.key === 'Escape') {
-    event.preventDefault()
-    close()
-    return
+    event.preventDefault();
+    close();
+    return;
   }
 
   if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
-    event.preventDefault()
-    if (rows.value.length === 0) return
-    const delta = event.key === 'ArrowDown' ? 1 : -1
-    const next = active.value + delta
-    active.value = (next + rows.value.length) % rows.value.length
-    scrollActive()
-    return
+    event.preventDefault();
+    if (rows.value.length === 0) return;
+    const delta = event.key === 'ArrowDown' ? 1 : -1;
+    const next = active.value + delta;
+    active.value = (next + rows.value.length) % rows.value.length;
+    scrollActive();
+    return;
   }
 
   if (event.key === 'Enter') {
-    if (rows.value.length === 0) return
-    event.preventDefault()
-    const row = rows.value[active.value === -1 ? 0 : active.value]
-    if (row) navigate(row.path)
+    if (rows.value.length === 0) return;
+    event.preventDefault();
+    const row = rows.value[active.value === -1 ? 0 : active.value];
+    if (row) navigate(row.path);
   }
-}
+};
 
 // Панель закрывается при клике вне её
 const onDocumentMouseDown = (event: MouseEvent): void => {
-  if (!open.value) return
-  if (root.value && !root.value.contains(event.target as Node)) close()
-}
+  if (!open.value) return;
+  if (root.value && !root.value.contains(event.target as Node)) close();
+};
 
 /**
  * Ctrl K / ⌘ K — фокус на поиске с любого места страницы.
@@ -844,28 +822,28 @@ const onDocumentMouseDown = (event: MouseEvent): void => {
  * обработчик висит на `window` напрямую.
  */
 const onGlobalKeydown = (event: KeyboardEvent): void => {
-  if (event.isComposing) return
+  if (event.isComposing) return;
   if (event.key === 'Escape' && open.value) {
-    event.preventDefault()
-    close()
-    return
+    event.preventDefault();
+    close();
+    return;
   }
   // Alt сохраняем: на macOS/Windows Alt+клавиша часто вводит
   // спецсимволы и используется другими обработчиками.
-  if (event.altKey) return
-  if (!event.metaKey && !event.ctrlKey) return
+  if (event.altKey) return;
+  if (!event.metaKey && !event.ctrlKey) return;
   // Проверяем и `code`, и `key`: на русской раскладке физическая
   // клавиша K даёт символ «к», а код остаётся 'KeyK'.
-  if (event.code !== 'KeyK' && event.key.toLowerCase() !== 'k') return
-  event.preventDefault()
+  if (event.code !== 'KeyK' && event.key.toLowerCase() !== 'k') return;
+  event.preventDefault();
 
   if (mobile.value) {
-    openMobile()
+    openMobile();
   } else {
-    open.value = true
-    requestAnimationFrame(() => input.value?.focus())
+    open.value = true;
+    requestAnimationFrame(() => input.value?.focus());
   }
-}
+};
 
 /**
  * Замеряет смещение «расширения»: левый край поля встаёт у правого
@@ -876,55 +854,57 @@ const onGlobalKeydown = (event: KeyboardEvent): void => {
  * это <div>).
  */
 const updateExpandMetrics = (): void => {
-  const box = root.value
-  if (box === null) return
+  const box = root.value;
+  if (box === null) return;
 
-  const navbar = box.closest('.vp-navbar')
-  if (navbar === null) return
+  const navbar = box.closest('.vp-navbar');
+  if (navbar === null) return;
 
-  const brand = navbar.querySelector('a')
+  const brand = navbar.querySelector('a');
   const logoRight =
     brand !== null
       ? brand.getBoundingClientRect().right
-      : navbar.getBoundingClientRect().left
+      : navbar.getBoundingClientRect().left;
 
   // Поле не должно начинаться ближе 12rem к правому краю экрана:
   // в узких окнах большой left выталкивает фиксированный элемент
   // за правый край (в LTR при нехватке места CSS игнорирует right).
-  const maxLeft = window.innerWidth - 24 - 192
-  box.style.setProperty('--sb-expand-left', `${Math.round(Math.min(logoRight + 24, maxLeft))}px`)
-}
+  const maxLeft = window.innerWidth - 24 - 192;
+  box.style.setProperty(
+    '--sb-expand-left',
+    `${Math.round(Math.min(logoRight + 24, maxLeft))}px`,
+  );
+};
 
 onMounted(() => {
   isMac.value = /mac|iphone|ipad|ipod/i.test(
     navigator.platform ?? navigator.userAgent,
-  )
+  );
 
-  document.addEventListener('mousedown', onDocumentMouseDown)
-  window.addEventListener('keydown', onGlobalKeydown)
-  window.addEventListener('resize', updateExpandMetrics)
+  document.addEventListener('mousedown', onDocumentMouseDown);
+  window.addEventListener('keydown', onGlobalKeydown);
+  window.addEventListener('resize', updateExpandMetrics);
 
-  const media = window.matchMedia('(max-width: 719px)')
-  mediaQuery = media
-  mobile.value = media.matches
-  media.addEventListener('change', onMediaChange)
+  const media = window.matchMedia('(max-width: 719px)');
+  mediaQuery = media;
+  mobile.value = media.matches;
+  media.addEventListener('change', onMediaChange);
 
-  updateExpandMetrics()
+  updateExpandMetrics();
 
   // Перезамер после загрузки веб-шрифтов — логотип мог изменить размер
   if (document.fonts !== undefined) {
-    void document.fonts.ready.then(() => updateExpandMetrics())
+    void document.fonts.ready.then(() => updateExpandMetrics());
   }
-})
+});
 
 onBeforeUnmount(() => {
-  document.removeEventListener('mousedown', onDocumentMouseDown)
-  window.removeEventListener('keydown', onGlobalKeydown)
-  window.removeEventListener('resize', updateExpandMetrics)
-  mediaQuery?.removeEventListener('change', onMediaChange)
-  lockBodyScroll(false)
-})
-
+  document.removeEventListener('mousedown', onDocumentMouseDown);
+  window.removeEventListener('keydown', onGlobalKeydown);
+  window.removeEventListener('resize', updateExpandMetrics);
+  mediaQuery?.removeEventListener('change', onMediaChange);
+  lockBodyScroll(false);
+});
 </script>
 
 <style lang="scss">
@@ -1030,7 +1010,9 @@ onBeforeUnmount(() => {
   color: var(--vp-c-text);
   font-size: 0.9rem;
   outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
   box-sizing: border-box;
 
   &::placeholder {

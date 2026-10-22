@@ -16,62 +16,61 @@
         :key="action.text"
         class="vp-hero-action-button"
         :class="[action.type]"
-        :config="action"
-      />
+        :config="action" />
     </p>
   </header>
 </template>
 
 <script setup lang="ts">
-import type { FunctionalComponent } from 'vue'
-import { computed, h } from 'vue'
-import { ClientOnly, withBase } from 'vuepress/client'
+import type { FunctionalComponent } from 'vue';
+import { computed, h } from 'vue';
+import { ClientOnly, withBase } from 'vuepress/client';
 
-import { useDarkMode } from '@theme/useDarkMode'
-import { useData } from '@theme/useData'
-import VPAutoLink from '@theme/VPAutoLink.vue'
+import { useDarkMode } from '@theme/useDarkMode';
+import { useData } from '@theme/useData';
+import VPAutoLink from '@theme/VPAutoLink.vue';
 
-import type { DefaultThemeHomePageFrontmatter } from '@vuepress/theme-default'
+import type { DefaultThemeHomePageFrontmatter } from '@vuepress/theme-default';
 
-const { frontmatter, siteLocale } = useData<DefaultThemeHomePageFrontmatter>()
-const isDarkMode = useDarkMode()
+const { frontmatter, siteLocale } = useData<DefaultThemeHomePageFrontmatter>();
+const isDarkMode = useDarkMode();
 
 const heroText = computed(() => {
-  if (frontmatter.value.heroText === null) return null
+  if (frontmatter.value.heroText === null) return null;
 
-  return frontmatter.value.heroText || siteLocale.value.title || 'Учебник Go'
-})
+  return frontmatter.value.heroText || siteLocale.value.title || 'Учебник Go';
+});
 const tagline = computed(() => {
-  if (frontmatter.value.tagline === null) return null
+  if (frontmatter.value.tagline === null) return null;
 
   return (
     frontmatter.value.tagline ||
     siteLocale.value.description ||
     'Учебник для изучения языка программирования Go с тестированием и практическими заданиями'
-  )
-})
+  );
+});
 const heroImage = computed(() => {
   if (isDarkMode.value && frontmatter.value.heroImageDark !== undefined)
-    return frontmatter.value.heroImageDark
+    return frontmatter.value.heroImageDark;
 
-  return frontmatter.value.heroImage
-})
+  return frontmatter.value.heroImage;
+});
 const heroAlt = computed(
   () => frontmatter.value.heroAlt || heroText.value || 'Учебник Go',
-)
-const heroHeight = computed(() => frontmatter.value.heroHeight ?? 280)
+);
+const heroHeight = computed(() => frontmatter.value.heroHeight ?? 280);
 
 const actions = computed(() => {
-  if (!Array.isArray(frontmatter.value.actions)) return []
+  if (!Array.isArray(frontmatter.value.actions)) return [];
 
   return frontmatter.value.actions.map(({ type = 'primary', ...rest }) => ({
     type,
     ...rest,
-  }))
-})
+  }));
+});
 
 const HomeHeroImage: FunctionalComponent = () => {
-  if (!heroImage.value) return null
+  if (!heroImage.value) return null;
 
   const img = h('img', {
     class: 'vp-hero-image',
@@ -80,12 +79,12 @@ const HomeHeroImage: FunctionalComponent = () => {
     width: Math.round((heroHeight.value * 207) / 78),
     height: heroHeight.value,
     fetchpriority: 'high',
-  })
+  });
 
-  if (frontmatter.value.heroImageDark === undefined) return img
+  if (frontmatter.value.heroImageDark === undefined) return img;
 
-  return h(ClientOnly, () => img)
-}
+  return h(ClientOnly, () => img);
+};
 </script>
 
 <style lang="scss">

@@ -1,18 +1,19 @@
-import { defineUserConfig } from 'vuepress'
-import { fileURLToPath } from 'node:url'
+import { defineUserConfig } from 'vuepress';
+import { fileURLToPath } from 'node:url';
 
-import { defaultTheme } from '@vuepress/theme-default'
-import { viteBundler } from '@vuepress/bundler-vite'
-import { pwaPlugin } from '@vuepress/plugin-pwa'
+import { defaultTheme } from '@vuepress/theme-default';
+import { viteBundler } from '@vuepress/bundler-vite';
+import { pwaPlugin } from '@vuepress/plugin-pwa';
 
-import { searchPlugin, sidebarEn } from './configs'
+import { searchPlugin, sidebarEn } from './configs';
 
 export default defineUserConfig({
   lang: 'ru-RU',
 
   base: '/go-book/',
   title: 'Учебник Go',
-  description: 'Учебник для изучения языка программирования Go с тестированием и практическими заданиями',
+  description:
+    'Учебник для изучения языка программирования Go с тестированием и практическими заданиями',
 
   // Service Worker управляет кэшем ресурсов, поэтому VuePress не должен
   // дополнительно добавлять ссылки prefetch для всех страниц.
@@ -23,7 +24,7 @@ export default defineUserConfig({
 
     // navbar: ['/', '/guide/'],
 
-    sidebar: sidebarEn
+    sidebar: sidebarEn,
   }),
 
   plugins: [
@@ -52,7 +53,12 @@ export default defineUserConfig({
         // Полнотекстовый индекс и большая PDF-версия загружаются только по
         // действию пользователя. Иначе первая загрузка PWA на мобильной сети
         // включала бы более 20 МБ, хотя читатель мог открыть только сайт.
-        globIgnores: ['assets/data-*.js', 'go-book.pdf', 'go-book.epub', 'go-book.kpf'],
+        globIgnores: [
+          'assets/data-*.js',
+          'go-book.pdf',
+          'go-book.epub',
+          'go-book.kpf',
+        ],
         runtimeCaching: [
           {
             urlPattern: /\/go-book\/assets\/data-[\w-]+\.js$/,
@@ -80,7 +86,8 @@ export default defineUserConfig({
         id: '/go-book/',
         name: 'Учебник Go',
         short_name: 'Учебник Go',
-        description: 'Интерактивный учебник Go: теория, самопроверка и практика',
+        description:
+          'Интерактивный учебник Go: теория, самопроверка и практика',
         lang: 'ru-RU',
         start_url: '/go-book/',
         scope: '/go-book/',
@@ -117,7 +124,8 @@ export default defineUserConfig({
           nextImage: 'Следующее изображение',
           desc: 'Описание',
           feature: 'Возможности',
-          explain: 'Установите учебник на телефон или компьютер, чтобы открыть его как отдельное приложение.',
+          explain:
+            'Установите учебник на телефон или компьютер, чтобы открыть его как отдельное приложение.',
           hint: 'Доступна новая версия учебника.',
           update: 'Обновить',
         },
@@ -142,4 +150,4 @@ export default defineUserConfig({
       },
     },
   }),
-})
+});

@@ -9,8 +9,7 @@
         class="go-playground__button go-playground__button--primary"
         href="https://go.dev/play/"
         target="_blank"
-        rel="noopener noreferrer"
-      >
+        rel="noopener noreferrer">
         Открыть Go Playground
       </a>
     </div>
@@ -18,40 +17,44 @@
     <p class="go-playground__hint">
       Скопируйте пример, вставьте его в Go Playground и нажмите Run.
     </p>
-    <p class="go-playground__copy-status" role="status" aria-live="polite" aria-atomic="true">
+    <p
+      class="go-playground__copy-status"
+      role="status"
+      aria-live="polite"
+      aria-atomic="true">
       {{ copyStatus }}
     </p>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, ref } from 'vue'
+import { onBeforeUnmount, ref } from 'vue';
 
 const props = defineProps<{
-  code: string
-}>()
+  code: string;
+}>();
 
-const copyStatus = ref('')
-let resetStatusTimer: ReturnType<typeof window.setTimeout> | undefined
+const copyStatus = ref('');
+let resetStatusTimer: ReturnType<typeof window.setTimeout> | undefined;
 
 async function copyCode() {
-  if (resetStatusTimer !== undefined) window.clearTimeout(resetStatusTimer)
+  if (resetStatusTimer !== undefined) window.clearTimeout(resetStatusTimer);
 
   try {
-    await navigator.clipboard.writeText(props.code.trim())
-    copyStatus.value = 'Код скопирован в буфер обмена.'
+    await navigator.clipboard.writeText(props.code.trim());
+    copyStatus.value = 'Код скопирован в буфер обмена.';
   } catch {
-    copyStatus.value = 'Не удалось скопировать код.'
+    copyStatus.value = 'Не удалось скопировать код.';
   }
 
   resetStatusTimer = window.setTimeout(() => {
-    copyStatus.value = ''
-  }, 2000)
+    copyStatus.value = '';
+  }, 2000);
 }
 
 onBeforeUnmount(() => {
-  if (resetStatusTimer !== undefined) window.clearTimeout(resetStatusTimer)
-})
+  if (resetStatusTimer !== undefined) window.clearTimeout(resetStatusTimer);
+});
 </script>
 
 <style scoped>

@@ -1,4 +1,4 @@
-import type { SidebarOptions } from '@vuepress/theme-default'
+import type { SidebarOptions } from '@vuepress/theme-default';
 
 export const sidebarEn: SidebarOptions = {
   '/guide/': [
@@ -18,7 +18,7 @@ export const sidebarEn: SidebarOptions = {
             '/guide/introduction/tests.md',
             '/guide/introduction/practice.md',
             '/guide/introduction/best-practices.md',
-          ],          
+          ],
         },
         {
           text: 'Глава 2: Переменные и базовые типы',
@@ -30,7 +30,7 @@ export const sidebarEn: SidebarOptions = {
             '/guide/variables-and-data-types/tests.md',
             '/guide/variables-and-data-types/practice.md',
             '/guide/variables-and-data-types/best-practices.md',
-          ],          
+          ],
         },
         {
           text: 'Глава 3: Строки и обработка текста',
@@ -140,7 +140,7 @@ export const sidebarEn: SidebarOptions = {
             '/guide/pointers/tests.md',
             '/guide/pointers/practice.md',
             '/guide/pointers/best-practices.md',
-          ],          
+          ],
         },
         {
           text: 'Глава 13: Интерфейсы',
@@ -487,17 +487,15 @@ export const sidebarEn: SidebarOptions = {
           children: [
             '/guide/directory/base-directory.md',
             '/guide/directory/advanced-directory.md',
-          ],          
+          ],
         },
         {
           text: 'Дополнительные ресурсы',
           link: '/guide/resources.md',
           collapsible: true,
-          children: [
-            '/guide/resources.md',
-          ],
+          children: ['/guide/resources.md'],
         },
       ],
     },
   ],
-}
+};

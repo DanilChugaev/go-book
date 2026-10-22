@@ -7,9 +7,15 @@
       <strong>Полный исходный код</strong>
       <p>
         <template v-if="href">
-          <a :href="href" target="_blank" rel="noopener noreferrer"><code>{{ path }}</code></a>
+          <a :href="href" target="_blank" rel="noopener noreferrer">
+            <code>{{ path }}</code>
+          </a>
         </template>
-        <template v-else><code>{{ path }}</code></template>
+
+        <template v-else>
+          <code>{{ path }}</code>
+        </template>
+
         <span v-if="description"> — {{ description }}</span>
       </p>
     </div>
@@ -17,17 +23,17 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed } from 'vue';
 
 const props = defineProps<{
-  path: string
-  description?: string
-}>()
+  path: string;
+  description?: string;
+}>();
 
 const href = computed(() => {
-  const normalized = props.path.replace(/^\/+/, '')
-  return `https://github.com/DanilChugaev/go-book/tree/master/${normalized}`
-})
+  const normalized = props.path.replace(/^\/+/, '');
+  return `https://github.com/DanilChugaev/go-book/tree/master/${normalized}`;
+});
 </script>
 
 <style scoped lang="scss">
@@ -52,7 +58,12 @@ const href = computed(() => {
     stroke-width: 1.8;
   }
 
-  strong { font-size: 0.92rem; }
-  p { margin: 0.2rem 0 0; font-size: 0.9rem; }
+  strong {
+    font-size: 0.92rem;
+  }
+  p {
+    margin: 0.2rem 0 0;
+    font-size: 0.9rem;
+  }
 }
 </style>

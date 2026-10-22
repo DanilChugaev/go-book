@@ -8,10 +8,11 @@
   --side-margin: 1rem;
 }
 
-html[data-theme=light] {
-    .vp-site-logo, .vp-hero-image {
-        filter: invert(0.5);
-    }
+html[data-theme='light'] {
+  .vp-site-logo,
+  .vp-hero-image {
+    filter: invert(0.5);
+  }
 }
 
 // Базовый зелёный цвет темы (#3eaf7c) даёт контраст 2.75:1 с белым
@@ -33,11 +34,11 @@ html[data-theme='light'] {
 // min-height (а не height): когда контента больше, чем экран (низкое окно),
 // блок растёт, и переполнение уходит вниз — страница просто скроллится.
 .vp-home {
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
 }
 
 // Центрирование через авто-маргины вместо justify-content: center:
@@ -46,15 +47,15 @@ html[data-theme='light'] {
 // при нехватке места hero начинается сразу под шапкой и уходит вниз,
 // а при избытке места остаётся по центру.
 .vp-hero {
-    margin: auto 0;
+  margin: auto 0;
 }
 
 .vp-footer {
-    border: none;
+  border: none;
 }
 
 summary {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 [vp-content] a:not(.header-anchor),
@@ -76,7 +77,8 @@ summary {
   vertical-align: middle;
   content: '';
   background-color: currentColor;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M14 3h7v7m0-7L10 14M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M14 3h7v7m0-7L10 14M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5'/%3E%3C/svg%3E")
+    center / contain no-repeat;
 }
 
 .vp-page .vp-page-nav .auto-link {
@@ -84,10 +86,10 @@ summary {
 }
 
 @media (max-width: 719px) {
-    .vp-back-to-top-button {
-        bottom: 112px;
-        right: 30px;
-    }
+  .vp-back-to-top-button {
+    bottom: 112px;
+    right: 30px;
+  }
 }
 
 // На страницах без сайдбара (главная) бургер на мобильных скрываем:
@@ -95,24 +97,24 @@ summary {
 // Если в config.js включим navbar, правила ниже придётся пересмотреть —
 // в дровере тогда появятся ссылки navbar'а, и его скрывать нельзя.
 @media (max-width: 719px) {
-    // Селекторы начинаются с .vp-theme-container, чтобы не уступить
-    // спецификой правилам темы (у них тоже три класса).
-    .vp-theme-container.no-sidebar .vp-toggle-sidebar-button {
-        display: none;
-    }
+  // Селекторы начинаются с .vp-theme-container, чтобы не уступить
+  // спецификой правилам темы (у них тоже три класса).
+  .vp-theme-container.no-sidebar .vp-toggle-sidebar-button {
+    display: none;
+  }
 
-    // 4rem — padding темы, который оставляет место под бургер.
-    // Кнопки нет, поэтому возвращаем обычный padding.
-    .vp-theme-container.no-sidebar .vp-navbar {
-        padding-inline-start: var(--navbar-padding-h);
-    }
+  // 4rem — padding темы, который оставляет место под бургер.
+  // Кнопки нет, поэтому возвращаем обычный padding.
+  .vp-theme-container.no-sidebar .vp-navbar {
+    padding-inline-start: var(--navbar-padding-h);
+  }
 
-    // Свайп с левого края (Layout.vue) тоже не должен открывать
-    // пустой дровер, иначе затемняющая маска «мигает».
-    .vp-theme-container.no-sidebar .vp-sidebar,
-    .vp-theme-container.no-sidebar .vp-sidebar-mask {
-        display: none;
-    }
+  // Свайп с левого края (Layout.vue) тоже не должен открывать
+  // пустой дровер, иначе затемняющая маска «мигает».
+  .vp-theme-container.no-sidebar .vp-sidebar,
+  .vp-theme-container.no-sidebar .vp-sidebar-mask {
+    display: none;
+  }
 }
 
 @media (max-width: 959px) {
@@ -140,9 +142,12 @@ summary {
   height: var(--navbar-icon-size);
   order: 1;
   border: 1px solid var(--vp-c-border);
-  border-radius: 0.35rem; background: var(--vp-c-bg);
+  border-radius: 0.35rem;
+  background: var(--vp-c-bg);
 
-  &:hover { background-color: var(--vp-c-bg-alt); }
+  &:hover {
+    background-color: var(--vp-c-bg-alt);
+  }
 }
 
 .vp-navbar-items-wrapper .search-box {
@@ -203,7 +208,6 @@ summary {
     margin-inline-end: 0.1rem;
   }
 }
-
 
 // Самые узкие телефоны: поджимаем правую группу, чтобы она не давила
 // на (уменьшенный) логотип. 4×44 + 3×5 + 2×16 = 223px.

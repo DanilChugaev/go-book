@@ -8,25 +8,23 @@
 
     <div class="quiz__options">
       <label
-          v-for="option in options"
-          :key="option.text"
-          :data-correct="option.correct ? 'true' : undefined"
-          :class="[
-              'quiz__option',
-              {
-                'quiz__option--correct': isSelectedCorrect(option),
-                'quiz__option--wrong': isSelectedWrong(option)
-              }
-          ]"
-      >
+        v-for="option in options"
+        :key="option.text"
+        :data-correct="option.correct ? 'true' : undefined"
+        :class="[
+          'quiz__option',
+          {
+            'quiz__option--correct': isSelectedCorrect(option),
+            'quiz__option--wrong': isSelectedWrong(option),
+          },
+        ]">
         <input
           :name="`quiz-${index}`"
           type="radio"
           :value="option.text"
           :checked="selectedAnswer === option.text"
           :disabled="hasAnswer"
-          @change="selectAnswer(option.text)"
-        >
+          @change="selectAnswer(option.text)" />
 
         <div>
           <span v-html="formatCode(option.text)"></span>
@@ -40,74 +38,78 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import type { IQuestion, IQuestionOption } from '../../types'
+import { computed } from 'vue';
+import type { IQuestion, IQuestionOption } from '../../types';
 
 const props = defineProps<{
-  question: IQuestion
-  index: number
-  selectedAnswer?: string
-}>()
+  question: IQuestion;
+  index: number;
+  selectedAnswer?: string;
+}>();
 
 const emit = defineEmits<{
-  select: [answer: string]
-}>()
+  select: [answer: string];
+}>();
 
-const id = computed(() => String(props.index + 1))
-const hasAnswer = computed(() => props.selectedAnswer !== undefined)
-const selectedAnswer = computed(() => props.selectedAnswer ?? '')
+const id = computed(() => String(props.index + 1));
+const hasAnswer = computed(() => props.selectedAnswer !== undefined);
+const selectedAnswer = computed(() => props.selectedAnswer ?? '');
 const options = computed(() => {
-  const shuffledOptions = [...props.question.options]
-  const random = createSeededRandom(`${props.index}:${props.question.text}`)
+  const shuffledOptions = [...props.question.options];
+  const random = createSeededRandom(`${props.index}:${props.question.text}`);
 
-  for (let optionIndex = shuffledOptions.length - 1; optionIndex > 0; optionIndex -= 1) {
-    const swapIndex = Math.floor(random() * (optionIndex + 1))
+  for (
+    let optionIndex = shuffledOptions.length - 1;
+    optionIndex > 0;
+    optionIndex -= 1
+  ) {
+    const swapIndex = Math.floor(random() * (optionIndex + 1));
 
-    const currentOption = shuffledOptions[optionIndex]
-    shuffledOptions[optionIndex] = shuffledOptions[swapIndex]
-    shuffledOptions[swapIndex] = currentOption
+    const currentOption = shuffledOptions[optionIndex];
+    shuffledOptions[optionIndex] = shuffledOptions[swapIndex];
+    shuffledOptions[swapIndex] = currentOption;
   }
 
-  return shuffledOptions
-})
+  return shuffledOptions;
+});
 
 function formatCode(text: string) {
   const escaped = text
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
+    .replace(/>/g, '&gt;');
 
-  return escaped.replace(/`([^`\n]+)`/g, '<code>$1</code>')
+  return escaped.replace(/`([^`\n]+)`/g, '<code>$1</code>');
 }
 
 function selectAnswer(answer: string) {
-  emit('select', answer)
+  emit('select', answer);
 }
 
 function isSelectedCorrect(option: IQuestionOption) {
-  return selectedAnswer.value === option.text && option.correct
+  return selectedAnswer.value === option.text && option.correct;
 }
 
 function isSelectedWrong(option: IQuestionOption) {
-  return selectedAnswer.value === option.text && !option.correct
+  return selectedAnswer.value === option.text && !option.correct;
 }
 
 function createSeededRandom(seed: string) {
-  let state = 2166136261
+  let state = 2166136261;
 
   for (let index = 0; index < seed.length; index += 1) {
-    state ^= seed.charCodeAt(index)
-    state = Math.imul(state, 16777619)
+    state ^= seed.charCodeAt(index);
+    state = Math.imul(state, 16777619);
   }
 
   return () => {
-    state += 0x6D2B79F5
-    let value = state
-    value = Math.imul(value ^ (value >>> 15), value | 1)
-    value ^= value + Math.imul(value ^ (value >>> 7), value | 61)
+    state += 0x6d2b79f5;
+    let value = state;
+    value = Math.imul(value ^ (value >>> 15), value | 1);
+    value ^= value + Math.imul(value ^ (value >>> 7), value | 61);
 
-    return ((value ^ (value >>> 14)) >>> 0) / 4294967296
-  }
+    return ((value ^ (value >>> 14)) >>> 0) / 4294967296;
+  };
 }
 </script>
 

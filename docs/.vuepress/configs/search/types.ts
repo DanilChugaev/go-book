@@ -3,22 +3,22 @@ export interface ISearchPage {
    * Маршрут страницы (формат ключей таблицы маршрутов):
    * `/guide/strings/tests.html` или `/guide/strings/`.
    */
-  path: string
+  path: string;
   /** Название страницы (`title` из frontmatter или первый `H1`) */
-  title: string
+  title: string;
   /** Название главы, к которой относится страница, или `undefined` для общих страниц */
-  chapter?: string
+  chapter?: string;
   /** Маршрут первой страницы главы */
-  chapterPath?: string
+  chapterPath?: string;
   /** Чистый текст страницы для полнотекстового поиска */
-  text: string
+  text: string;
 }
 
 export interface ISearchChapter {
   /** Название главы */
-  title: string
+  title: string;
   /** Маршрут первой страницы главы */
-  path: string
+  path: string;
 }
 
 /**
@@ -29,6 +29,6 @@ export interface ISearchChapter {
  * подгружает этот модуль лениво, отдельным чанком.
  */
 export interface ISearchIndex {
-  chapters: ISearchChapter[]
-  pages: ISearchPage[]
+  chapters: ISearchChapter[];
+  pages: ISearchPage[];
 }

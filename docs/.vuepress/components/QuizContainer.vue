@@ -9,99 +9,108 @@
     </div>
 
     <div
-        v-for="(question, index) in questions"
-        :key="getQuestionKey(question, index)"
-    >
+      v-for="(question, index) in questions"
+      :key="getQuestionKey(question, index)">
       <Quiz
         :question
         :index
         :selected-answer="answers[getQuestionKey(question, index)]"
-        @select="saveAnswer(getQuestionKey(question, index), $event)"
-      />
+        @select="saveAnswer(getQuestionKey(question, index), $event)" />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, ref } from 'vue'
-import type { IQuestion } from '../../types.ts'
-import Quiz from './Quiz.vue'
+import { computed, onMounted, ref } from 'vue';
+import type { IQuestion } from '../../types.ts';
+import Quiz from './Quiz.vue';
 
 const props = defineProps<{
-  questions: IQuestion[]
-}>()
+  questions: IQuestion[];
+}>();
 
-const answers = ref<Record<string, string>>({})
-const storageKey = ref('')
-const hasSavedAnswers = computed(() => Object.keys(answers.value).length > 0)
+const answers = ref<Record<string, string>>({});
+const storageKey = ref('');
+const hasSavedAnswers = computed(() => Object.keys(answers.value).length > 0);
 
 onMounted(() => {
-  storageKey.value = `go-book:quiz:${window.location.pathname}`
+  storageKey.value = `go-book:quiz:${window.location.pathname}`;
 
   try {
-    const savedAnswers = window.localStorage.getItem(storageKey.value)
+    const savedAnswers = window.localStorage.getItem(storageKey.value);
 
     if (!savedAnswers) {
-      return
+      return;
     }
 
-    const parsedAnswers: unknown = JSON.parse(savedAnswers)
+    const parsedAnswers: unknown = JSON.parse(savedAnswers);
 
     if (isAnswerRecord(parsedAnswers)) {
       answers.value = Object.fromEntries(
-        Object.entries(parsedAnswers).filter(([key, answer]) => isKnownAnswer(key, answer)),
-      )
+        Object.entries(parsedAnswers).filter(([key, answer]) =>
+          isKnownAnswer(key, answer),
+        ),
+      );
     }
   } catch {
-    answers.value = {}
+    answers.value = {};
   }
-})
+});
 
 function getQuestionKey(question: IQuestion, index: number): string {
-  return `${index}:${question.text}`
+  return `${index}:${question.text}`;
 }
 
 function saveAnswer(questionKey: string, answer: string): void {
   answers.value = {
     ...answers.value,
     [questionKey]: answer,
-  }
+  };
 
-  persistAnswers()
+  persistAnswers();
 }
 
 function resetAnswers(): void {
-  answers.value = {}
+  answers.value = {};
 
   if (storageKey.value) {
-    window.localStorage.removeItem(storageKey.value)
+    window.localStorage.removeItem(storageKey.value);
   }
 }
 
 function persistAnswers(): void {
   if (!storageKey.value) {
-    return
+    return;
   }
 
   try {
-    window.localStorage.setItem(storageKey.value, JSON.stringify(answers.value))
+    window.localStorage.setItem(
+      storageKey.value,
+      JSON.stringify(answers.value),
+    );
   } catch {
     // Пользователь может продолжить квиз, даже если браузер запретил localStorage.
   }
 }
 
 function isAnswerRecord(value: unknown): value is Record<string, string> {
-  return typeof value === 'object'
-    && value !== null
-    && Object.values(value).every((answer) => typeof answer === 'string')
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    Object.values(value).every(answer => typeof answer === 'string')
+  );
 }
 
 function isKnownAnswer(questionKey: string, answer: string): boolean {
   const question = props.questions.find(
-    (currentQuestion, index) => getQuestionKey(currentQuestion, index) === questionKey,
-  )
+    (currentQuestion, index) =>
+      getQuestionKey(currentQuestion, index) === questionKey,
+  );
 
-  return question !== undefined && question.options.some((option) => option.text === answer)
+  return (
+    question !== undefined &&
+    question.options.some(option => option.text === answer)
+  );
 }
 </script>
 
