@@ -7,7 +7,7 @@
   "scripts": {
     "book:meta": "node scripts/book-meta.mjs",
     "book:meta:release": "node scripts/book-meta.mjs --release",
-    "book:build": "npm run book:meta:release && vuepress build docs && node scripts/build-book.mjs && node scripts/build-epub.mjs && node scripts/verify-epub.mjs",
+    "book:build": "npm run book:meta:release && vuepress build docs && node scripts/build-book.mjs && node scripts/build-epub.mjs && node scripts/verify-epub.mjs && node scripts/post-build.mjs",
     "book:epub": "node scripts/build-epub.mjs",
     "book:epub:verify": "node scripts/verify-epub.mjs",
     "book:kpf": "node scripts/build-kpf.mjs",
@@ -15,7 +15,7 @@
     "book:verify": "node scripts/verify-book.mjs",
     "book:formats": "npm run book:build",
     "book:release": "npm run book:build && npm run book:kpf && npm run book:kpf:verify",
-    "docs:build": "npm run book:meta && vuepress build docs",
+    "docs:build": "npm run book:meta && vuepress build docs && node scripts/post-build.mjs",
     "docs:clean-dev": "npm run book:meta && vuepress dev docs --clean-cache --port 6060",
     "docs:dev": "npm run book:meta && vuepress dev docs --port 6060",
     "dev": "npm run book:meta && vuepress dev docs --clean-cache --port 6060",
