@@ -1,8 +1,8 @@
 {
   "title": "Учебник Go",
-  "version": "0.2.2",
-  "generatedAt": "2026-10-22T10:56:41.099Z",
-  "sourcePages": 190,
+  "version": "0.3.0",
+  "generatedAt": "2026-10-23T19:38:33.592Z",
+  "sourcePages": 189,
   "epub": "go-book.epub",
-  "bytes": 720142
+  "bytes": 717079
 }
