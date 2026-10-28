@@ -19,6 +19,7 @@ html[data-theme='light'] {
 // текстом. Более тёмный оттенок сохраняет визуальный стиль кнопки и
 // соответствует WCAG AA для обычного текста (не менее 4.5:1).
 html[data-theme='light'] {
+  --vp-c-accent: #147a4b;
   --vp-c-accent-bg: #147a4b;
   --vp-c-accent-hover: #0f633c;
 }
@@ -39,6 +40,7 @@ html[data-theme='light'] {
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
+  padding-bottom: 2rem;
 }
 
 // Центрирование через авто-маргины вместо justify-content: center:
@@ -85,51 +87,66 @@ summary {
   padding: 0.25rem 0.75rem 0.5rem;
 }
 
-@media (max-width: 719px) {
-  .vp-back-to-top-button {
-    bottom: 112px;
-    right: 30px;
-  }
+// Mobile-first: base-значения — для узких экранов;
+// блоки @media (min-width: …) в конце файла возвращают desktop-значения.
+
+// На узких экранах кнопка отодвинута от края экрана; от 720px
+// возвращаем значения плагина (4rem/1rem).
+.vp-back-to-top-button {
+  bottom: 112px;
+  right: 30px;
 }
 
-// На страницах без сайдбара (главная) бургер на мобильных скрываем:
+// На страницах без сайдбара (главная) бургер скрываем на всех ширинах:
 // иначе тема открывает дровер без единого пункта.
 // Если в config.js включим navbar, правила ниже придётся пересмотреть —
 // в дровере тогда появятся ссылки navbar'а, и его скрывать нельзя.
-@media (max-width: 719px) {
-  // Селекторы начинаются с .vp-theme-container, чтобы не уступить
-  // спецификой правилам темы (у них тоже три класса).
-  .vp-theme-container.no-sidebar .vp-toggle-sidebar-button {
-    display: none;
-  }
-
-  // 4rem — padding темы, который оставляет место под бургер.
-  // Кнопки нет, поэтому возвращаем обычный padding.
-  .vp-theme-container.no-sidebar .vp-navbar {
-    padding-inline-start: var(--navbar-padding-h);
-  }
-
-  // Свайп с левого края (Layout.vue) тоже не должен открывать
-  // пустой дровер, иначе затемняющая маска «мигает».
-  .vp-theme-container.no-sidebar .vp-sidebar,
-  .vp-theme-container.no-sidebar .vp-sidebar-mask {
-    display: none;
-  }
+// Селекторы начинаются с .vp-theme-container, чтобы не уступить
+// спецификой правилам темы (у них тоже три класса).
+.vp-theme-container.no-sidebar .vp-toggle-sidebar-button {
+  display: none;
 }
 
-@media (max-width: 959px) {
-  .vp-page [vp-content] {
-    padding: var(--side-margin);
-  }
+// 4rem — padding темы, который оставляет место под бургер.
+// Кнопки нет, поэтому возвращаем обычный padding.
+.vp-theme-container.no-sidebar .vp-navbar {
+  padding-inline-start: var(--navbar-padding-h);
+}
 
-  .vp-navbar-items-wrapper {
-    inset-inline-end: var(--side-margin);
-  }
+// Свайп с левого края (Layout.vue) тоже не должен открывать
+// пустой дровер, иначе затемняющая маска «мигает».
+.vp-theme-container.no-sidebar .vp-sidebar,
+.vp-theme-container.no-sidebar .vp-sidebar-mask {
+  display: none;
+}
 
-  .vp-site-logo {
-    margin-inline-start: 0.6rem;
-    margin-inline-end: 0.6rem;
-  }
+// На узких экранах padding контента — единый токен --side-margin.
+.vp-page [vp-content] {
+  padding: var(--side-margin);
+}
+
+// Правая группа: base — самые узкие телефоны (≤359px), поджимаем,
+// чтобы она не давила на (уменьшенный) логотип.
+// 4×44 + 3×5 + 2×16 = 223px.
+.vp-navbar-items-wrapper {
+  gap: 5px;
+
+  // Если правая группа не помещается (узкое окно), переполнение идёт
+  // влево — на бренд, а не за правый край экрана. Параллельно поле
+  // поиска сжимается (SearchBox.vue).
+  align-items: center;
+  justify-content: flex-end;
+
+  inset-inline-end: 1rem;
+  padding-inline-start: 1rem;
+}
+
+// Логотип: на узких телефонах — 2.5rem; лестница более широких
+// значений — в конце файла (360 / 400 / 960px).
+.vp-site-logo {
+  margin-inline-start: 0.1rem;
+  margin-inline-end: 0.1rem;
+  width: 2.5rem;
 }
 
 .vp-toggle-color-mode-button {
@@ -163,67 +180,103 @@ summary {
   order: 3;
 }
 
-// Брендовый блок (логотип) выравниваем по центру по вертикали: на мобильных
-// логотип уменьшается, и без центрирования прилипал бы к верху строки.
+// Брендовый блок (логотип) выравниваем по центру по вертикали: на узких
+// экранах логотип уменьшается, и без центрирования прилипал бы к верху строки.
 .vp-navbar > .vp-toggle-sidebar-button + span {
   display: inline-flex;
   align-items: center;
 }
 
-.vp-navbar-items-wrapper {
-  gap: var(--navbar-icon-gap);
-
-  // Если правая группа не помещается (узкое окно), переполнение идёт
-  // влево — на бренд, а не за правый край экрана. Параллельно поле
-  // поиска сжимается (SearchBox.vue).
-  align-items: center;
-  justify-content: flex-end;
-}
-
 // Бургер из темы мал для пальца (иконка 1.25rem + padding 0.6rem =
 // 26.5px): приводим к тем же 44×44, что и все кнопки шапки.
-@media screen and (max-width: 719px) {
-  .vp-toggle-sidebar-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    top: calc((var(--navbar-height) - var(--navbar-icon-size)) / 2);
-    width: var(--navbar-icon-size);
-    height: var(--navbar-icon-size);
-    border: 1px solid var(--vp-c-border);
-    border-radius: 0.35rem;
-    background: var(--vp-c-bg);
-    box-sizing: border-box;
+// Base — мобильное состояние; от 720px возвращаем значения темы.
+.vp-toggle-sidebar-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  top: calc((var(--navbar-height) - var(--navbar-icon-size)) / 2);
+  width: var(--navbar-icon-size);
+  height: var(--navbar-icon-size);
+  border: 1px solid var(--vp-c-border);
+  border-radius: 0.35rem;
+  background: var(--vp-c-bg);
+  box-sizing: border-box;
 
-    &:hover {
-      background-color: var(--vp-c-bg-alt);
-    }
+  &:hover {
+    background-color: var(--vp-c-bg-alt);
   }
 }
-@media screen and (max-width: 399px) {
+
+// Название сайта рядом с логотипом на узких экранах избыточно.
+.vp-hide-mobile {
+  display: none;
+}
+
+// ============================ Desktop-значения ============================
+
+// От 360px правая группа возвращается к обычным промежуткам
+// и padding темы.
+@media (min-width: 360px) {
+  .vp-navbar-items-wrapper {
+    gap: var(--navbar-icon-gap);
+    padding-inline-start: var(--navbar-padding-h);
+  }
+
   .vp-site-logo {
     width: 4rem;
-    margin-inline-start: 0.1rem;
-    margin-inline-end: 0.1rem;
   }
 }
 
-// Самые узкие телефоны: поджимаем правую группу, чтобы она не давила
-// на (уменьшенный) логотип. 4×44 + 3×5 + 2×16 = 223px.
-@media screen and (max-width: 359px) {
-  .vp-navbar-items-wrapper {
-    gap: 5px;
-    inset-inline-end: 1rem;
-    padding-inline-start: 1rem;
-  }
+@media (min-width: 400px) {
   .vp-site-logo {
-    width: 2.5rem;
+    width: auto;
+    margin-inline-start: 0.6rem;
+    margin-inline-end: 0.6rem;
   }
 }
 
-@media screen and (max-width: 849px) {
-  .vp-hide-mobile {
+@media (min-width: 720px) {
+  .vp-back-to-top-button {
+    bottom: 4rem;
+    right: 1rem;
+  }
+
+  // Значения бургера из темы: скрыт, padding 0.6rem, top 0.6rem,
+  // без коробки 44×44.
+  .vp-toggle-sidebar-button {
     display: none;
+    padding: 0.6rem;
+    top: 0.6rem;
+    width: auto;
+    height: auto;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-sizing: content-box;
+  }
+}
+
+@media (min-width: 850px) {
+  .vp-hide-mobile {
+    display: inline;
+  }
+}
+
+@media (min-width: 960px) {
+  .vp-page [vp-content] {
+    // Тема декларирует padding-top: 0 после padding из миксина —
+    // возвращаем его явно после шортката.
+    padding: 2rem 2.5rem;
+    padding-top: 0;
+  }
+
+  .vp-navbar-items-wrapper {
+    inset-inline-end: var(--navbar-padding-h);
+  }
+
+  .vp-site-logo {
+    margin-inline-start: 0;
+    margin-inline-end: var(--navbar-padding-v);
   }
 }

@@ -146,6 +146,8 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss">
+// Mobile-first: на узких экранах (≤719px) кнопка — компактная
+// 44×44 (текст и стрелка скрыты), на широких — с текстом.
 .book-download-navbar {
   position: relative;
 }
@@ -153,8 +155,10 @@ onBeforeUnmount(() => {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
+  width: var(--navbar-icon-size);
   min-height: var(--navbar-icon-size);
-  padding: 0.35rem 0.65rem;
+  padding: 0;
+  justify-content: center;
   color: var(--vp-c-accent);
   font: inherit;
   font-size: 0.82rem;
@@ -183,6 +187,18 @@ onBeforeUnmount(() => {
     stroke-linejoin: round;
     stroke-width: 2;
   }
+}
+.book-download-navbar__toggle span,
+.book-download-navbar__arrow {
+  position: absolute;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 .book-download-navbar__toggle .book-download-navbar__arrow {
   width: 0.85rem;
@@ -229,23 +245,36 @@ onBeforeUnmount(() => {
 .book-download-navbar__format + .book-download-navbar__format {
   border-top: 1px solid var(--vp-c-border);
 }
-@media screen and (max-width: 719px) {
+
+@media (min-width: 720px) {
   .book-download-navbar__toggle {
-    width: var(--navbar-icon-size);
-    padding: 0;
-    justify-content: center;
+    width: auto;
+    padding: 0.35rem 0.65rem;
+    justify-content: flex-start;
   }
-  .book-download-navbar__toggle span,
-  .book-download-navbar__arrow {
-    position: absolute;
-    width: 1px !important;
-    height: 1px !important;
+  .book-download-navbar__toggle span {
+    position: static;
+    width: auto !important;
+    height: auto !important;
     padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
     border: 0;
+  }
+  .book-download-navbar__arrow {
+    position: static;
+    width: auto !important;
+    height: auto !important;
+    padding: 0;
+    margin: 0;
+    clip: auto;
+    border: 0;
+  }
+  .book-download-navbar__toggle .book-download-navbar__arrow {
+    width: 0.85rem !important;
+    height: 0.85rem !important;
   }
 }
 </style>

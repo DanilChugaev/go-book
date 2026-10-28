@@ -6,8 +6,6 @@ actions:
   - text: Начать изучение GO
     link: /guide/
     type: primary
-
-footer: 'Статус: в процессе...'
 ---
 
 <ClientOnly>

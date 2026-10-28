@@ -256,7 +256,7 @@ const mobile = ref(false);
 let mediaQuery: MediaQueryList | null = null;
 
 const onMediaChange = (event: MediaQueryListEvent): void => {
-  mobile.value = event.matches;
+  mobile.value = !event.matches;
 };
 
 const placeholder = 'Поиск по учебнику…';
@@ -885,9 +885,9 @@ onMounted(() => {
   window.addEventListener('keydown', onGlobalKeydown);
   window.addEventListener('resize', updateExpandMetrics);
 
-  const media = window.matchMedia('(max-width: 719px)');
+  const media = window.matchMedia('(min-width: 720px)');
   mediaQuery = media;
-  mobile.value = media.matches;
+  mobile.value = !media.matches;
   media.addEventListener('change', onMediaChange);
 
   updateExpandMetrics();
@@ -913,8 +913,11 @@ onBeforeUnmount(() => {
 // Flex-элемент по умолчанию не сжимается меньше своего контента
 // (min-width: auto), поэтому разрешаем поисковой коробке сжиматься:
 // это единственный элемент шапки, который уменьшается в узких окнах.
+// Mobile-first: base — мобильное состояние (в шапке только кнопка,
+// панель — лист под шапкой); @media (min-width: 720px) в конце файла
+// возвращает desktop-значения.
 .search-box {
-  position: relative;
+  position: static;
   display: flex;
   align-items: center;
   min-width: 0;
@@ -923,10 +926,10 @@ onBeforeUnmount(() => {
 }
 
 // На десктопе, когда места не хватает, сжимается именно поле поиска
-// (до минимума 7rem). Явный flex-basis важен: у поля задан
+// (до минимума 5rem). Явный flex-basis важен: у поля задан
 // container-type, поэтому его контент не учитывается при размере
 // flex-слота, и без явной базы слот схлопнулся бы в ноль.
-@media screen and (min-width: 720px) {
+@media (min-width: 720px) {
   .search-box {
     flex-basis: 15rem;
     min-width: 5rem;
@@ -955,8 +958,10 @@ onBeforeUnmount(() => {
   }
 }
 
+// Иконка поиска видна на узких экранах (base); на десктопе скрыта
+// (вместо неё — поле).
 .search-box__toggle {
-  display: none;
+  display: flex;
   align-items: center;
   justify-content: center;
   width: var(--navbar-icon-size);
@@ -981,9 +986,11 @@ onBeforeUnmount(() => {
 // Ширина живёт на поле, а инпут — 100% от поля: так flex-раскладка
 // шапки может сжимать его в узких окнах. container-type нужен для
 // container-запроса ниже: подсказка ⌘K скрывается, когда поле узкое.
+// Поле видно только на десктопе; на узких экранах его заменяет
+// кнопка, поэтому base — скрыто.
 .search-box__field {
   position: relative;
-  display: flex;
+  display: none;
   align-items: center;
   width: 100%;
   min-width: 0;
@@ -1082,21 +1089,29 @@ onBeforeUnmount(() => {
   right: 0.45rem;
 }
 
-// На десктопе панель выровнена по левому краю расширенного поля
-// (логотипу); смещение --sb-expand-left наследуется от поля и ещё
-// служит защитой от выхода за экран на узких окнах.
+// Панель: на узких экранах (base) — лист под шапкой во всю ширину;
+// на десктопе (min-width: 720px, внизу файла) — выпадающий блок,
+// выровненный по левому краю расширенного поля (логотипу); смещение
+// --sb-expand-left наследуется от поля и ещё служит защитой от выхода
+// за экран на узких окнах.
 .search-box__panel {
-  position: absolute;
-  top: calc(100% + 0.6rem);
+  position: fixed;
+  top: var(--navbar-height);
   left: 0;
+  right: 0;
   z-index: 30;
-  width: 100%;
-  max-width: calc(100vw - var(--sb-expand-left, 0px) - 1.5rem);
-  max-height: min(28rem, calc(100vh - var(--navbar-height) - 2rem));
-  overflow-y: auto;
+  width: auto;
+  max-width: none;
+  max-height: calc(100vh - var(--navbar-height));
+  overflow: hidden;
   background-color: var(--vp-c-bg-elv);
   border: 1px solid var(--vp-c-border);
-  border-radius: 0.75rem;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
   box-shadow: 0 1rem 2.5rem var(--vp-c-shadow, rgba(0, 0, 0, 0.12));
   animation: search-box-panel-in 0.18s ease;
 }
@@ -1133,22 +1148,98 @@ onBeforeUnmount(() => {
   }
 }
 
+// Бар панели (инпут + кнопки) есть только в мобильной версии (base);
+// на десктопе скрыт.
 .search-box__panel-bar {
-  display: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid var(--vp-c-border);
+  background-color: var(--vp-c-bg-elv);
 }
 
+// Инпут и кнопка закрытия живут только в мобильном баре.
+.search-box__panel-input {
+  flex: 1;
+  height: var(--navbar-icon-size);
+  padding: 0 0.75rem;
+  border: 1px solid var(--vp-c-border);
+  border-radius: 0.5rem;
+  background-color: var(--vp-c-bg);
+  color: var(--vp-c-text);
+  font-size: 0.9rem;
+  outline: none;
+
+  &::placeholder {
+    color: var(--vp-c-text-mute);
+  }
+
+  &:focus {
+    border-color: var(--vp-c-accent);
+  }
+}
+
+.search-box__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--navbar-icon-size);
+  height: var(--navbar-icon-size);
+  padding: 0;
+  border: none;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: var(--vp-c-text-mute);
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--vp-c-bg-alt);
+    color: var(--vp-c-text);
+  }
+}
+
+.search-box__close svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+// «×» в мобильном баре по размеру совпадает с кнопкой закрытия.
+// Селектор привязан к баре, поэтому в desktop-контексте (поле) не
+// применяется — медиа-запрос не нужен.
+.search-box__panel-bar .search-box__clear {
+  width: var(--navbar-icon-size);
+  height: var(--navbar-icon-size);
+  border-radius: 0.5rem;
+
+  svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+
+// На мобильных (base) результаты — прокручиваемая колонка листа;
+// на десктопе панель скроллится целиком (сброс внизу файла).
 .search-box__results {
+  flex: 1;
+  overflow-y: auto;
   min-height: 2rem;
 }
 
+// На мобильных (base) только первая глава имеет разделитель
+// (верх листа «прилеплен» к шапке); на десктопе — у всех.
 .search-box__chapter {
   display: block;
   padding: 0.55rem 1rem;
-  border-top: 1px solid var(--vp-c-border);
+  border-top: none;
   color: var(--vp-c-text);
   font-size: 0.9rem;
   font-weight: 600;
   text-decoration: none;
+
+  &:first-of-type {
+    border-top: 1px solid var(--vp-c-border);
+  }
 
   &:hover {
     background-color: var(--vp-c-bg-alt);
@@ -1219,113 +1310,54 @@ onBeforeUnmount(() => {
   }
 }
 
-// Мобильная версия: в шапке только кнопка, панель — под шапкой
-@media screen and (max-width: 719px) {
+// Desktop: в шапке поле поиска, панель — выпадающий блок.
+// Возврат значений, которые в base отведены мобильному листу.
+@media (min-width: 720px) {
   .search-box {
-    position: static;
+    position: relative;
   }
 
   .search-box__toggle {
-    display: flex;
-  }
-
-  .search-box__field {
     display: none;
   }
 
+  .search-box__field {
+    display: flex;
+  }
+
   .search-box__panel {
-    position: fixed;
-    top: var(--navbar-height);
-    left: 0;
-    right: 0;
-    width: auto;
-    max-width: none;
-    max-height: calc(100vh - var(--navbar-height));
-    overflow: hidden;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-radius: 0;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .search-box__panel-bar {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem;
-    border-bottom: 1px solid var(--vp-c-border);
-    background-color: var(--vp-c-bg-elv);
-  }
-
-  .search-box__panel-input {
-    flex: 1;
-    height: var(--navbar-icon-size);
-    padding: 0 0.75rem;
+    position: absolute;
+    top: calc(100% + 0.6rem);
+    right: auto;
+    width: 100%;
+    max-width: calc(100vw - var(--sb-expand-left, 0px) - 1.5rem);
+    max-height: min(28rem, calc(100vh - var(--navbar-height) - 2rem));
+    overflow: auto;
+    display: block;
+    flex-direction: row;
     border: 1px solid var(--vp-c-border);
-    border-radius: 0.5rem;
-    background-color: var(--vp-c-bg);
-    color: var(--vp-c-text);
-    font-size: 0.9rem;
-    outline: none;
-
-    &::placeholder {
-      color: var(--vp-c-text-mute);
-    }
-
-    &:focus {
-      border-color: var(--vp-c-accent);
-    }
+    border-radius: 0.75rem;
   }
 
-  .search-box__close {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: var(--navbar-icon-size);
-    height: var(--navbar-icon-size);
+  // Бар виден только на мобильных (base); на десктопе скрыт.
+  .search-box__panel-bar {
+    display: none;
+    align-items: stretch;
+    gap: normal;
     padding: 0;
-    border: none;
-    border-radius: 0.5rem;
-    background: transparent;
-    color: var(--vp-c-text-mute);
-    cursor: pointer;
-
-    &:hover {
-      background-color: var(--vp-c-bg-alt);
-      color: var(--vp-c-text);
-    }
+    border-bottom: 0;
+    background-color: transparent;
   }
 
-  .search-box__close svg {
-    width: 1.25rem;
-    height: 1.25rem;
-  }
-
-  // «×» в мобильном баре по размеру совпадает с кнопкой закрытия
-  .search-box__panel-bar .search-box__clear {
-    width: var(--navbar-icon-size);
-    height: var(--navbar-icon-size);
-    border-radius: 0.5rem;
-
-    svg {
-      width: 1.25rem;
-      height: 1.25rem;
-    }
-  }
-
+  // Результаты: панель скроллится целиком, отдельной колонки нет.
   .search-box__results {
-    flex: 1;
-    overflow-y: auto;
+    flex: 0 1 auto;
+    overflow-y: visible;
   }
 
+  // У всех глав есть разделитель, включая первую.
   .search-box__chapter {
-    border-top: none;
-
-    &:first-of-type {
-      border-top: 1px solid var(--vp-c-border);
-    }
+    border-top: 1px solid var(--vp-c-border);
   }
 }
 </style>

@@ -88,6 +88,8 @@ const HomeHeroImage: FunctionalComponent = () => {
 </script>
 
 <style lang="scss">
+// Mobile-first: base — значения для узких экранов (≤419px),
+// @media (min-width: 420px) — возврат значений для широких экранов.
 .vp-hero {
   text-align: center;
 }
@@ -95,31 +97,18 @@ const HomeHeroImage: FunctionalComponent = () => {
 .vp-hero-image {
   display: block;
   max-width: 100%;
-  max-height: 280px;
-  margin: 3rem auto 1.5rem;
-
-  @media (max-width: 419px) {
-    max-height: 210px;
-    margin: 2rem auto 1.2rem;
-  }
+  max-height: 210px;
+  margin: 2rem auto 1.2rem;
 }
 
 #main-title {
-  font-size: 3rem;
-
-  @media (max-width: 419px) {
-    font-size: 2rem;
-  }
+  font-size: 2rem;
 }
 
 #main-title,
 .vp-hero-description,
 .vp-hero-actions {
-  margin: 1.8rem auto;
-
-  @media (max-width: 419px) {
-    margin: 1.2rem auto;
-  }
+  margin: 1.2rem auto;
 }
 
 .vp-hero-actions {
@@ -132,33 +121,24 @@ const HomeHeroImage: FunctionalComponent = () => {
 .vp-hero-description {
   max-width: 35rem;
   color: var(--vp-c-text-mute);
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   line-height: 1.3;
-
-  @media (max-width: 419px) {
-    font-size: 1.2rem;
-  }
 }
 
 .vp-hero-action-button {
   display: inline-block;
 
   box-sizing: border-box;
-  padding: 0.8rem 1.6rem;
+  padding: 0.6rem 1.2rem;
   border: 2px solid var(--vp-c-accent-bg);
   border-radius: 4px;
 
   background-color: var(--vp-c-bg);
   color: var(--vp-c-accent);
 
-  font-size: 1.2rem;
+  font-size: 1rem;
 
   transition: background-color border-color color var(--vp-t-color);
-
-  @media (max-width: 419px) {
-    padding: 0.6rem 1.2rem;
-    font-size: 1rem;
-  }
 
   &:hover {
     background-color: var(--vp-c-accent-hover);
@@ -173,6 +153,32 @@ const HomeHeroImage: FunctionalComponent = () => {
       border-color: var(--vp-c-accent-hover);
       background-color: var(--vp-c-accent-hover);
     }
+  }
+}
+
+@media (min-width: 420px) {
+  .vp-hero-image {
+    max-height: 280px;
+    margin: 3rem auto 1.5rem;
+  }
+
+  #main-title {
+    font-size: 3rem;
+  }
+
+  #main-title,
+  .vp-hero-description,
+  .vp-hero-actions {
+    margin: 1.8rem auto;
+  }
+
+  .vp-hero-description {
+    font-size: 1.6rem;
+  }
+
+  .vp-hero-action-button {
+    padding: 0.8rem 1.6rem;
+    font-size: 1.2rem;
   }
 }
 </style>

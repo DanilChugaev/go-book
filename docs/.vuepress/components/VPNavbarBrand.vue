@@ -66,21 +66,34 @@ const NavbarBrandLogo: FunctionalComponent = () => {
   margin-inline-end: var(--navbar-padding-v);
 }
 
+// Mobile-first: на узких экранах (≤719px) название — блочный элемент
+// с ограниченной шириной и ellipsis, на широких — обычное inline.
 .vp-site-name {
   position: relative;
   color: var(--vp-c-text);
   font-weight: 600;
   font-size: 1.3rem;
 
-  @media screen and (max-width: 719px) {
-    display: block;
+  display: block;
 
-    overflow: hidden;
+  overflow: hidden;
 
-    width: calc(100vw - 11rem);
+  width: calc(100vw - 11rem);
 
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (min-width: 720px) {
+  .vp-site-name {
+    display: inline;
+
+    overflow: visible;
+
+    width: auto;
+
+    text-overflow: clip;
+    white-space: normal;
   }
 }
 </style>

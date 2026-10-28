@@ -12,10 +12,13 @@ import { bookMeta } from '../generated/book-meta';
 </script>
 
 <style scoped lang="scss">
+// Mobile-first: на узких экранах (≤449px) версия скрыта, чтобы четыре
+// кнопки 44×44 в шапке не давили на уменьшенный логотип; от 450px
+// показываем её, от 920px возвращаем полный отступ и дату.
 .book-version {
-  display: inline-flex;
+  display: none;
   align-items: center;
-  margin-inline-start: 0.55rem;
+  margin-inline-start: 0.35rem;
   color: var(--vp-c-text-mute);
   font-size: 0.72rem;
   font-variant-numeric: tabular-nums;
@@ -24,21 +27,23 @@ import { bookMeta } from '../generated/book-meta';
   white-space: nowrap;
 }
 
-@media screen and (max-width: 919px) {
-  .book-version {
-    margin-inline-start: 0.35rem;
-  }
+.book-version__date {
+  display: none;
+}
 
-  .book-version__date {
-    display: none;
+@media (min-width: 450px) {
+  .book-version {
+    display: inline-flex;
   }
 }
 
-// Скрываем уже на ≤419px (а не ≤359px): освобождаем место, чтобы
-// четыре кнопки 44×44 в шапке не давили на уменьшенный логотип.
-@media screen and (max-width: 449px) {
+@media (min-width: 920px) {
   .book-version {
-    display: none;
+    margin-inline-start: 0.55rem;
+  }
+
+  .book-version__date {
+    display: inline;
   }
 }
 </style>

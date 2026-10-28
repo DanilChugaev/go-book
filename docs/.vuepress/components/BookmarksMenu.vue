@@ -263,15 +263,15 @@ function onKeydown(event: KeyboardEvent): void {
 }
 
 function onMediaChange(event: MediaQueryListEvent): void {
-  mobile.value = event.matches;
+  mobile.value = !event.matches;
 }
 
 onMounted(() => {
   load();
   document.addEventListener('mousedown', onDocumentMouseDown);
   window.addEventListener('keydown', onKeydown);
-  mediaQuery = window.matchMedia('(max-width: 719px)');
-  mobile.value = mediaQuery.matches;
+  mediaQuery = window.matchMedia('(min-width: 720px)');
+  mobile.value = !mediaQuery.matches;
   mediaQuery.addEventListener('change', onMediaChange);
 });
 
@@ -283,8 +283,10 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss">
+// Mobile-first: панель по умолчанию — full-screen-лист под шапкой,
+// от 720px — выпадающий блок.
 .bookmarks-menu {
-  position: relative;
+  position: static;
   display: flex;
   align-items: center;
   height: 100%;
@@ -345,14 +347,19 @@ onBeforeUnmount(() => {
   background-color: rgba(0, 0, 0, 0.35);
 }
 .bookmarks-menu__panel {
-  position: absolute;
-  top: calc(100% + 0.6rem);
+  position: fixed;
+  top: var(--navbar-height);
   right: 0;
+  left: 0;
   z-index: 30;
-  width: min(25rem, calc(100vw - 1.5rem));
+  width: auto;
+  max-height: calc(100vh - var(--navbar-height));
   overflow: hidden;
   border: 1px solid var(--vp-c-border);
-  border-radius: 0.75rem;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-radius: 0;
   background-color: var(--vp-c-bg-elv);
   box-shadow: 0 1rem 2.5rem var(--vp-c-shadow, rgba(0, 0, 0, 0.12));
   animation: bookmarks-menu-panel-in 0.18s ease;
@@ -450,7 +457,7 @@ onBeforeUnmount(() => {
   }
 }
 .bookmarks-menu__list {
-  max-height: min(28rem, calc(100vh - var(--navbar-height) - 10rem));
+  max-height: calc(100vh - var(--navbar-height) - 8.5rem);
   overflow-y: auto;
 }
 .bookmarks-menu__list ul {
@@ -512,24 +519,21 @@ onBeforeUnmount(() => {
     transform: translateY(0);
   }
 }
-@media screen and (max-width: 719px) {
+@media (min-width: 720px) {
   .bookmarks-menu {
-    position: static;
+    position: relative;
   }
   .bookmarks-menu__panel {
-    position: fixed;
-    top: var(--navbar-height);
-    right: 0;
-    left: 0;
-    width: auto;
-    max-height: calc(100vh - var(--navbar-height));
-    border-top: none;
-    border-right: none;
-    border-left: none;
-    border-radius: 0;
+    position: absolute;
+    top: calc(100% + 0.6rem);
+    left: auto;
+    width: min(25rem, calc(100vw - 1.5rem));
+    max-height: none;
+    border: 1px solid var(--vp-c-border);
+    border-radius: 0.75rem;
   }
   .bookmarks-menu__list {
-    max-height: calc(100vh - var(--navbar-height) - 8.5rem);
+    max-height: min(28rem, calc(100vh - var(--navbar-height) - 10rem));
   }
 }
 </style>

@@ -42,11 +42,12 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+// Mobile-first: base — компактный padding для узких экранов.
 .bookmarks-home {
   width: calc(100vw - 4rem);
   max-width: var(--homepage-width);
   margin: 0;
-  padding: 1.25rem 1.5rem;
+  padding: 1rem;
   border: 1px solid var(--vp-c-border);
   border-radius: 0.75rem;
   background: var(--vp-c-bg-alt);
@@ -87,9 +88,9 @@ onMounted(() => {
     text-decoration: underline;
   }
 }
-@media (max-width: 719px) {
+@media (min-width: 720px) {
   .bookmarks-home {
-    padding: 1rem;
+    padding: 1.25rem 1.5rem;
   }
 }
 </style>
